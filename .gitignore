@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# vs
+*.VC.db
+*.sln
+*.opendb
+*.vcxproj
+*.filters
+*.log
+*.pdb
+*.exp
+*.ilk
