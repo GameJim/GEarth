@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.5)
-project (ui)
+project(ui)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add sub directories

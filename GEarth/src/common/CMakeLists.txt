@@ -3,8 +3,7 @@
 set(CMAKE_USE_RELATIVE_PATHS true)
 # 父路径
 set(GEARTH_DIR ${PROJECT_SOURCE_DIR}/../)
-message("${GEARTH_DIR}")
-project (common)
+project(common)
 set(PROJECT_NAME common)
 
 set(CMAKE_CXX_STANDARD 11)

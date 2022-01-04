@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
-project (plugs)
+project(plugs)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 

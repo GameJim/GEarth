@@ -1,7 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.5)
 # set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project (GEarh)
+project(GEarh)
 
 # Add sub directories
 add_subdirectory(plugs)
