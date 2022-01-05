@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- QtnRibbonQuickAccessBar.qdoc -->
+  <title>RibbonQuickAccessBar Class | QtitanRibbon 4.17</title>
+  <link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="qtdocheader"></div>
+    <div class="nav" id="qt13a-header">
+        <div class="qt13a-gradient">
+        <div class="qt13a-container qt13a-dynamicREMOVE" >
+                <div id="qt13a-register">
+                    <a href="http://www.devmachines.com">Home</a>
+                    <a href="http://www.devmachines.com/tech-support.html">Tech Support</a>
+                </div>
+                <div class="qt13a-sixCol">
+                    <div id="qt13a-logo">
+                        <a href="http://www.devmachines.com" class="qt13a-site-logo">
+                            <img src="images/dm_logo64x64.png" alt="Developer Machines"></img>
+                        </a>
+                    </div>
+                    <div id="qt13a-title_nav">
+                        <div id="qt13a-title">
+                                <p class="qt13a-title">QtitanRibbon Documentation</p>
+                        </div>
+                            <div class="qt13a-nav">
+                                <ul>
+                                    <li>
+                                        <a href="index.html">Index</a>
+                                    </li>
+                                    <li>
+                                        <a href="classes.html">All Classes</a>
+                                    </li>
+                                    <li>
+                                        <a href="examples.html">Examples</a>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+            <ul>
+<li>RibbonQuickAccessBar</li>
+            </ul>
+        </div>
+<div class="content">
+    <div class="line">
+        <div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#signals">Signals</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">RibbonQuickAccessBar Class</h1>
+<!-- $$$RibbonQuickAccessBar-brief -->
+<p><a href="ribbonquickaccessbar.html">RibbonQuickAccessBar</a> class quick access Toolbar, which is located on <a href="ribbonbar.html">RibbonBar</a>. Quick access toolbar contains a set of controls that are always available to users regardless of which page is selected. <a href="#details">More...</a></p>
+<!-- @@@RibbonQuickAccessBar -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;RibbonQuickAccessBar&gt;</span>
+</td></tr></table></div><ul>
+<li><a href="ribbonquickaccessbar-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#RibbonQuickAccessBar">RibbonQuickAccessBar</a></b>(QWidget *<i>parent</i> = Q_NULL)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#dtor.RibbonQuickAccessBar">~RibbonQuickAccessBar</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QAction *</td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#actionCustomizeButton">actionCustomizeButton</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#isActionVisible">isActionVisible</a></b>(QAction *<i>action</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#setActionVisible">setActionVisible</a></b>(QAction *<i>action</i>, bool <i>visible</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSize </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#sizeHint">sizeHint</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#visibleCount">visibleCount</a></b>() const</td></tr>
+</table></div>
+<a name="signals"></a>
+<h2 id="signals">Signals</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#showCustomizeMenu">showCustomizeMenu</a></b>(QMenu *<i>menu</i>)</td></tr>
+</table></div>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#actionEvent">actionEvent</a></b>(QActionEvent *<i>event</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#event">event</a></b>(QEvent *<i>event</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#paintEvent">paintEvent</a></b>(QPaintEvent *<i>event</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="ribbonquickaccessbar.html#resizeEvent">resizeEvent</a></b>(QResizeEvent *<i>event</i>)</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$RibbonQuickAccessBar-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="ribbonquickaccessbar.html">RibbonQuickAccessBar</a> class quick access Toolbar, which is located on <a href="ribbonbar.html">RibbonBar</a>. Quick access toolbar contains a set of controls that are always available to users regardless of which page is selected.</p>
+</div>
+<!-- @@@RibbonQuickAccessBar -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$RibbonQuickAccessBar[overload1]$$$RibbonQuickAccessBarQWidget* -->
+<h3 class="fn" id="RibbonQuickAccessBar"><a name="RibbonQuickAccessBar"></a>RibbonQuickAccessBar::<span class="name">RibbonQuickAccessBar</span>(<span class="type">QWidget</span> *<i>parent</i> = Q_NULL)</h3>
+<p>Constructs <a href="ribbonquickaccessbar.html">RibbonQuickAccessBar</a> object with the given parent.</p>
+<!-- @@@RibbonQuickAccessBar -->
+<!-- $$$~RibbonQuickAccessBar[overload1]$$$~RibbonQuickAccessBar -->
+<h3 class="fn" id="dtor.RibbonQuickAccessBar"><a name="dtor.RibbonQuickAccessBar"></a><code>[virtual] </code>RibbonQuickAccessBar::<span class="name">~RibbonQuickAccessBar</span>()</h3>
+<p>Destructor of the <a href="ribbonquickaccessbar.html">RibbonQuickAccessBar</a> object.</p>
+<!-- @@@~RibbonQuickAccessBar -->
+<!-- $$$actionCustomizeButton[overload1]$$$actionCustomizeButton -->
+<h3 class="fn" id="actionCustomizeButton"><a name="actionCustomizeButton"></a><span class="type">QAction</span> *RibbonQuickAccessBar::<span class="name">actionCustomizeButton</span>() const</h3>
+<p>Returns a pointer to the QAction that is associated with the customize button of Ribbon's Quick Access Bar.</p>
+<!-- @@@actionCustomizeButton -->
+<!-- $$$actionEvent[overload1]$$$actionEventQActionEvent* -->
+<h3 class="fn" id="actionEvent"><a name="actionEvent"></a><code>[virtual protected] </code><span class="type">void</span> RibbonQuickAccessBar::<span class="name">actionEvent</span>(<span class="type">QActionEvent</span> *<i>event</i>)</h3>
+<!-- @@@actionEvent -->
+<!-- $$$event[overload1]$$$eventQEvent* -->
+<h3 class="fn" id="event"><a name="event"></a><code>[virtual protected] </code><span class="type">bool</span> RibbonQuickAccessBar::<span class="name">event</span>(<span class="type">QEvent</span> *<i>event</i>)</h3>
+<!-- @@@event -->
+<!-- $$$isActionVisible[overload1]$$$isActionVisibleQAction* -->
+<h3 class="fn" id="isActionVisible"><a name="isActionVisible"></a><span class="type">bool</span> RibbonQuickAccessBar::<span class="name">isActionVisible</span>(<span class="type">QAction</span> *<i>action</i>) const</h3>
+<p>Returns the visibility of the visual representation for the given <i>action</i>.</p>
+<!-- @@@isActionVisible -->
+<!-- $$$paintEvent[overload1]$$$paintEventQPaintEvent* -->
+<h3 class="fn" id="paintEvent"><a name="paintEvent"></a><code>[virtual protected] </code><span class="type">void</span> RibbonQuickAccessBar::<span class="name">paintEvent</span>(<span class="type">QPaintEvent</span> *<i>event</i>)</h3>
+<!-- @@@paintEvent -->
+<!-- $$$resizeEvent[overload1]$$$resizeEventQResizeEvent* -->
+<h3 class="fn" id="resizeEvent"><a name="resizeEvent"></a><code>[virtual protected] </code><span class="type">void</span> RibbonQuickAccessBar::<span class="name">resizeEvent</span>(<span class="type">QResizeEvent</span> *<i>event</i>)</h3>
+<!-- @@@resizeEvent -->
+<!-- $$$setActionVisible[overload1]$$$setActionVisibleQAction*bool -->
+<h3 class="fn" id="setActionVisible"><a name="setActionVisible"></a><span class="type">void</span> RibbonQuickAccessBar::<span class="name">setActionVisible</span>(<span class="type">QAction</span> *<i>action</i>, <span class="type">bool</span> <i>visible</i>)</h3>
+<p>Sets the visibility of the visual representation of action on the quick access toolbar. Parameter <i>action</i> is action, parameter <i>visible</i> is a visibility.</p>
+<p><b>See also </b><a href="ribbonquickaccessbar.html#isActionVisible">isActionVisible</a>().</p>
+<!-- @@@setActionVisible -->
+<!-- $$$showCustomizeMenu[overload1]$$$showCustomizeMenuQMenu* -->
+<h3 class="fn" id="showCustomizeMenu"><a name="showCustomizeMenu"></a><code>[signal] </code><span class="type">void</span> RibbonQuickAccessBar::<span class="name">showCustomizeMenu</span>(<span class="type">QMenu</span> *<i>menu</i>)</h3>
+<!-- @@@showCustomizeMenu -->
+<!-- $$$sizeHint[overload1]$$$sizeHint -->
+<h3 class="fn" id="sizeHint"><a name="sizeHint"></a><code>[virtual] </code><span class="type">QSize</span> RibbonQuickAccessBar::<span class="name">sizeHint</span>() const</h3>
+<p>Returns the recommended size for Ribbon's Quick Access Bar.</p>
+<!-- @@@sizeHint -->
+<!-- $$$visibleCount[overload1]$$$visibleCount -->
+<h3 class="fn" id="visibleCount"><a name="visibleCount"></a><span class="type">int</span> RibbonQuickAccessBar::<span class="name">visibleCount</span>() const</h3>
+<p>Returns the count of the elements visible on Ribbon's Quick Access Bar.</p>
+<!-- @@@visibleCount -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+    <p>
+      <acronym title="Copyright">&copy;</acronym> 2009-2017 Developer Machines<br><br>       Qt and their respective logos are trademarks of Digia Corporation 
+      in Finland and/or other countries worldwide.</p>
+    <p>
+      All other trademarks are property of their respective owners. <a title="Privacy Policy"
+        href="http://www.devmachines.com/company/privacy-policy.html">Privacy Policy</a></p>
+</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17002018-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</body>
+</html>

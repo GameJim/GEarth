@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>devmachines.qtitanribbon</namespace>
+    <virtualFolder>qdoc</virtualFolder>
+    <customFilter name="QtitanRibbon 4.17.0">
+        <filterAttribute>4.17.0</filterAttribute>
+        <filterAttribute>QtitanRibbon</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>4.17.0</filterAttribute>
+        <filterAttribute>QtitanRibbon</filterAttribute>
+        <filterAttribute>qtrefdoc</filterAttribute>
+        <toc>
+            <section ref="index.html" title="QtitanRibbon Documentation">
+                <section ref="" title="">
+                    <section ref="classes.html" title="All QtitanRibbon Classes (main index)"/>
+                    <section ref="classlists.html" title="Class and Function Documentation"/>
+                    <section ref="commonstyle.html" title="CommonStyle Class Reference">
+                        <section ref="commonstyle-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="officepopupwindow.html" title="OfficePopupWindow Class Reference">
+                        <section ref="officepopupwindow-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="officestyle.html" title="OfficeStyle Class Reference">
+                        <section ref="officestyle-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="popupcolorbutton.html" title="PopupColorButton Class Reference">
+                        <section ref="popupcolorbutton-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="license.html" title="Qtitan End-User License Agreement"/>
+                    <section ref="qtitanribbonchangelog.html" title="QtitanRibbon Changelog"/>
+                    <section ref="index.html" title="QtitanRibbon Documentation"/>
+                    <section ref="qtitanribbonquickstart.html" title="QtitanRibbon quick start guide"/>
+                    <section ref="ribbonbackstagebutton.html" title="RibbonBackstageButton Class Reference">
+                        <section ref="ribbonbackstagebutton-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonbackstagepage.html" title="RibbonBackstagePage Class Reference">
+                        <section ref="ribbonbackstagepage-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonbackstageseparator.html" title="RibbonBackstageSeparator Class Reference">
+                        <section ref="ribbonbackstageseparator-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonbackstageview.html" title="RibbonBackstageView Class Reference">
+                        <section ref="ribbonbackstageview-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonbar.html" title="RibbonBar Class Reference">
+                        <section ref="ribbonbar-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribboncustomizedialog.html" title="RibbonCustomizeDialog Class Reference">
+                        <section ref="ribboncustomizedialog-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribboncustomizemanager.html" title="RibbonCustomizeManager Class Reference">
+                        <section ref="ribboncustomizemanager-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbongallery.html" title="RibbonGallery Class Reference">
+                        <section ref="ribbongallery-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbongallerygroup.html" title="RibbonGalleryGroup Class Reference">
+                        <section ref="ribbongallerygroup-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbongalleryitem.html" title="RibbonGalleryItem Class Reference">
+                        <section ref="ribbongalleryitem-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbongroup.html" title="RibbonGroup Class Reference">
+                        <section ref="ribbongroup-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonmainwindow.html" title="RibbonMainWindow Class Reference">
+                        <section ref="ribbonmainwindow-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonpage.html" title="RibbonPage Class Reference">
+                        <section ref="ribbonpage-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonpagesystemrecentfilelist.html" title="RibbonPageSystemRecentFileList Class Reference">
+                        <section ref="ribbonpagesystemrecentfilelist-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonquickaccessbar.html" title="RibbonQuickAccessBar Class Reference">
+                        <section ref="ribbonquickaccessbar-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonstatusbar.html" title="RibbonStatusBar Class Reference">
+                        <section ref="ribbonstatusbar-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonstyle.html" title="RibbonStyle Class Reference">
+                        <section ref="ribbonstyle-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbonsystempopupbar.html" title="RibbonSystemPopupBar Class Reference">
+                        <section ref="ribbonsystempopupbar-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="ribbontooltip.html" title="RibbonToolTip Class Reference">
+                        <section ref="ribbontooltip-members.html" title="List of all members"/>
+                    </section>
+                </section>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="All QtitanRibbon Classes (main index)" id="All QtitanRibbon Classes (main index)" ref="classes.html"/>
+            <keyword name="Class and Function Documentation" id="Class and Function Documentation" ref="classlists.html"/>
+            <keyword name="CommonStyle" id="CommonStyle" ref="commonstyle.html"/>
+            <keyword name="DPIAware" id="OfficeStyle::DPIAware" ref="officestyle.html#DPIAware-prop"/>
+            <keyword name="OfficePopupWindow" id="OfficePopupWindow" ref="officepopupwindow.html"/>
+            <keyword name="OfficeStyle" id="OfficeStyle" ref="officestyle.html"/>
+            <keyword name="OfficeStyle::AccentColor" id="OfficeStyle::AccentColor" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorBlue" id="OfficeStyle::AccentColorBlue" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorBrown" id="OfficeStyle::AccentColorBrown" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorGreen" id="OfficeStyle::AccentColorGreen" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorLime" id="OfficeStyle::AccentColorLime" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorMagenta" id="OfficeStyle::AccentColorMagenta" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorOrange" id="OfficeStyle::AccentColorOrange" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorPink" id="OfficeStyle::AccentColorPink" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorPurple" id="OfficeStyle::AccentColorPurple" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorRed" id="OfficeStyle::AccentColorRed" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::AccentColorTeal" id="OfficeStyle::AccentColorTeal" ref="officestyle.html#AccentColor-enum"/>
+            <keyword name="OfficeStyle::Office2007Aqua" id="OfficeStyle::Office2007Aqua" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2007Black" id="OfficeStyle::Office2007Black" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2007Blue" id="OfficeStyle::Office2007Blue" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2007Silver" id="OfficeStyle::Office2007Silver" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2010Black" id="OfficeStyle::Office2010Black" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2010Blue" id="OfficeStyle::Office2010Blue" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2010Silver" id="OfficeStyle::Office2010Silver" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2013Dark" id="OfficeStyle::Office2013Dark" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2013Gray" id="OfficeStyle::Office2013Gray" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2013White" id="OfficeStyle::Office2013White" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2016Black" id="OfficeStyle::Office2016Black" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2016Colorful" id="OfficeStyle::Office2016Colorful" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2016DarkGray" id="OfficeStyle::Office2016DarkGray" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Office2016White" id="OfficeStyle::Office2016White" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::OfficePopupDecoration" id="OfficeStyle::OfficePopupDecoration" ref="officestyle.html#OfficePopupDecoration-enum"/>
+            <keyword name="OfficeStyle::PopupCompatibleDecoration" id="OfficeStyle::PopupCompatibleDecoration" ref="officestyle.html#OfficePopupDecoration-enum"/>
+            <keyword name="OfficeStyle::PopupMSNDecoration" id="OfficeStyle::PopupMSNDecoration" ref="officestyle.html#OfficePopupDecoration-enum"/>
+            <keyword name="OfficeStyle::PopupOfficeFlatDecoration" id="OfficeStyle::PopupOfficeFlatDecoration" ref="officestyle.html#OfficePopupDecoration-enum"/>
+            <keyword name="OfficeStyle::PopupSystemDecoration" id="OfficeStyle::PopupSystemDecoration" ref="officestyle.html#OfficePopupDecoration-enum"/>
+            <keyword name="OfficeStyle::Theme" id="OfficeStyle::Theme" ref="officestyle.html#Theme-enum"/>
+            <keyword name="OfficeStyle::Windows7Scenic" id="OfficeStyle::Windows7Scenic" ref="officestyle.html#Theme-enum"/>
+            <keyword name="PopupAnimation" id="PopupAnimation" ref=""/>
+            <keyword name="PopupAnimationFade" id="PopupAnimationFade" ref=""/>
+            <keyword name="PopupAnimationNone" id="PopupAnimationNone" ref=""/>
+            <keyword name="PopupAnimationSlide" id="PopupAnimationSlide" ref=""/>
+            <keyword name="PopupAnimationUnfold" id="PopupAnimationUnfold" ref=""/>
+            <keyword name="PopupColorButton" id="PopupColorButton" ref="popupcolorbutton.html"/>
+            <keyword name="PopupLocation" id="PopupLocation" ref=""/>
+            <keyword name="PopupLocationBottomRight" id="PopupLocationBottomRight" ref=""/>
+            <keyword name="PopupLocationCenter" id="PopupLocationCenter" ref=""/>
+            <keyword name="Qtitan End-User License Agreement" id="Qtitan End-User License Agreement" ref="license.html"/>
+            <keyword name="Qtitan End-User License Agreement" id="Qtitan End-User License Agreement" ref="license.html"/>
+            <keyword name="QtitanRibbon Changelog" id="QtitanRibbon Changelog" ref="qtitanribbonchangelog.html"/>
+            <keyword name="QtitanRibbon Changelog" id="QtitanRibbon Changelog" ref="qtitanribbonchangelog.html"/>
+            <keyword name="QtitanRibbon Documentation" id="QtitanRibbon Documentation" ref="index.html"/>
+            <keyword name="QtitanRibbon Reference Documentation" id="QtitanRibbon Reference Documentation" ref="index.html"/>
+            <keyword name="QtitanRibbon quick start guide" id="QtitanRibbon quick start guide" ref="qtitanribbonquickstart.html"/>
+            <keyword name="Quick Start Guide" id="Quick Start Guide" ref="qtitanribbonquickstart.html"/>
+            <keyword name="RibbonBackstageButton" id="RibbonBackstageButton" ref="ribbonbackstagebutton.html"/>
+            <keyword name="RibbonBackstagePage" id="RibbonBackstagePage" ref="ribbonbackstagepage.html"/>
+            <keyword name="RibbonBackstageSeparator" id="RibbonBackstageSeparator" ref="ribbonbackstageseparator.html"/>
+            <keyword name="RibbonBackstageView" id="RibbonBackstageView" ref="ribbonbackstageview.html"/>
+            <keyword name="RibbonBar" id="RibbonBar" ref="ribbonbar.html"/>
+            <keyword name="RibbonBar::QABottomPosition" id="RibbonBar::QABottomPosition" ref="ribbonbar.html#QuickAccessBarPosition-enum"/>
+            <keyword name="RibbonBar::QATopPosition" id="RibbonBar::QATopPosition" ref="ribbonbar.html#QuickAccessBarPosition-enum"/>
+            <keyword name="RibbonBar::QuickAccessBarPosition" id="RibbonBar::QuickAccessBarPosition" ref="ribbonbar.html#QuickAccessBarPosition-enum"/>
+            <keyword name="RibbonBar::TabBarBottomPosition" id="RibbonBar::TabBarBottomPosition" ref="ribbonbar.html#TabBarPosition-enum"/>
+            <keyword name="RibbonBar::TabBarPosition" id="RibbonBar::TabBarPosition" ref="ribbonbar.html#TabBarPosition-enum"/>
+            <keyword name="RibbonBar::TabBarTopPosition" id="RibbonBar::TabBarTopPosition" ref="ribbonbar.html#TabBarPosition-enum"/>
+            <keyword name="RibbonCustomizeDialog" id="RibbonCustomizeDialog" ref="ribboncustomizedialog.html"/>
+            <keyword name="RibbonCustomizeManager" id="RibbonCustomizeManager" ref="ribboncustomizemanager.html"/>
+            <keyword name="RibbonGallery" id="RibbonGallery" ref="ribbongallery.html"/>
+            <keyword name="RibbonGalleryGroup" id="RibbonGalleryGroup" ref="ribbongallerygroup.html"/>
+            <keyword name="RibbonGalleryItem" id="RibbonGalleryItem" ref="ribbongalleryitem.html"/>
+            <keyword name="RibbonGroup" id="RibbonGroup" ref="ribbongroup.html"/>
+            <keyword name="RibbonMainWindow" id="RibbonMainWindow" ref="ribbonmainwindow.html"/>
+            <keyword name="RibbonPage" id="RibbonPage" ref="ribbonpage.html"/>
+            <keyword name="RibbonPage::ContextColor" id="RibbonPage::ContextColor" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorBlue" id="RibbonPage::ContextColorBlue" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorCyan" id="RibbonPage::ContextColorCyan" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorGreen" id="RibbonPage::ContextColorGreen" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorNone" id="RibbonPage::ContextColorNone" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorOrange" id="RibbonPage::ContextColorOrange" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorPurple" id="RibbonPage::ContextColorPurple" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorRed" id="RibbonPage::ContextColorRed" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPage::ContextColorYellow" id="RibbonPage::ContextColorYellow" ref="ribbonpage.html#ContextColor-enum"/>
+            <keyword name="RibbonPageSystemRecentFileList" id="RibbonPageSystemRecentFileList" ref="ribbonpagesystemrecentfilelist.html"/>
+            <keyword name="RibbonQuickAccessBar" id="RibbonQuickAccessBar" ref="ribbonquickaccessbar.html"/>
+            <keyword name="RibbonStatusBar" id="RibbonStatusBar" ref="ribbonstatusbar.html"/>
+            <keyword name="RibbonStyle" id="RibbonStyle" ref="ribbonstyle.html"/>
+            <keyword name="RibbonStyle::CE_Group" id="RibbonStyle::CE_Group" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_PopupSizeGrip" id="RibbonStyle::CE_PopupSizeGrip" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_ReducedGroup" id="RibbonStyle::CE_ReducedGroup" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_RibbonBar" id="RibbonStyle::CE_RibbonBar" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_RibbonFileButtonLabel" id="RibbonStyle::CE_RibbonFileButtonLabel" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_RibbonGroups" id="RibbonStyle::CE_RibbonGroups" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_RibbonTabBar" id="RibbonStyle::CE_RibbonTabBar" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CE_RibbonTabShapeLabel" id="RibbonStyle::CE_RibbonTabShapeLabel" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::CT_RibbonGroupButton" id="RibbonStyle::CT_RibbonGroupButton" ref="ribbonstyle.html#QContentsType-enum"/>
+            <keyword name="RibbonStyle::CT_RibbonSliderButton" id="RibbonStyle::CT_RibbonSliderButton" ref="ribbonstyle.html#QContentsType-enum"/>
+            <keyword name="RibbonStyle::PE_Backstage" id="RibbonStyle::PE_Backstage" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonBackstageCloseButton" id="RibbonStyle::PE_RibbonBackstageCloseButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonContextHeaders" id="RibbonStyle::PE_RibbonContextHeaders" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonFileButton" id="RibbonStyle::PE_RibbonFileButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonFillRect" id="RibbonStyle::PE_RibbonFillRect" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonGroupScrollButton" id="RibbonStyle::PE_RibbonGroupScrollButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonKeyTip" id="RibbonStyle::PE_RibbonKeyTip" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonOptionButton" id="RibbonStyle::PE_RibbonOptionButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonPopupBarButton" id="RibbonStyle::PE_RibbonPopupBarButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonQuickAccessButton" id="RibbonStyle::PE_RibbonQuickAccessButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonRect" id="RibbonStyle::PE_RibbonRect" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonSliderButton" id="RibbonStyle::PE_RibbonSliderButton" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PE_RibbonTab" id="RibbonStyle::PE_RibbonTab" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::PM_RibbonHeightCaptionGroup" id="RibbonStyle::PM_RibbonHeightCaptionGroup" ref="ribbonstyle.html#QPixelMetric-enum"/>
+            <keyword name="RibbonStyle::PM_RibbonReducedGroupWidth" id="RibbonStyle::PM_RibbonReducedGroupWidth" ref="ribbonstyle.html#QPixelMetric-enum"/>
+            <keyword name="RibbonStyle::QContentsType" id="RibbonStyle::QContentsType" ref="ribbonstyle.html#QContentsType-enum"/>
+            <keyword name="RibbonStyle::QControlElement" id="RibbonStyle::QControlElement" ref="ribbonstyle.html#QControlElement-enum"/>
+            <keyword name="RibbonStyle::QPixelMetric" id="RibbonStyle::QPixelMetric" ref="ribbonstyle.html#QPixelMetric-enum"/>
+            <keyword name="RibbonStyle::QPrimitiveElement" id="RibbonStyle::QPrimitiveElement" ref="ribbonstyle.html#QPrimitiveElement-enum"/>
+            <keyword name="RibbonStyle::QStyleHint" id="RibbonStyle::QStyleHint" ref="ribbonstyle.html#QStyleHint-enum"/>
+            <keyword name="RibbonStyle::SH_FlatFrame" id="RibbonStyle::SH_FlatFrame" ref="ribbonstyle.html#QStyleHint-enum"/>
+            <keyword name="RibbonStyle::SH_RibbonBackstageHideTabs" id="RibbonStyle::SH_RibbonBackstageHideTabs" ref="ribbonstyle.html#QStyleHint-enum"/>
+            <keyword name="RibbonStyle::SH_RibbonItemUpperCase" id="RibbonStyle::SH_RibbonItemUpperCase" ref="ribbonstyle.html#QStyleHint-enum"/>
+            <keyword name="RibbonSystemPopupBar" id="RibbonSystemPopupBar" ref="ribbonsystempopupbar.html"/>
+            <keyword name="RibbonToolTip" id="RibbonToolTip" ref="ribbontooltip.html"/>
+            <keyword name="RibbonToolTip::AutoWrap" id="RibbonToolTip::AutoWrap" ref="ribbontooltip.html#WrapMode-enum"/>
+            <keyword name="RibbonToolTip::NativeWrap" id="RibbonToolTip::NativeWrap" ref="ribbontooltip.html#WrapMode-enum"/>
+            <keyword name="RibbonToolTip::NoWrap" id="RibbonToolTip::NoWrap" ref="ribbontooltip.html#WrapMode-enum"/>
+            <keyword name="RibbonToolTip::WrapMode" id="RibbonToolTip::WrapMode" ref="ribbontooltip.html#WrapMode-enum"/>
+            <keyword name="aboutToHide" id="OfficePopupWindow::aboutToHide" ref="officepopupwindow.html#aboutToHide"/>
+            <keyword name="aboutToHide" id="RibbonBackstageView::aboutToHide" ref="ribbonbackstageview.html#aboutToHide"/>
+            <keyword name="aboutToShow" id="OfficePopupWindow::aboutToShow" ref="officepopupwindow.html#aboutToShow"/>
+            <keyword name="aboutToShow" id="RibbonBackstageView::aboutToShow" ref="ribbonbackstageview.html#aboutToShow"/>
+            <keyword name="accentColor" id="OfficeStyle::accentColor" ref="officestyle.html#accentColor"/>
+            <keyword name="accentIndexColor" id="OfficeStyle::accentIndexColor" ref="officestyle.html#accentIndexColor"/>
+            <keyword name="accept" id="RibbonCustomizeDialog::accept" ref="ribboncustomizedialog.html#accept"/>
+            <keyword name="actionCustomizeButton" id="RibbonQuickAccessBar::actionCustomizeButton" ref="ribbonquickaccessbar.html#actionCustomizeButton"/>
+            <keyword name="actionEvent" id="RibbonBackstageView::actionEvent" ref="ribbonbackstageview.html#actionEvent"/>
+            <keyword name="actionEvent" id="RibbonGroup::actionEvent" ref="ribbongroup.html#actionEvent"/>
+            <keyword name="actionEvent" id="RibbonQuickAccessBar::actionEvent" ref="ribbonquickaccessbar.html#actionEvent"/>
+            <keyword name="actionEvent" id="RibbonStatusBar::actionEvent" ref="ribbonstatusbar.html#actionEvent"/>
+            <keyword name="actionGeometry" id="RibbonBackstageView::actionGeometry" ref="ribbonbackstageview.html#actionGeometry"/>
+            <keyword name="actionId" id="RibbonCustomizeManager::actionId" ref="ribboncustomizemanager.html#actionId"/>
+            <keyword name="actionTriggered" id="RibbonPage::actionTriggered" ref="ribbonpage.html#actionTriggered"/>
+            <keyword name="actions" id="RibbonCustomizeManager::actions" ref="ribboncustomizemanager.html#actions"/>
+            <keyword name="actionsAll" id="RibbonCustomizeManager::actionsAll" ref="ribboncustomizemanager.html#actionsAll"/>
+            <keyword name="actionsByCategory" id="RibbonCustomizeManager::actionsByCategory" ref="ribboncustomizemanager.html#actionsByCategory"/>
+            <keyword name="actionsGroup" id="RibbonCustomizeManager::actionsGroup" ref="ribboncustomizemanager.html#actionsGroup"/>
+            <keyword name="activated" id="RibbonPage::activated" ref="ribbonpage.html#activated"/>
+            <keyword name="activating" id="RibbonPage::activating" ref="ribbonpage.html#activating"/>
+            <keyword name="activePage" id="RibbonBackstageView::activePage" ref="ribbonbackstageview.html#activePage"/>
+            <keyword name="activeTabAccented" id="RibbonStyle::activeTabAccented" ref="ribbonstyle.html#activeTabAccented-prop"/>
+            <keyword name="addAction" id="RibbonBackstageView::addAction" ref="ribbonbackstageview.html#addAction"/>
+            <keyword name="addAction" id="RibbonBar::addAction" ref="ribbonbar.html#addAction"/>
+            <keyword name="addAction" id="RibbonBar::addAction" ref="ribbonbar.html#addAction-1"/>
+            <keyword name="addAction" id="RibbonGroup::addAction" ref="ribbongroup.html#addAction"/>
+            <keyword name="addAction" id="RibbonGroup::addAction" ref="ribbongroup.html#addAction-1"/>
+            <keyword name="addAction" id="RibbonStatusBar::addAction" ref="ribbonstatusbar.html#addAction"/>
+            <keyword name="addAllActionsCategory" id="RibbonCustomizeManager::addAllActionsCategory" ref="ribboncustomizemanager.html#addAllActionsCategory"/>
+            <keyword name="addControl" id="RibbonGroup::addControl" ref="ribbongroup.html#addControl"/>
+            <keyword name="addDefaultStateQAccessBar" id="RibbonCustomizeManager::addDefaultStateQAccessBar" ref="ribboncustomizemanager.html#addDefaultStateQAccessBar"/>
+            <keyword name="addDefaultStateRibbonBar" id="RibbonCustomizeManager::addDefaultStateRibbonBar" ref="ribboncustomizemanager.html#addDefaultStateRibbonBar"/>
+            <keyword name="addGroup" id="RibbonPage::addGroup" ref="ribbonpage.html#addGroup"/>
+            <keyword name="addGroup" id="RibbonPage::addGroup" ref="ribbonpage.html#addGroup-1"/>
+            <keyword name="addGroup" id="RibbonPage::addGroup" ref="ribbonpage.html#addGroup-2"/>
+            <keyword name="addItem" id="RibbonGalleryGroup::addItem" ref="ribbongallerygroup.html#addItem"/>
+            <keyword name="addItemFromMap" id="RibbonGalleryGroup::addItemFromMap" ref="ribbongallerygroup.html#addItemFromMap"/>
+            <keyword name="addMenu" id="RibbonBar::addMenu" ref="ribbonbar.html#addMenu"/>
+            <keyword name="addMenu" id="RibbonGroup::addMenu" ref="ribbongroup.html#addMenu"/>
+            <keyword name="addPage" id="RibbonBackstageView::addPage" ref="ribbonbackstageview.html#addPage"/>
+            <keyword name="addPage" id="RibbonBar::addPage" ref="ribbonbar.html#addPage"/>
+            <keyword name="addPage" id="RibbonBar::addPage" ref="ribbonbar.html#addPage-1"/>
+            <keyword name="addPage" id="RibbonCustomizeDialog::addPage" ref="ribboncustomizedialog.html#addPage"/>
+            <keyword name="addPageRecentFile" id="RibbonSystemPopupBar::addPageRecentFile" ref="ribbonsystempopupbar.html#addPageRecentFile"/>
+            <keyword name="addPageSystemPopup" id="RibbonSystemPopupBar::addPageSystemPopup" ref="ribbonsystempopupbar.html#addPageSystemPopup"/>
+            <keyword name="addPermanentAction" id="RibbonStatusBar::addPermanentAction" ref="ribbonstatusbar.html#addPermanentAction"/>
+            <keyword name="addPopupBarAction" id="RibbonSystemPopupBar::addPopupBarAction" ref="ribbonsystempopupbar.html#addPopupBarAction"/>
+            <keyword name="addPopupBarAction" id="RibbonSystemPopupBar::addPopupBarAction" ref="ribbonsystempopupbar.html#addPopupBarAction-1"/>
+            <keyword name="addSeparator" id="RibbonBackstageView::addSeparator" ref="ribbonbackstageview.html#addSeparator"/>
+            <keyword name="addSeparator" id="RibbonGalleryGroup::addSeparator" ref="ribbongallerygroup.html#addSeparator"/>
+            <keyword name="addSeparator" id="RibbonGroup::addSeparator" ref="ribbongroup.html#addSeparator"/>
+            <keyword name="addSeparator" id="RibbonStatusBar::addSeparator" ref="ribbonstatusbar.html#addSeparator"/>
+            <keyword name="addSystemButton" id="RibbonBar::addSystemButton" ref="ribbonbar.html#addSystemButton"/>
+            <keyword name="addSystemButton" id="RibbonBar::addSystemButton" ref="ribbonbar.html#addSystemButton-1"/>
+            <keyword name="addToCategory" id="RibbonCustomizeManager::addToCategory" ref="ribboncustomizemanager.html#addToCategory"/>
+            <keyword name="addToCategory" id="RibbonCustomizeManager::addToCategory" ref="ribboncustomizemanager.html#addToCategory-1"/>
+            <keyword name="addToCategory" id="RibbonCustomizeManager::addToCategory" ref="ribboncustomizemanager.html#addToCategory-2"/>
+            <keyword name="addToCategory" id="RibbonCustomizeManager::addToCategory" ref="ribboncustomizemanager.html#addToCategory-3"/>
+            <keyword name="addToolBar" id="RibbonCustomizeManager::addToolBar" ref="ribboncustomizemanager.html#addToolBar"/>
+            <keyword name="addWidget" id="RibbonGroup::addWidget" ref="ribbongroup.html#addWidget"/>
+            <keyword name="addWidget" id="RibbonGroup::addWidget" ref="ribbongroup.html#addWidget-1"/>
+            <keyword name="addWidget" id="RibbonGroup::addWidget" ref="ribbongroup.html#addWidget-2"/>
+            <keyword name="animation" id="OfficePopupWindow::animation" ref="officepopupwindow.html#animation"/>
+            <keyword name="animation" id="OfficePopupWindow::animation" ref="officepopupwindow.html#animation-prop"/>
+            <keyword name="animationEnabled" id="OfficeStyle::animationEnabled" ref="officestyle.html#animationEnabled-prop"/>
+            <keyword name="animationSpeed" id="OfficePopupWindow::animationSpeed" ref="officepopupwindow.html#animationSpeed"/>
+            <keyword name="animationSpeed" id="OfficePopupWindow::animationSpeed" ref="officepopupwindow.html#animationSpeed-prop"/>
+            <keyword name="appendActions" id="RibbonCustomizeManager::appendActions" ref="ribboncustomizemanager.html#appendActions"/>
+            <keyword name="appendItem" id="RibbonGalleryGroup::appendItem" ref="ribbongallerygroup.html#appendItem"/>
+            <keyword name="autoWidth" id="RibbonGallery::autoWidth" ref="ribbongallery.html#autoWidth-prop"/>
+            <keyword name="autoWidth" id="RibbonGallery::autoWidth" ref="ribbongallery.html#autoWidth-prop"/>
+            <keyword name="backstageViewTop" id="RibbonBar::backstageViewTop" ref="ribbonbar.html#backstageViewTop"/>
+            <keyword name="beginUpdate" id="RibbonBar::beginUpdate" ref="ribbonbar.html#beginUpdate"/>
+            <keyword name="bestFit" id="RibbonGallery::bestFit" ref="ribbongallery.html#bestFit"/>
+            <keyword name="bodyText" id="OfficePopupWindow::bodyText" ref="officepopupwindow.html#bodyText"/>
+            <keyword name="bodyText" id="OfficePopupWindow::bodyText" ref="officepopupwindow.html#bodyText-prop"/>
+            <keyword name="borders" id="RibbonGallery::borders" ref="ribbongallery.html#borders"/>
+            <keyword name="cancel" id="RibbonCustomizeManager::cancel" ref="ribboncustomizemanager.html#cancel"/>
+            <keyword name="caption" id="RibbonGalleryItem::caption" ref="ribbongalleryitem.html#caption"/>
+            <keyword name="categories" id="RibbonCustomizeManager::categories" ref="ribboncustomizemanager.html#categories"/>
+            <keyword name="centralWidget" id="OfficePopupWindow::centralWidget" ref="officepopupwindow.html#centralWidget"/>
+            <keyword name="changeEvent" id="RibbonBar::changeEvent" ref="ribbonbar.html#changeEvent"/>
+            <keyword name="changeEvent" id="RibbonPage::changeEvent" ref="ribbonpage.html#changeEvent"/>
+            <keyword name="checkedIndex" id="RibbonGallery::checkedIndex" ref="ribbongallery.html#checkedIndex"/>
+            <keyword name="checkedItem" id="RibbonGallery::checkedItem" ref="ribbongallery.html#checkedItem"/>
+            <keyword name="childrenPermanentRect" id="RibbonStatusBar::childrenPermanentRect" ref="ribbonstatusbar.html#childrenPermanentRect"/>
+            <keyword name="clear" id="RibbonGalleryGroup::clear" ref="ribbongallerygroup.html#clear"/>
+            <keyword name="clear" id="RibbonGroup::clear" ref="ribbongroup.html#clear"/>
+            <keyword name="clearActions" id="RibbonCustomizeManager::clearActions" ref="ribboncustomizemanager.html#clearActions"/>
+            <keyword name="clearGroups" id="RibbonPage::clearGroups" ref="ribbonpage.html#clearGroups"/>
+            <keyword name="clearPages" id="RibbonBar::clearPages" ref="ribbonbar.html#clearPages"/>
+            <keyword name="closeButtonPixmap" id="OfficePopupWindow::closeButtonPixmap" ref="officepopupwindow.html#closeButtonPixmap"/>
+            <keyword name="closePopup" id="OfficePopupWindow::closePopup" ref="officepopupwindow.html#closePopup"/>
+            <keyword name="closePrevented" id="RibbonBackstageView::closePrevented" ref="ribbonbackstageview.html#closePrevented-prop"/>
+            <keyword name="closeToolTip" id="RibbonToolTip::closeToolTip" ref="ribbontooltip.html#closeToolTip"/>
+            <keyword name="color" id="PopupColorButton::color" ref="popupcolorbutton.html#color"/>
+            <keyword name="color" id="PopupColorButton::color" ref="popupcolorbutton.html#color-prop"/>
+            <keyword name="colorChanged" id="PopupColorButton::colorChanged" ref="popupcolorbutton.html#colorChanged"/>
+            <keyword name="columnCount" id="RibbonGallery::columnCount" ref="ribbongallery.html#columnCount"/>
+            <keyword name="commit" id="RibbonCustomizeManager::commit" ref="ribboncustomizemanager.html#commit"/>
+            <keyword name="containsAction" id="RibbonCustomizeManager::containsAction" ref="ribboncustomizemanager.html#containsAction"/>
+            <keyword name="containsAction" id="RibbonCustomizeManager::containsAction" ref="ribboncustomizemanager.html#containsAction-1"/>
+            <keyword name="contentAlignment" id="RibbonGroup::contentAlignment" ref="ribbongroup.html#contentAlignment"/>
+            <keyword name="contentAlignment" id="RibbonGroup::contentAlignment" ref="ribbongroup.html#contentAlignment-prop"/>
+            <keyword name="contextColor" id="RibbonPage::contextColor" ref="ribbonpage.html#contextColor"/>
+            <keyword name="contextColor" id="RibbonPage::contextColor" ref="ribbonpage.html#contextColor-prop"/>
+            <keyword name="contextMenuEvent" id="RibbonBar::contextMenuEvent" ref="ribbonbar.html#contextMenuEvent"/>
+            <keyword name="contextTitle" id="RibbonPage::contextTitle" ref="ribbonpage.html#contextTitle"/>
+            <keyword name="contextTitle" id="RibbonPage::contextTitle" ref="ribbonpage.html#contextTitle-prop"/>
+            <keyword name="controlByAction" id="RibbonGroup::controlByAction" ref="ribbongroup.html#controlByAction"/>
+            <keyword name="controlByIndex" id="RibbonGroup::controlByIndex" ref="ribbongroup.html#controlByIndex"/>
+            <keyword name="controlByWidget" id="RibbonGroup::controlByWidget" ref="ribbongroup.html#controlByWidget"/>
+            <keyword name="controlCount" id="RibbonGroup::controlCount" ref="ribbongroup.html#controlCount"/>
+            <keyword name="controlsAlignment" id="RibbonGroup::controlsAlignment" ref="ribbongroup.html#controlsAlignment"/>
+            <keyword name="createGalleryGroup" id="RibbonGalleryGroup::createGalleryGroup" ref="ribbongallerygroup.html#createGalleryGroup"/>
+            <keyword name="createGroup" id="RibbonCustomizeManager::createGroup" ref="ribboncustomizemanager.html#createGroup"/>
+            <keyword name="createPage" id="RibbonCustomizeManager::createPage" ref="ribboncustomizemanager.html#createPage"/>
+            <keyword name="currentItemChanged" id="RibbonGallery::currentItemChanged" ref="ribbongallery.html#currentItemChanged"/>
+            <keyword name="currentPage" id="RibbonCustomizeDialog::currentPage" ref="ribboncustomizedialog.html#currentPage"/>
+            <keyword name="currentPageChanged" id="RibbonBar::currentPageChanged" ref="ribbonbar.html#currentPageChanged"/>
+            <keyword name="currentPageIndex" id="RibbonBar::currentPageIndex" ref="ribbonbar.html#currentPageIndex"/>
+            <keyword name="currentPageIndex" id="RibbonBar::currentPageIndex" ref="ribbonbar.html#currentPageIndex-prop"/>
+            <keyword name="currentPageIndex" id="RibbonCustomizeDialog::currentPageIndex" ref="ribboncustomizedialog.html#currentPageIndex"/>
+            <keyword name="currentPageIndexChanged" id="RibbonBar::currentPageIndexChanged" ref="ribbonbar.html#currentPageIndex-prop"/>
+            <keyword name="currentSize" id="RibbonGroup::currentSize" ref="ribbongroup.html#currentSize"/>
+            <keyword name="customizeDialog" id="RibbonBar::customizeDialog" ref="ribbonbar.html#customizeDialog"/>
+            <keyword name="customizeManager" id="RibbonBar::customizeManager" ref="ribbonbar.html#customizeManager"/>
+            <keyword name="data" id="RibbonGalleryItem::data" ref="ribbongalleryitem.html#data"/>
+            <keyword name="defaultAction" id="RibbonPage::defaultAction" ref="ribbonpage.html#defaultAction"/>
+            <keyword name="deleteGroup" id="RibbonCustomizeManager::deleteGroup" ref="ribboncustomizemanager.html#deleteGroup"/>
+            <keyword name="deletePage" id="RibbonCustomizeManager::deletePage" ref="ribboncustomizemanager.html#deletePage"/>
+            <keyword name="detachGroup" id="RibbonPage::detachGroup" ref="ribbonpage.html#detachGroup"/>
+            <keyword name="detachGroup" id="RibbonPage::detachGroup" ref="ribbonpage.html#detachGroup-1"/>
+            <keyword name="detachPage" id="RibbonBar::detachPage" ref="ribbonbar.html#detachPage"/>
+            <keyword name="detachPage" id="RibbonBar::detachPage" ref="ribbonbar.html#detachPage-1"/>
+            <keyword name="displayTime" id="OfficePopupWindow::displayTime" ref="officepopupwindow.html#displayTime"/>
+            <keyword name="displayTime" id="OfficePopupWindow::displayTime" ref="officepopupwindow.html#displayTime-prop"/>
+            <keyword name="dragDropEnabled" id="OfficePopupWindow::dragDropEnabled" ref="officepopupwindow.html#dragDropEnabled"/>
+            <keyword name="draw" id="RibbonGalleryItem::draw" ref="ribbongalleryitem.html#draw"/>
+            <keyword name="drawComplexControl" id="CommonStyle::drawComplexControl" ref="commonstyle.html#drawComplexControl"/>
+            <keyword name="drawComplexControl" id="OfficeStyle::drawComplexControl" ref="officestyle.html#drawComplexControl"/>
+            <keyword name="drawComplexControl" id="RibbonStyle::drawComplexControl" ref="ribbonstyle.html#drawComplexControl"/>
+            <keyword name="drawControl" id="CommonStyle::drawControl" ref="commonstyle.html#drawControl"/>
+            <keyword name="drawControl" id="RibbonStyle::drawControl" ref="ribbonstyle.html#drawControl"/>
+            <keyword name="drawEvent" id="RibbonPageSystemRecentFileList::drawEvent" ref="ribbonpagesystemrecentfilelist.html#drawEvent"/>
+            <keyword name="drawPrimitive" id="CommonStyle::drawPrimitive" ref="commonstyle.html#drawPrimitive"/>
+            <keyword name="drawPrimitive" id="OfficeStyle::drawPrimitive" ref="officestyle.html#drawPrimitive"/>
+            <keyword name="drawPrimitive" id="RibbonStyle::drawPrimitive" ref="ribbonstyle.html#drawPrimitive"/>
+            <keyword name="endUpdate" id="RibbonBar::endUpdate" ref="ribbonbar.html#endUpdate"/>
+            <keyword name="ensureVisible" id="RibbonGallery::ensureVisible" ref="ribbongallery.html#ensureVisible"/>
+            <keyword name="enterEvent" id="OfficePopupWindow::enterEvent" ref="officepopupwindow.html#enterEvent"/>
+            <keyword name="enterEvent" id="RibbonGroup::enterEvent" ref="ribbongroup.html#enterEvent"/>
+            <keyword name="enterEvent" id="RibbonPageSystemRecentFileList::enterEvent" ref="ribbonpagesystemrecentfilelist.html#enterEvent"/>
+            <keyword name="event" id="CommonStyle::event" ref="commonstyle.html#event"/>
+            <keyword name="event" id="OfficePopupWindow::event" ref="officepopupwindow.html#event"/>
+            <keyword name="event" id="RibbonBackstageButton::event" ref="ribbonbackstagebutton.html#event"/>
+            <keyword name="event" id="RibbonBackstageView::event" ref="ribbonbackstageview.html#event"/>
+            <keyword name="event" id="RibbonBar::event" ref="ribbonbar.html#event"/>
+            <keyword name="event" id="RibbonGallery::event" ref="ribbongallery.html#event"/>
+            <keyword name="event" id="RibbonGroup::event" ref="ribbongroup.html#event"/>
+            <keyword name="event" id="RibbonPage::event" ref="ribbonpage.html#event"/>
+            <keyword name="event" id="RibbonQuickAccessBar::event" ref="ribbonquickaccessbar.html#event"/>
+            <keyword name="event" id="RibbonStatusBar::event" ref="ribbonstatusbar.html#event"/>
+            <keyword name="event" id="RibbonToolTip::event" ref="ribbontooltip.html#event"/>
+            <keyword name="eventFilter" id="CommonStyle::eventFilter" ref="commonstyle.html#eventFilter"/>
+            <keyword name="eventFilter" id="OfficeStyle::eventFilter" ref="officestyle.html#eventFilter"/>
+            <keyword name="eventFilter" id="RibbonBackstageView::eventFilter" ref="ribbonbackstageview.html#eventFilter"/>
+            <keyword name="eventFilter" id="RibbonBar::eventFilter" ref="ribbonbar.html#eventFilter"/>
+            <keyword name="eventFilter" id="RibbonStyle::eventFilter" ref="ribbonstyle.html#eventFilter"/>
+            <keyword name="eventFilter" id="RibbonToolTip::eventFilter" ref="ribbontooltip.html#eventFilter"/>
+            <keyword name="fadingOut" id="RibbonToolTip::fadingOut" ref="ribbontooltip.html#fadingOut"/>
+            <keyword name="flatStyle" id="RibbonBackstageButton::flatStyle" ref="ribbonbackstagebutton.html#flatStyle"/>
+            <keyword name="flatStyle" id="RibbonBackstageButton::flatStyle" ref="ribbonbackstagebutton.html#flatStyle-prop"/>
+            <keyword name="focusOutEvent" id="RibbonGallery::focusOutEvent" ref="ribbongallery.html#focusOutEvent"/>
+            <keyword name="font" id="RibbonStyle::font" ref="ribbonstyle.html#font"/>
+            <keyword name="frameThemeEnabled" id="RibbonBar::frameThemeEnabled" ref="ribbonbar.html#frameThemeEnabled-prop"/>
+            <keyword name="galleryGroup" id="RibbonGallery::galleryGroup" ref="ribbongallery.html#galleryGroup"/>
+            <keyword name="getCurrentAction" id="RibbonPageSystemRecentFileList::getCurrentAction" ref="ribbonpagesystemrecentfilelist.html#getCurrentAction"/>
+            <keyword name="getDPI" id="OfficeStyle::getDPI" ref="officestyle.html#getDPI"/>
+            <keyword name="getDPIToPercent" id="OfficeStyle::getDPIToPercent" ref="officestyle.html#getDPIToPercent"/>
+            <keyword name="getDrawItemRect" id="RibbonGallery::getDrawItemRect" ref="ribbongallery.html#getDrawItemRect"/>
+            <keyword name="getGroup" id="RibbonPage::getGroup" ref="ribbonpage.html#getGroup"/>
+            <keyword name="getIndex" id="RibbonGalleryItem::getIndex" ref="ribbongalleryitem.html#getIndex"/>
+            <keyword name="getItemsRect" id="RibbonGallery::getItemsRect" ref="ribbongallery.html#getItemsRect"/>
+            <keyword name="getPage" id="RibbonBar::getPage" ref="ribbonbar.html#getPage"/>
+            <keyword name="getPageCount" id="RibbonBar::getPageCount" ref="ribbonbar.html#getPageCount"/>
+            <keyword name="getPosition" id="OfficePopupWindow::getPosition" ref="officepopupwindow.html#getPosition"/>
+            <keyword name="getQuickAccessBar" id="RibbonBar::getQuickAccessBar" ref="ribbonbar.html#getQuickAccessBar"/>
+            <keyword name="getSize" id="RibbonPageSystemRecentFileList::getSize" ref="ribbonpagesystemrecentfilelist.html#getSize"/>
+            <keyword name="getSystemButton" id="RibbonBar::getSystemButton" ref="ribbonbar.html#getSystemButton"/>
+            <keyword name="getTheme" id="OfficeStyle::getTheme" ref="officestyle.html#getTheme"/>
+            <keyword name="getThemeColor" id="CommonStyle::getThemeColor" ref="commonstyle.html#getThemeColor"/>
+            <keyword name="getTipScreen" id="RibbonToolTip::getTipScreen" ref="ribbontooltip.html#getTipScreen"/>
+            <keyword name="groupCount" id="RibbonPage::groupCount" ref="ribbonpage.html#groupCount"/>
+            <keyword name="groupCount" id="RibbonPage::groupCount" ref="ribbonpage.html#groupCount-prop"/>
+            <keyword name="groupId" id="RibbonCustomizeManager::groupId" ref="ribboncustomizemanager.html#groupId"/>
+            <keyword name="groupIndex" id="RibbonPage::groupIndex" ref="ribbonpage.html#groupIndex"/>
+            <keyword name="groupName" id="RibbonCustomizeManager::groupName" ref="ribboncustomizemanager.html#groupName"/>
+            <keyword name="groups" id="RibbonPage::groups" ref="ribbonpage.html#groups"/>
+            <keyword name="groupsByCategory" id="RibbonCustomizeManager::groupsByCategory" ref="ribboncustomizemanager.html#groupsByCategory"/>
+            <keyword name="heightForWidth" id="RibbonBar::heightForWidth" ref="ribbonbar.html#heightForWidth"/>
+            <keyword name="hideEvent" id="RibbonBackstageView::hideEvent" ref="ribbonbackstageview.html#hideEvent"/>
+            <keyword name="hideEvent" id="RibbonCustomizeDialog::hideEvent" ref="ribboncustomizedialog.html#hideEvent"/>
+            <keyword name="hideSelection" id="RibbonGallery::hideSelection" ref="ribbongallery.html#hideSelection"/>
+            <keyword name="hideTip" id="RibbonToolTip::hideTip" ref="ribbontooltip.html#hideTip"/>
+            <keyword name="hideToolTip" id="RibbonToolTip::hideToolTip" ref="ribbontooltip.html#hideToolTip"/>
+            <keyword name="hitTestComplexControl" id="OfficeStyle::hitTestComplexControl" ref="officestyle.html#hitTestComplexControl"/>
+            <keyword name="hitTestItem" id="RibbonGallery::hitTestItem" ref="ribbongallery.html#hitTestItem"/>
+            <keyword name="icon" id="RibbonGalleryItem::icon" ref="ribbongalleryitem.html#icon"/>
+            <keyword name="icon" id="RibbonGroup::icon" ref="ribbongroup.html#icon"/>
+            <keyword name="icon" id="RibbonGroup::icon" ref="ribbongroup.html#icon-prop"/>
+            <keyword name="icon" id="RibbonToolTip::icon" ref="ribbontooltip.html#icon"/>
+            <keyword name="icon" id="RibbonToolTip::icon" ref="ribbontooltip.html#icon-prop"/>
+            <keyword name="ignoreDialogs" id="OfficeStyle::ignoreDialogs" ref="officestyle.html#ignoreDialogs-prop"/>
+            <keyword name="ignoreMDIWindowTitle" id="OfficeStyle::ignoreMDIWindowTitle" ref="officestyle.html#ignoreMDIWindowTitle-prop"/>
+            <keyword name="ignoreScrollBars" id="OfficeStyle::ignoreScrollBars" ref="officestyle.html#ignoreScrollBars-prop"/>
+            <keyword name="indexOf" id="RibbonCustomizeDialog::indexOf" ref="ribboncustomizedialog.html#indexOf"/>
+            <keyword name="insertAction" id="RibbonCustomizeManager::insertAction" ref="ribboncustomizemanager.html#insertAction"/>
+            <keyword name="insertAction" id="RibbonCustomizeManager::insertAction" ref="ribboncustomizemanager.html#insertAction-1"/>
+            <keyword name="insertAction" id="RibbonGroup::insertAction" ref="ribbongroup.html#insertAction"/>
+            <keyword name="insertGroup" id="RibbonPage::insertGroup" ref="ribbonpage.html#insertGroup"/>
+            <keyword name="insertGroup" id="RibbonPage::insertGroup" ref="ribbonpage.html#insertGroup-1"/>
+            <keyword name="insertGroup" id="RibbonPage::insertGroup" ref="ribbonpage.html#insertGroup-2"/>
+            <keyword name="insertItem" id="RibbonGalleryGroup::insertItem" ref="ribbongallerygroup.html#insertItem"/>
+            <keyword name="insertPage" id="RibbonBar::insertPage" ref="ribbonbar.html#insertPage"/>
+            <keyword name="insertPage" id="RibbonBar::insertPage" ref="ribbonbar.html#insertPage-1"/>
+            <keyword name="insertPage" id="RibbonCustomizeDialog::insertPage" ref="ribboncustomizedialog.html#insertPage"/>
+            <keyword name="instance" id="RibbonToolTip::instance" ref="ribbontooltip.html#instance"/>
+            <keyword name="isActionVisible" id="RibbonQuickAccessBar::isActionVisible" ref="ribbonquickaccessbar.html#isActionVisible"/>
+            <keyword name="isActiveTabAccented" id="RibbonStyle::isActiveTabAccented" ref="ribbonstyle.html#activeTabAccented-prop"/>
+            <keyword name="isAnimationEnabled" id="OfficeStyle::isAnimationEnabled" ref="officestyle.html#isAnimationEnabled"/>
+            <keyword name="isBackstageVisible" id="RibbonBar::isBackstageVisible" ref="ribbonbar.html#isBackstageVisible"/>
+            <keyword name="isBorderVisible" id="RibbonGallery::isBorderVisible" ref="ribbongallery.html#isBorderVisible"/>
+            <keyword name="isBorderVisible" id="RibbonGallery::isBorderVisible" ref="ribbongallery.html#isBorderVisible-prop"/>
+            <keyword name="isClosePrevented" id="RibbonBackstageView::isClosePrevented" ref="ribbonbackstageview.html#closePrevented-prop"/>
+            <keyword name="isControlsCentering" id="RibbonGroup::isControlsCentering" ref="ribbongroup.html#isControlsCentering"/>
+            <keyword name="isControlsGrouping" id="RibbonGroup::isControlsGrouping" ref="ribbongroup.html#isControlsGrouping"/>
+            <keyword name="isDPIAware" id="OfficeStyle::isDPIAware" ref="officestyle.html#isDPIAware"/>
+            <keyword name="isDialogsIgnored" id="OfficeStyle::isDialogsIgnored" ref="officestyle.html#isDialogsIgnored"/>
+            <keyword name="isEditMode" id="RibbonCustomizeManager::isEditMode" ref="ribboncustomizemanager.html#isEditMode"/>
+            <keyword name="isEnabled" id="RibbonGalleryItem::isEnabled" ref="ribbongalleryitem.html#isEnabled"/>
+            <keyword name="isFrameThemeEnabled" id="RibbonBar::isFrameThemeEnabled" ref="ribbonbar.html#frameThemeEnabled-prop"/>
+            <keyword name="isIconVisible" id="RibbonToolTip::isIconVisible" ref="ribbontooltip.html#isIconVisible"/>
+            <keyword name="isItemSelected" id="RibbonGallery::isItemSelected" ref="ribbongallery.html#isItemSelected"/>
+            <keyword name="isKeyTipsComplement" id="RibbonBar::isKeyTipsComplement" ref="ribbonbar.html#isKeyTipsComplement"/>
+            <keyword name="isKeyTipsShowing" id="RibbonBar::isKeyTipsShowing" ref="ribbonbar.html#isKeyTipsShowing"/>
+            <keyword name="isLabelsVisible" id="RibbonGallery::isLabelsVisible" ref="ribbongallery.html#isLabelsVisible"/>
+            <keyword name="isMDIWindowTitleIgnored" id="OfficeStyle::isMDIWindowTitleIgnored" ref="officestyle.html#isMDIWindowTitleIgnored"/>
+            <keyword name="isMaximized" id="RibbonBar::isMaximized" ref="ribbonbar.html#isMaximized"/>
+            <keyword name="isMinimizationEnabled" id="RibbonBar::isMinimizationEnabled" ref="ribbonbar.html#isMinimizationEnabled"/>
+            <keyword name="isMinimized" id="RibbonBar::isMinimized" ref="ribbonbar.html#isMinimized"/>
+            <keyword name="isOptionButtonVisible" id="RibbonGroup::isOptionButtonVisible" ref="ribbongroup.html#isOptionButtonVisible"/>
+            <keyword name="isOptionButtonVisible" id="RibbonGroup::isOptionButtonVisible" ref="ribbongroup.html#isOptionButtonVisible-prop"/>
+            <keyword name="isPageHidden" id="RibbonCustomizeManager::isPageHidden" ref="ribboncustomizemanager.html#isPageHidden"/>
+            <keyword name="isPageVisible" id="RibbonCustomizeManager::isPageVisible" ref="ribboncustomizemanager.html#isPageVisible"/>
+            <keyword name="isQuickAccessVisible" id="RibbonBar::isQuickAccessVisible" ref="ribbonbar.html#isQuickAccessVisible"/>
+            <keyword name="isReduced" id="RibbonGroup::isReduced" ref="ribbongroup.html#isReduced"/>
+            <keyword name="isResizable" id="RibbonGallery::isResizable" ref="ribbongallery.html#isResizable"/>
+            <keyword name="isResizable" id="RibbonGallery::isResizable" ref="ribbongallery.html#isResizable-prop"/>
+            <keyword name="isScrollBarsIgnored" id="OfficeStyle::isScrollBarsIgnored" ref="officestyle.html#isScrollBarsIgnored"/>
+            <keyword name="isSeparator" id="RibbonGalleryItem::isSeparator" ref="ribbongalleryitem.html#isSeparator"/>
+            <keyword name="isShowAsButton" id="RibbonGallery::isShowAsButton" ref="ribbongallery.html#isShowAsButton"/>
+            <keyword name="isStyle2010" id="OfficeStyle::isStyle2010" ref="officestyle.html#isStyle2010"/>
+            <keyword name="isTitleBarVisible" id="RibbonBar::isTitleBarVisible" ref="ribbonbar.html#isTitleBarVisible"/>
+            <keyword name="isTitleCloseButtonVisible" id="OfficePopupWindow::isTitleCloseButtonVisible" ref="officepopupwindow.html#isTitleCloseButtonVisible"/>
+            <keyword name="isTitleGroupsVisible" id="RibbonBar::isTitleGroupsVisible" ref="ribbonbar.html#titleGroupsVisible-prop"/>
+            <keyword name="isToolTipVisible" id="RibbonToolTip::isToolTipVisible" ref="ribbontooltip.html#isToolTipVisible"/>
+            <keyword name="isTransparent" id="RibbonGallery::isTransparent" ref="ribbongallery.html#isTransparent-prop"/>
+            <keyword name="isTransparent" id="RibbonGallery::isTransparent" ref="ribbongallery.html#isTransparent-prop"/>
+            <keyword name="isVisible" id="RibbonBar::isVisible" ref="ribbonbar.html#isVisible"/>
+            <keyword name="isVisible" id="RibbonGalleryItem::isVisible" ref="ribbongalleryitem.html#isVisible"/>
+            <keyword name="isVisible" id="RibbonPage::isVisible" ref="ribbonpage.html#isVisible"/>
+            <keyword name="item" id="RibbonGallery::item" ref="ribbongallery.html#item"/>
+            <keyword name="item" id="RibbonGalleryGroup::item" ref="ribbongallerygroup.html#item"/>
+            <keyword name="itemClicked" id="RibbonGallery::itemClicked" ref="ribbongallery.html#itemClicked"/>
+            <keyword name="itemClicking" id="RibbonGallery::itemClicking" ref="ribbongallery.html#itemClicking"/>
+            <keyword name="itemCount" id="RibbonGallery::itemCount" ref="ribbongallery.html#itemCount"/>
+            <keyword name="itemCount" id="RibbonGalleryGroup::itemCount" ref="ribbongallerygroup.html#itemCount"/>
+            <keyword name="itemPressed" id="RibbonGallery::itemPressed" ref="ribbongallery.html#itemPressed"/>
+            <keyword name="itemSelectionChanged" id="RibbonGallery::itemSelectionChanged" ref="ribbongallery.html#itemSelectionChanged"/>
+            <keyword name="keyPressEvent" id="RibbonPageSystemRecentFileList::keyPressEvent" ref="ribbonpagesystemrecentfilelist.html#keyPressEvent"/>
+            <keyword name="keyPressEvent" id="RibbonSystemPopupBar::keyPressEvent" ref="ribbonsystempopupbar.html#keyPressEvent"/>
+            <keyword name="keyTipsEnabled" id="RibbonBar::keyTipsEnabled" ref="ribbonbar.html#keyTipsEnabled"/>
+            <keyword name="keyTipsShowed" id="RibbonBar::keyTipsShowed" ref="ribbonbar.html#keyTipsShowed"/>
+            <keyword name="leaveEvent" id="OfficePopupWindow::leaveEvent" ref="officepopupwindow.html#leaveEvent"/>
+            <keyword name="leaveEvent" id="RibbonGallery::leaveEvent" ref="ribbongallery.html#leaveEvent"/>
+            <keyword name="leaveEvent" id="RibbonGroup::leaveEvent" ref="ribbongroup.html#leaveEvent"/>
+            <keyword name="leaveEvent" id="RibbonPageSystemRecentFileList::leaveEvent" ref="ribbonpagesystemrecentfilelist.html#leaveEvent"/>
+            <keyword name="loadStateFromDevice" id="RibbonCustomizeManager::loadStateFromDevice" ref="ribboncustomizemanager.html#loadStateFromDevice"/>
+            <keyword name="loadTranslation" id="RibbonBar::loadTranslation" ref="ribbonbar.html#loadTranslation"/>
+            <keyword name="location" id="OfficePopupWindow::location" ref="officepopupwindow.html#location"/>
+            <keyword name="location" id="OfficePopupWindow::location" ref="officepopupwindow.html#location-prop"/>
+            <keyword name="logoPixmap" id="RibbonBar::logoPixmap" ref="ribbonbar.html#logoPixmap"/>
+            <keyword name="m_color" id="PopupColorButton::m_color" ref="popupcolorbutton.html#m_color-var"/>
+            <keyword name="margin" id="RibbonToolTip::margin" ref="ribbontooltip.html#margin"/>
+            <keyword name="margin" id="RibbonToolTip::margin" ref="ribbontooltip.html#margin-prop"/>
+            <keyword name="maximize" id="RibbonBar::maximize" ref="ribbonbar.html#maximize"/>
+            <keyword name="maximumColumnCount" id="RibbonGallery::maximumColumnCount" ref="ribbongallery.html#maximumColumnCount"/>
+            <keyword name="maximumColumnCount" id="RibbonGallery::maximumColumnCount" ref="ribbongallery.html#maximumColumnCount-prop"/>
+            <keyword name="menuGeometry" id="RibbonBackstageView::menuGeometry" ref="ribbonbackstageview.html#menuGeometry"/>
+            <keyword name="minimizationChanged" id="RibbonBar::minimizationChanged" ref="ribbonbar.html#minimizationChanged"/>
+            <keyword name="minimize" id="RibbonBar::minimize" ref="ribbonbar.html#minimize"/>
+            <keyword name="minimized" id="RibbonBar::minimized" ref="ribbonbar.html#minimized-prop"/>
+            <keyword name="minimumColumnCount" id="RibbonGallery::minimumColumnCount" ref="ribbongallery.html#minimumColumnCount"/>
+            <keyword name="minimumColumnCount" id="RibbonGallery::minimumColumnCount" ref="ribbongallery.html#minimumColumnCount-prop"/>
+            <keyword name="minimumSizeHint" id="RibbonBackstageButton::minimumSizeHint" ref="ribbonbackstagebutton.html#minimumSizeHint"/>
+            <keyword name="minimumSizeHint" id="RibbonGallery::minimumSizeHint" ref="ribbongallery.html#minimumSizeHint"/>
+            <keyword name="mouseDoubleClickEvent" id="RibbonBar::mouseDoubleClickEvent" ref="ribbonbar.html#mouseDoubleClickEvent"/>
+            <keyword name="mouseMoveEvent" id="RibbonGallery::mouseMoveEvent" ref="ribbongallery.html#mouseMoveEvent"/>
+            <keyword name="mouseMoveEvent" id="RibbonPageSystemRecentFileList::mouseMoveEvent" ref="ribbonpagesystemrecentfilelist.html#mouseMoveEvent"/>
+            <keyword name="mouseMoveEvent" id="RibbonToolTip::mouseMoveEvent" ref="ribbontooltip.html#mouseMoveEvent"/>
+            <keyword name="mousePressEvent" id="PopupColorButton::mousePressEvent" ref="popupcolorbutton.html#mousePressEvent"/>
+            <keyword name="mousePressEvent" id="RibbonBar::mousePressEvent" ref="ribbonbar.html#mousePressEvent"/>
+            <keyword name="mousePressEvent" id="RibbonGallery::mousePressEvent" ref="ribbongallery.html#mousePressEvent"/>
+            <keyword name="mousePressEvent" id="RibbonGroup::mousePressEvent" ref="ribbongroup.html#mousePressEvent"/>
+            <keyword name="mousePressEvent" id="RibbonPageSystemRecentFileList::mousePressEvent" ref="ribbonpagesystemrecentfilelist.html#mousePressEvent"/>
+            <keyword name="mousePressEvent" id="RibbonSystemPopupBar::mousePressEvent" ref="ribbonsystempopupbar.html#mousePressEvent"/>
+            <keyword name="mouseReleaseEvent" id="RibbonGallery::mouseReleaseEvent" ref="ribbongallery.html#mouseReleaseEvent"/>
+            <keyword name="mouseReleaseEvent" id="RibbonPageSystemRecentFileList::mouseReleaseEvent" ref="ribbonpagesystemrecentfilelist.html#mouseReleaseEvent"/>
+            <keyword name="mouseReleaseEvent" id="RibbonSystemPopupBar::mouseReleaseEvent" ref="ribbonsystempopupbar.html#mouseReleaseEvent"/>
+            <keyword name="moveGroup" id="RibbonCustomizeManager::moveGroup" ref="ribboncustomizemanager.html#moveGroup"/>
+            <keyword name="movePage" id="RibbonBar::movePage" ref="ribbonbar.html#movePage"/>
+            <keyword name="movePage" id="RibbonBar::movePage" ref="ribbonbar.html#movePage-1"/>
+            <keyword name="movePage" id="RibbonCustomizeManager::movePage" ref="ribboncustomizemanager.html#movePage"/>
+            <keyword name="open" id="RibbonBackstageView::open" ref="ribbonbackstageview.html#open"/>
+            <keyword name="openRecentFile" id="RibbonPageSystemRecentFileList::openRecentFile" ref="ribbonpagesystemrecentfilelist.html#openRecentFile"/>
+            <keyword name="optionButtonAction" id="RibbonGroup::optionButtonAction" ref="ribbongroup.html#optionButtonAction"/>
+            <keyword name="orientation" id="RibbonBackstageSeparator::orientation" ref="ribbonbackstageseparator.html#orientation"/>
+            <keyword name="orientation" id="RibbonBackstageSeparator::orientation" ref="ribbonbackstageseparator.html#orientation-prop"/>
+            <keyword name="pageByIndex" id="RibbonCustomizeDialog::pageByIndex" ref="ribboncustomizedialog.html#pageByIndex"/>
+            <keyword name="pageCount" id="RibbonCustomizeDialog::pageCount" ref="ribboncustomizedialog.html#pageCount"/>
+            <keyword name="pageGroups" id="RibbonCustomizeManager::pageGroups" ref="ribboncustomizemanager.html#pageGroups"/>
+            <keyword name="pageId" id="RibbonCustomizeManager::pageId" ref="ribboncustomizemanager.html#pageId"/>
+            <keyword name="pageIndex" id="RibbonCustomizeManager::pageIndex" ref="ribboncustomizemanager.html#pageIndex"/>
+            <keyword name="pageName" id="RibbonCustomizeManager::pageName" ref="ribboncustomizemanager.html#pageName"/>
+            <keyword name="pages" id="RibbonBar::pages" ref="ribbonbar.html#pages"/>
+            <keyword name="pages" id="RibbonCustomizeManager::pages" ref="ribboncustomizemanager.html#pages"/>
+            <keyword name="pagesByCategory" id="RibbonCustomizeManager::pagesByCategory" ref="ribboncustomizemanager.html#pagesByCategory"/>
+            <keyword name="paintEvent" id="OfficePopupWindow::paintEvent" ref="officepopupwindow.html#paintEvent"/>
+            <keyword name="paintEvent" id="PopupColorButton::paintEvent" ref="popupcolorbutton.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonBackstageButton::paintEvent" ref="ribbonbackstagebutton.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonBackstagePage::paintEvent" ref="ribbonbackstagepage.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonBackstageView::paintEvent" ref="ribbonbackstageview.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonBar::paintEvent" ref="ribbonbar.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonGallery::paintEvent" ref="ribbongallery.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonGroup::paintEvent" ref="ribbongroup.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonPage::paintEvent" ref="ribbonpage.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonQuickAccessBar::paintEvent" ref="ribbonquickaccessbar.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonStatusBar::paintEvent" ref="ribbonstatusbar.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonSystemPopupBar::paintEvent" ref="ribbonsystempopupbar.html#paintEvent"/>
+            <keyword name="paintEvent" id="RibbonToolTip::paintEvent" ref="ribbontooltip.html#paintEvent"/>
+            <keyword name="pixelMetric" id="CommonStyle::pixelMetric" ref="commonstyle.html#pixelMetric"/>
+            <keyword name="pixelMetric" id="OfficeStyle::pixelMetric" ref="officestyle.html#pixelMetric"/>
+            <keyword name="pixelMetric" id="RibbonStyle::pixelMetric" ref="ribbonstyle.html#pixelMetric"/>
+            <keyword name="placeTip" id="RibbonToolTip::placeTip" ref="ribbontooltip.html#placeTip"/>
+            <keyword name="polish" id="CommonStyle::polish" ref="commonstyle.html#polish"/>
+            <keyword name="polish" id="CommonStyle::polish" ref="commonstyle.html#polish-1"/>
+            <keyword name="polish" id="OfficeStyle::polish" ref="officestyle.html#polish"/>
+            <keyword name="polish" id="OfficeStyle::polish" ref="officestyle.html#polish-1"/>
+            <keyword name="polish" id="OfficeStyle::polish" ref="officestyle.html#polish-2"/>
+            <keyword name="polish" id="RibbonStyle::polish" ref="ribbonstyle.html#polish"/>
+            <keyword name="polish" id="RibbonStyle::polish" ref="ribbonstyle.html#polish-1"/>
+            <keyword name="popupDecoration" id="OfficeStyle::popupDecoration" ref="officestyle.html#popupDecoration"/>
+            <keyword name="popupMenu" id="RibbonGallery::popupMenu" ref="ribbongallery.html#popupMenu"/>
+            <keyword name="quickAccessBar" id="RibbonBar::quickAccessBar" ref="ribbonbar.html#quickAccessBar"/>
+            <keyword name="quickAccessBarPosition" id="RibbonBar::quickAccessBarPosition" ref="ribbonbar.html#quickAccessBarPosition"/>
+            <keyword name="quickAccessBarPosition" id="RibbonBar::quickAccessBarPosition" ref="ribbonbar.html#quickAccessBarPosition-prop"/>
+            <keyword name="reduced" id="RibbonGroup::reduced" ref="ribbongroup.html#reduced-prop"/>
+            <keyword name="reject" id="RibbonCustomizeDialog::reject" ref="ribboncustomizedialog.html#reject"/>
+            <keyword name="released" id="RibbonPage::released" ref="ribbonpage.html#released"/>
+            <keyword name="remove" id="RibbonGalleryGroup::remove" ref="ribbongallerygroup.html#remove"/>
+            <keyword name="remove" id="RibbonGroup::remove" ref="ribbongroup.html#remove"/>
+            <keyword name="removeActionAt" id="RibbonCustomizeManager::removeActionAt" ref="ribboncustomizemanager.html#removeActionAt"/>
+            <keyword name="removeActionAt" id="RibbonCustomizeManager::removeActionAt" ref="ribboncustomizemanager.html#removeActionAt-1"/>
+            <keyword name="removeControl" id="RibbonGroup::removeControl" ref="ribbongroup.html#removeControl"/>
+            <keyword name="removeFromCategory" id="RibbonCustomizeManager::removeFromCategory" ref="ribboncustomizemanager.html#removeFromCategory"/>
+            <keyword name="removeGroup" id="RibbonPage::removeGroup" ref="ribbonpage.html#removeGroup"/>
+            <keyword name="removeGroup" id="RibbonPage::removeGroup" ref="ribbonpage.html#removeGroup-1"/>
+            <keyword name="removePage" id="RibbonBar::removePage" ref="ribbonbar.html#removePage"/>
+            <keyword name="removePage" id="RibbonBar::removePage" ref="ribbonbar.html#removePage-1"/>
+            <keyword name="reset" id="RibbonCustomizeManager::reset" ref="ribboncustomizemanager.html#reset"/>
+            <keyword name="resizeEvent" id="RibbonBar::resizeEvent" ref="ribbonbar.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonGallery::resizeEvent" ref="ribbongallery.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonPage::resizeEvent" ref="ribbonpage.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonPageSystemRecentFileList::resizeEvent" ref="ribbonpagesystemrecentfilelist.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonQuickAccessBar::resizeEvent" ref="ribbonquickaccessbar.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonStatusBar::resizeEvent" ref="ribbonstatusbar.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonSystemPopupBar::resizeEvent" ref="ribbonsystempopupbar.html#resizeEvent"/>
+            <keyword name="resizeEvent" id="RibbonToolTip::resizeEvent" ref="ribbontooltip.html#resizeEvent"/>
+            <keyword name="restartExpireTimer" id="RibbonToolTip::restartExpireTimer" ref="ribbontooltip.html#restartExpireTimer"/>
+            <keyword name="reuseTip" id="RibbonToolTip::reuseTip" ref="ribbontooltip.html#reuseTip"/>
+            <keyword name="ribbonBar" id="RibbonGroup::ribbonBar" ref="ribbongroup.html#ribbonBar"/>
+            <keyword name="ribbonBar" id="RibbonMainWindow::ribbonBar" ref="ribbonmainwindow.html#ribbonBar"/>
+            <keyword name="ribbonBar" id="RibbonPage::ribbonBar" ref="ribbonpage.html#ribbonBar"/>
+            <keyword name="rowItemCount" id="RibbonBar::rowItemCount" ref="ribbonbar.html#rowItemCount"/>
+            <keyword name="rowItemHeight" id="RibbonBar::rowItemHeight" ref="ribbonbar.html#rowItemHeight"/>
+            <keyword name="saveStateToDevice" id="RibbonCustomizeManager::saveStateToDevice" ref="ribboncustomizemanager.html#saveStateToDevice"/>
+            <keyword name="scrollBarPolicy" id="RibbonGallery::scrollBarPolicy" ref="ribbongallery.html#scrollBarPolicy"/>
+            <keyword name="scrollBarPolicy" id="RibbonGallery::scrollBarPolicy" ref="ribbongallery.html#scrollBarPolicy-prop"/>
+            <keyword name="selectedItem" id="RibbonGallery::selectedItem" ref="ribbongallery.html#selectedItem"/>
+            <keyword name="selectedItemChanged" id="RibbonGallery::selectedItemChanged" ref="ribbongallery.html#selectedItemChanged"/>
+            <keyword name="setAccentColor" id="OfficeStyle::setAccentColor" ref="officestyle.html#setAccentColor"/>
+            <keyword name="setAccentColor" id="OfficeStyle::setAccentColor" ref="officestyle.html#setAccentColor-1"/>
+            <keyword name="setActionId" id="RibbonCustomizeManager::setActionId" ref="ribboncustomizemanager.html#setActionId"/>
+            <keyword name="setActionVisible" id="RibbonQuickAccessBar::setActionVisible" ref="ribbonquickaccessbar.html#setActionVisible"/>
+            <keyword name="setActivePage" id="RibbonBackstageView::setActivePage" ref="ribbonbackstageview.html#setActivePage"/>
+            <keyword name="setActiveTabAccented" id="RibbonStyle::setActiveTabAccented" ref="ribbonstyle.html#activeTabAccented-prop"/>
+            <keyword name="setAnimation" id="OfficePopupWindow::setAnimation" ref="officepopupwindow.html#setAnimation"/>
+            <keyword name="setAnimationEnabled" id="OfficeStyle::setAnimationEnabled" ref="officestyle.html#animationEnabled-prop"/>
+            <keyword name="setAnimationSpeed" id="OfficePopupWindow::setAnimationSpeed" ref="officepopupwindow.html#setAnimationSpeed"/>
+            <keyword name="setAutoWidth" id="RibbonGallery::setAutoWidth" ref="ribbongallery.html#autoWidth-prop"/>
+            <keyword name="setBodyText" id="OfficePopupWindow::setBodyText" ref="officepopupwindow.html#setBodyText"/>
+            <keyword name="setBorderVisible" id="RibbonGallery::setBorderVisible" ref="ribbongallery.html#setBorderVisible"/>
+            <keyword name="setCaption" id="RibbonGalleryItem::setCaption" ref="ribbongalleryitem.html#setCaption"/>
+            <keyword name="setCentralWidget" id="OfficePopupWindow::setCentralWidget" ref="officepopupwindow.html#setCentralWidget"/>
+            <keyword name="setCheckedIndex" id="RibbonGallery::setCheckedIndex" ref="ribbongallery.html#setCheckedIndex"/>
+            <keyword name="setCheckedItem" id="RibbonGallery::setCheckedItem" ref="ribbongallery.html#setCheckedItem"/>
+            <keyword name="setClipItems" id="RibbonGalleryGroup::setClipItems" ref="ribbongallerygroup.html#setClipItems"/>
+            <keyword name="setCloseButtonPixmap" id="OfficePopupWindow::setCloseButtonPixmap" ref="officepopupwindow.html#setCloseButtonPixmap"/>
+            <keyword name="setClosePrevented" id="RibbonBackstageView::setClosePrevented" ref="ribbonbackstageview.html#closePrevented-prop"/>
+            <keyword name="setColor" id="PopupColorButton::setColor" ref="popupcolorbutton.html#setColor"/>
+            <keyword name="setColumnCount" id="RibbonGallery::setColumnCount" ref="ribbongallery.html#setColumnCount"/>
+            <keyword name="setContentAlignment" id="RibbonGroup::setContentAlignment" ref="ribbongroup.html#setContentAlignment"/>
+            <keyword name="setContextColor" id="RibbonPage::setContextColor" ref="ribbonpage.html#setContextColor"/>
+            <keyword name="setContextGroupName" id="RibbonPage::setContextGroupName" ref="ribbonpage.html#setContextGroupName"/>
+            <keyword name="setContextTitle" id="RibbonPage::setContextTitle" ref="ribbonpage.html#setContextTitle"/>
+            <keyword name="setControlsAlignment" id="RibbonGroup::setControlsAlignment" ref="ribbongroup.html#setControlsAlignment"/>
+            <keyword name="setControlsCentering" id="RibbonGroup::setControlsCentering" ref="ribbongroup.html#setControlsCentering"/>
+            <keyword name="setControlsGrouping" id="RibbonGroup::setControlsGrouping" ref="ribbongroup.html#setControlsGrouping"/>
+            <keyword name="setCurrentPage" id="RibbonCustomizeDialog::setCurrentPage" ref="ribboncustomizedialog.html#setCurrentPage"/>
+            <keyword name="setCurrentPageIndex" id="RibbonBar::setCurrentPageIndex" ref="ribbonbar.html#setCurrentPageIndex"/>
+            <keyword name="setCurrentPageIndex" id="RibbonCustomizeDialog::setCurrentPageIndex" ref="ribboncustomizedialog.html#setCurrentPageIndex"/>
+            <keyword name="setDPIAware" id="OfficeStyle::setDPIAware" ref="officestyle.html#DPIAware-prop"/>
+            <keyword name="setData" id="RibbonGalleryItem::setData" ref="ribbongalleryitem.html#setData"/>
+            <keyword name="setDialogsIgnored" id="OfficeStyle::setDialogsIgnored" ref="officestyle.html#ignoreDialogs-prop"/>
+            <keyword name="setDisplayTime" id="OfficePopupWindow::setDisplayTime" ref="officepopupwindow.html#setDisplayTime"/>
+            <keyword name="setDragDropEnabled" id="OfficePopupWindow::setDragDropEnabled" ref="officepopupwindow.html#setDragDropEnabled"/>
+            <keyword name="setEditMode" id="RibbonCustomizeManager::setEditMode" ref="ribboncustomizemanager.html#setEditMode"/>
+            <keyword name="setEnabled" id="RibbonGalleryItem::setEnabled" ref="ribbongalleryitem.html#setEnabled"/>
+            <keyword name="setFlatStyle" id="RibbonBackstageButton::setFlatStyle" ref="ribbonbackstagebutton.html#setFlatStyle"/>
+            <keyword name="setFrameThemeEnabled" id="RibbonBar::setFrameThemeEnabled" ref="ribbonbar.html#frameThemeEnabled-prop"/>
+            <keyword name="setGalleryGroup" id="RibbonGallery::setGalleryGroup" ref="ribbongallery.html#setGalleryGroup"/>
+            <keyword name="setGroupId" id="RibbonCustomizeManager::setGroupId" ref="ribboncustomizemanager.html#setGroupId"/>
+            <keyword name="setGroupName" id="RibbonCustomizeManager::setGroupName" ref="ribboncustomizemanager.html#setGroupName"/>
+            <keyword name="setGroupsHeight" id="RibbonPage::setGroupsHeight" ref="ribbonpage.html#setGroupsHeight"/>
+            <keyword name="setIcon" id="RibbonGalleryItem::setIcon" ref="ribbongalleryitem.html#setIcon"/>
+            <keyword name="setIcon" id="RibbonGroup::setIcon" ref="ribbongroup.html#setIcon"/>
+            <keyword name="setIcon" id="RibbonToolTip::setIcon" ref="ribbontooltip.html#setIcon"/>
+            <keyword name="setIconVisible" id="RibbonToolTip::setIconVisible" ref="ribbontooltip.html#setIconVisible"/>
+            <keyword name="setKeyTip" id="RibbonBar::setKeyTip" ref="ribbonbar.html#setKeyTip"/>
+            <keyword name="setKeyTipsComplement" id="RibbonBar::setKeyTipsComplement" ref="ribbonbar.html#setKeyTipsComplement"/>
+            <keyword name="setKeyTipsEnable" id="RibbonBar::setKeyTipsEnable" ref="ribbonbar.html#setKeyTipsEnable"/>
+            <keyword name="setLabelsVisible" id="RibbonGallery::setLabelsVisible" ref="ribbongallery.html#isTransparent-prop"/>
+            <keyword name="setLocation" id="OfficePopupWindow::setLocation" ref="officepopupwindow.html#setLocation"/>
+            <keyword name="setLogoPixmap" id="RibbonBar::setLogoPixmap" ref="ribbonbar.html#setLogoPixmap"/>
+            <keyword name="setMDIWindowTitleIgnored" id="OfficeStyle::setMDIWindowTitleIgnored" ref="officestyle.html#ignoreMDIWindowTitle-prop"/>
+            <keyword name="setMargin" id="RibbonToolTip::setMargin" ref="ribbontooltip.html#setMargin"/>
+            <keyword name="setMaximized" id="RibbonBar::setMaximized" ref="ribbonbar.html#setMaximized"/>
+            <keyword name="setMaximumColumnCount" id="RibbonGallery::setMaximumColumnCount" ref="ribbongallery.html#setMaximumColumnCount"/>
+            <keyword name="setMinimizationEnabled" id="RibbonBar::setMinimizationEnabled" ref="ribbonbar.html#setMinimizationEnabled"/>
+            <keyword name="setMinimized" id="RibbonBar::setMinimized" ref="ribbonbar.html#setMinimized"/>
+            <keyword name="setMinimumColumnCount" id="RibbonGallery::setMinimumColumnCount" ref="ribbongallery.html#setMinimumColumnCount"/>
+            <keyword name="setOptionButtonAction" id="RibbonGroup::setOptionButtonAction" ref="ribbongroup.html#setOptionButtonAction"/>
+            <keyword name="setOptionButtonVisible" id="RibbonGroup::setOptionButtonVisible" ref="ribbongroup.html#setOptionButtonVisible"/>
+            <keyword name="setOrientation" id="RibbonBackstageSeparator::setOrientation" ref="ribbonbackstageseparator.html#setOrientation"/>
+            <keyword name="setPageHidden" id="RibbonCustomizeManager::setPageHidden" ref="ribboncustomizemanager.html#setPageHidden"/>
+            <keyword name="setPageId" id="RibbonCustomizeManager::setPageId" ref="ribboncustomizemanager.html#setPageId"/>
+            <keyword name="setPageName" id="RibbonCustomizeManager::setPageName" ref="ribboncustomizemanager.html#setPageName"/>
+            <keyword name="setPageVisible" id="RibbonCustomizeManager::setPageVisible" ref="ribboncustomizemanager.html#setPageVisible"/>
+            <keyword name="setPopupDecoration" id="OfficeStyle::setPopupDecoration" ref="officestyle.html#setPopupDecoration"/>
+            <keyword name="setPopupMenu" id="RibbonGallery::setPopupMenu" ref="ribbongallery.html#setPopupMenu"/>
+            <keyword name="setPosition" id="OfficePopupWindow::setPosition" ref="officepopupwindow.html#setPosition"/>
+            <keyword name="setQuickAccessBarPosition" id="RibbonBar::setQuickAccessBarPosition" ref="ribbonbar.html#setQuickAccessBarPosition"/>
+            <keyword name="setRibbonBar" id="RibbonMainWindow::setRibbonBar" ref="ribbonmainwindow.html#setRibbonBar"/>
+            <keyword name="setScrollBarPolicy" id="RibbonGallery::setScrollBarPolicy" ref="ribbongallery.html#setScrollBarPolicy"/>
+            <keyword name="setScrollBarsIgnored" id="OfficeStyle::setScrollBarsIgnored" ref="officestyle.html#ignoreScrollBars-prop"/>
+            <keyword name="setSelectedItem" id="RibbonGallery::setSelectedItem" ref="ribbongallery.html#setSelectedItem"/>
+            <keyword name="setSeparator" id="RibbonGalleryItem::setSeparator" ref="ribbongalleryitem.html#setSeparator"/>
+            <keyword name="setSize" id="RibbonGalleryGroup::setSize" ref="ribbongallerygroup.html#setSize"/>
+            <keyword name="setSize" id="RibbonPageSystemRecentFileList::setSize" ref="ribbonpagesystemrecentfilelist.html#setSize"/>
+            <keyword name="setSizeHint" id="RibbonGalleryItem::setSizeHint" ref="ribbongalleryitem.html#setSizeHint"/>
+            <keyword name="setStatusTip" id="RibbonGalleryItem::setStatusTip" ref="ribbongalleryitem.html#setStatusTip"/>
+            <keyword name="setTabBarPosition" id="RibbonBar::setTabBarPosition" ref="ribbonbar.html#tabBarPosition-prop"/>
+            <keyword name="setTabStyle" id="RibbonBackstageButton::setTabStyle" ref="ribbonbackstagebutton.html#setTabStyle"/>
+            <keyword name="setTabWidth" id="RibbonPage::setTabWidth" ref="ribbonpage.html#tabWidth-prop"/>
+            <keyword name="setText" id="RibbonToolTip::setText" ref="ribbontooltip.html#text-prop"/>
+            <keyword name="setTheme" id="OfficeStyle::setTheme" ref="officestyle.html#theme-prop"/>
+            <keyword name="setTipRect" id="RibbonToolTip::setTipRect" ref="ribbontooltip.html#setTipRect"/>
+            <keyword name="setTitle" id="RibbonGroup::setTitle" ref="ribbongroup.html#setTitle"/>
+            <keyword name="setTitle" id="RibbonPage::setTitle" ref="ribbonpage.html#setTitle"/>
+            <keyword name="setTitle" id="RibbonToolTip::setTitle" ref="ribbontooltip.html#title-prop"/>
+            <keyword name="setTitleBackground" id="RibbonBar::setTitleBackground" ref="ribbonbar.html#setTitleBackground"/>
+            <keyword name="setTitleBarVisible" id="RibbonBar::setTitleBarVisible" ref="ribbonbar.html#setTitleBarVisible"/>
+            <keyword name="setTitleCloseButtonVisible" id="OfficePopupWindow::setTitleCloseButtonVisible" ref="officepopupwindow.html#setTitleCloseButtonVisible"/>
+            <keyword name="setTitleColor" id="RibbonGroup::setTitleColor" ref="ribbongroup.html#setTitleColor"/>
+            <keyword name="setTitleElideMode" id="RibbonGroup::setTitleElideMode" ref="ribbongroup.html#setTitleElideMode"/>
+            <keyword name="setTitleFont" id="RibbonGroup::setTitleFont" ref="ribbongroup.html#setTitleFont"/>
+            <keyword name="setTitleGroupsVisible" id="RibbonBar::setTitleGroupsVisible" ref="ribbonbar.html#titleGroupsVisible-prop"/>
+            <keyword name="setTitleIcon" id="OfficePopupWindow::setTitleIcon" ref="officepopupwindow.html#setTitleIcon"/>
+            <keyword name="setTitleText" id="OfficePopupWindow::setTitleText" ref="officepopupwindow.html#setTitleText"/>
+            <keyword name="setToolTip" id="RibbonGalleryItem::setToolTip" ref="ribbongalleryitem.html#setToolTip"/>
+            <keyword name="setTransparency" id="OfficePopupWindow::setTransparency" ref="officepopupwindow.html#setTransparency"/>
+            <keyword name="setTransparent" id="RibbonGallery::setTransparent" ref="ribbongallery.html#setTransparent"/>
+            <keyword name="setVisible" id="RibbonGalleryItem::setVisible" ref="ribbongalleryitem.html#setVisible"/>
+            <keyword name="setVisible" id="RibbonPage::setVisible" ref="ribbonpage.html#setVisible"/>
+            <keyword name="setWrapMode" id="RibbonToolTip::setWrapMode" ref="ribbontooltip.html#setWrapMode"/>
+            <keyword name="showCustomizeDialog" id="RibbonBar::showCustomizeDialog" ref="ribbonbar.html#showCustomizeDialog"/>
+            <keyword name="showCustomizeMenu" id="RibbonQuickAccessBar::showCustomizeMenu" ref="ribbonquickaccessbar.html#showCustomizeMenu"/>
+            <keyword name="showEvent" id="RibbonBackstageView::showEvent" ref="ribbonbackstageview.html#showEvent"/>
+            <keyword name="showEvent" id="RibbonCustomizeDialog::showEvent" ref="ribboncustomizedialog.html#showEvent"/>
+            <keyword name="showEvent" id="RibbonSystemPopupBar::showEvent" ref="ribbonsystempopupbar.html#showEvent"/>
+            <keyword name="showPopup" id="OfficePopupWindow::showPopup" ref="officepopupwindow.html#showPopup"/>
+            <keyword name="showPopup" id="OfficePopupWindow::showPopup" ref="officepopupwindow.html#showPopup-1"/>
+            <keyword name="showPopup" id="OfficePopupWindow::showPopup" ref="officepopupwindow.html#showPopup-2"/>
+            <keyword name="showQuickAccess" id="RibbonBar::showQuickAccess" ref="ribbonbar.html#showQuickAccess"/>
+            <keyword name="showRibbonContextMenu" id="RibbonBar::showRibbonContextMenu" ref="ribbonbar.html#showRibbonContextMenu"/>
+            <keyword name="showToolTip" id="RibbonToolTip::showToolTip" ref="ribbontooltip.html#showToolTip"/>
+            <keyword name="size" id="RibbonGalleryGroup::size" ref="ribbongallerygroup.html#size"/>
+            <keyword name="sizeFromContents" id="CommonStyle::sizeFromContents" ref="commonstyle.html#sizeFromContents"/>
+            <keyword name="sizeFromContents" id="OfficeStyle::sizeFromContents" ref="officestyle.html#sizeFromContents"/>
+            <keyword name="sizeFromContents" id="RibbonStyle::sizeFromContents" ref="ribbonstyle.html#sizeFromContents"/>
+            <keyword name="sizeHint" id="OfficePopupWindow::sizeHint" ref="officepopupwindow.html#sizeHint"/>
+            <keyword name="sizeHint" id="PopupColorButton::sizeHint" ref="popupcolorbutton.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonBackstageButton::sizeHint" ref="ribbonbackstagebutton.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonBar::sizeHint" ref="ribbonbar.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonGallery::sizeHint" ref="ribbongallery.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonGalleryItem::sizeHint" ref="ribbongalleryitem.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonGroup::sizeHint" ref="ribbongroup.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonPage::sizeHint" ref="ribbonpage.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonQuickAccessBar::sizeHint" ref="ribbonquickaccessbar.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonSystemPopupBar::sizeHint" ref="ribbonsystempopupbar.html#sizeHint"/>
+            <keyword name="sizeHint" id="RibbonToolTip::sizeHint" ref="ribbontooltip.html#sizeHint"/>
+            <keyword name="standardIcon" id="CommonStyle::standardIcon" ref="commonstyle.html#standardIcon"/>
+            <keyword name="statusTip" id="RibbonGalleryItem::statusTip" ref="ribbongalleryitem.html#statusTip"/>
+            <keyword name="styleHint" id="CommonStyle::styleHint" ref="commonstyle.html#styleHint"/>
+            <keyword name="styleHint" id="OfficeStyle::styleHint" ref="officestyle.html#styleHint"/>
+            <keyword name="styleHint" id="RibbonStyle::styleHint" ref="ribbonstyle.html#styleHint"/>
+            <keyword name="subControlRect" id="CommonStyle::subControlRect" ref="commonstyle.html#subControlRect"/>
+            <keyword name="subControlRect" id="OfficeStyle::subControlRect" ref="officestyle.html#subControlRect"/>
+            <keyword name="subControlRect" id="RibbonStyle::subControlRect" ref="ribbonstyle.html#subControlRect"/>
+            <keyword name="subElementRect" id="RibbonStyle::subElementRect" ref="ribbonstyle.html#subElementRect"/>
+            <keyword name="tabBarHeight" id="RibbonBar::tabBarHeight" ref="ribbonbar.html#tabBarHeight"/>
+            <keyword name="tabBarPosition" id="RibbonBar::tabBarPosition" ref="ribbonbar.html#tabBarPosition-prop"/>
+            <keyword name="tabBarPosition" id="RibbonBar::tabBarPosition" ref="ribbonbar.html#tabBarPosition-prop"/>
+            <keyword name="tabStyle" id="RibbonBackstageButton::tabStyle" ref="ribbonbackstagebutton.html#tabStyle"/>
+            <keyword name="tabStyle" id="RibbonBackstageButton::tabStyle" ref="ribbonbackstagebutton.html#tabStyle-prop"/>
+            <keyword name="tabWidth" id="RibbonPage::tabWidth" ref="ribbonpage.html#tabWidth-prop"/>
+            <keyword name="tabWidth" id="RibbonPage::tabWidth" ref="ribbonpage.html#tabWidth-prop"/>
+            <keyword name="takeItem" id="RibbonGalleryGroup::takeItem" ref="ribbongallerygroup.html#takeItem"/>
+            <keyword name="text" id="RibbonToolTip::text" ref="ribbontooltip.html#text"/>
+            <keyword name="text" id="RibbonToolTip::text" ref="ribbontooltip.html#text-prop"/>
+            <keyword name="theme" id="OfficeStyle::theme" ref="officestyle.html#theme-prop"/>
+            <keyword name="timerEvent" id="RibbonToolTip::timerEvent" ref="ribbontooltip.html#timerEvent"/>
+            <keyword name="tipChanged" id="RibbonToolTip::tipChanged" ref="ribbontooltip.html#tipChanged"/>
+            <keyword name="title" id="RibbonGroup::title" ref="ribbongroup.html#title"/>
+            <keyword name="title" id="RibbonGroup::title" ref="ribbongroup.html#title-prop"/>
+            <keyword name="title" id="RibbonPage::title" ref="ribbonpage.html#title"/>
+            <keyword name="title" id="RibbonPage::title" ref="ribbonpage.html#title-prop"/>
+            <keyword name="title" id="RibbonToolTip::title" ref="ribbontooltip.html#title"/>
+            <keyword name="title" id="RibbonToolTip::title" ref="ribbontooltip.html#title-prop"/>
+            <keyword name="titleBackground" id="RibbonBar::titleBackground" ref="ribbonbar.html#titleBackground"/>
+            <keyword name="titleChanged" id="RibbonGroup::titleChanged" ref="ribbongroup.html#titleChanged"/>
+            <keyword name="titleChanged" id="RibbonPage::titleChanged" ref="ribbonpage.html#titleChanged"/>
+            <keyword name="titleCloseButtonVisible" id="OfficePopupWindow::titleCloseButtonVisible" ref="officepopupwindow.html#titleCloseButtonVisible-prop"/>
+            <keyword name="titleColor" id="RibbonGroup::titleColor" ref="ribbongroup.html#titleColor"/>
+            <keyword name="titleColor" id="RibbonGroup::titleColor" ref="ribbongroup.html#titleColor-prop"/>
+            <keyword name="titleElideMode" id="RibbonGroup::titleElideMode" ref="ribbongroup.html#titleElideMode"/>
+            <keyword name="titleElideMode" id="RibbonGroup::titleElideMode" ref="ribbongroup.html#titleElideMode-prop"/>
+            <keyword name="titleFont" id="RibbonGroup::titleFont" ref="ribbongroup.html#titleFont"/>
+            <keyword name="titleFont" id="RibbonGroup::titleFont" ref="ribbongroup.html#titleFont-prop"/>
+            <keyword name="titleFontChanged" id="RibbonGroup::titleFontChanged" ref="ribbongroup.html#titleFontChanged"/>
+            <keyword name="titleGroupsVisible" id="RibbonBar::titleGroupsVisible" ref="ribbonbar.html#titleGroupsVisible-prop"/>
+            <keyword name="titleIcon" id="OfficePopupWindow::titleIcon" ref="officepopupwindow.html#titleIcon"/>
+            <keyword name="titleIcon" id="OfficePopupWindow::titleIcon" ref="officepopupwindow.html#titleIcon-prop"/>
+            <keyword name="titleText" id="OfficePopupWindow::titleText" ref="officepopupwindow.html#titleText"/>
+            <keyword name="titleText" id="OfficePopupWindow::titleText" ref="officepopupwindow.html#titleText-prop"/>
+            <keyword name="toolBarsByCategory" id="RibbonCustomizeManager::toolBarsByCategory" ref="ribboncustomizemanager.html#toolBarsByCategory"/>
+            <keyword name="toolTip" id="RibbonGalleryItem::toolTip" ref="ribbongalleryitem.html#toolTip"/>
+            <keyword name="tr_compatible" id="RibbonBar::tr_compatible" ref="ribbonbar.html#tr_compatible"/>
+            <keyword name="transitionsEnabled" id="CommonStyle::transitionsEnabled" ref="commonstyle.html#transitionsEnabled"/>
+            <keyword name="transparency" id="OfficePopupWindow::transparency" ref="officepopupwindow.html#transparency"/>
+            <keyword name="transparency" id="OfficePopupWindow::transparency" ref="officepopupwindow.html#transparency-prop"/>
+            <keyword name="unpolish" id="CommonStyle::unpolish" ref="commonstyle.html#unpolish"/>
+            <keyword name="unpolish" id="CommonStyle::unpolish" ref="commonstyle.html#unpolish-1"/>
+            <keyword name="unpolish" id="OfficeStyle::unpolish" ref="officestyle.html#unpolish"/>
+            <keyword name="unpolish" id="OfficeStyle::unpolish" ref="officestyle.html#unpolish-1"/>
+            <keyword name="unpolish" id="RibbonStyle::unpolish" ref="ribbonstyle.html#unpolish"/>
+            <keyword name="unpolish" id="RibbonStyle::unpolish" ref="ribbonstyle.html#unpolish-1"/>
+            <keyword name="updateLayout" id="RibbonBar::updateLayout" ref="ribbonbar.html#updateLayout"/>
+            <keyword name="updateLayout" id="RibbonPage::updateLayout" ref="ribbonpage.html#updateLayout"/>
+            <keyword name="updateRecentFileActions" id="RibbonPageSystemRecentFileList::updateRecentFileActions" ref="ribbonpagesystemrecentfilelist.html#updateRecentFileActions"/>
+            <keyword name="updatelayout" id="RibbonGallery::updatelayout" ref="ribbongallery.html#updatelayout"/>
+            <keyword name="visibleCount" id="RibbonQuickAccessBar::visibleCount" ref="ribbonquickaccessbar.html#visibleCount"/>
+            <keyword name="wheelEvent" id="RibbonBackstageView::wheelEvent" ref="ribbonbackstageview.html#wheelEvent"/>
+            <keyword name="wheelEvent" id="RibbonBar::wheelEvent" ref="ribbonbar.html#wheelEvent"/>
+            <keyword name="wheelEvent" id="RibbonGallery::wheelEvent" ref="ribbongallery.html#wheelEvent"/>
+            <keyword name="wordWrap" id="RibbonToolTip::wordWrap" ref="ribbontooltip.html#wordWrap"/>
+            <keyword name="~CommonStyle" id="CommonStyle::~CommonStyle" ref="commonstyle.html#dtor.CommonStyle"/>
+            <keyword name="~OfficePopupWindow" id="OfficePopupWindow::~OfficePopupWindow" ref="officepopupwindow.html#dtor.OfficePopupWindow"/>
+            <keyword name="~OfficeStyle" id="OfficeStyle::~OfficeStyle" ref="officestyle.html#dtor.OfficeStyle"/>
+            <keyword name="~PopupColorButton" id="PopupColorButton::~PopupColorButton" ref="popupcolorbutton.html#dtor.PopupColorButton"/>
+            <keyword name="~RibbonBackstageButton" id="RibbonBackstageButton::~RibbonBackstageButton" ref="ribbonbackstagebutton.html#dtor.RibbonBackstageButton"/>
+            <keyword name="~RibbonBackstagePage" id="RibbonBackstagePage::~RibbonBackstagePage" ref="ribbonbackstagepage.html#dtor.RibbonBackstagePage"/>
+            <keyword name="~RibbonBackstageSeparator" id="RibbonBackstageSeparator::~RibbonBackstageSeparator" ref="ribbonbackstageseparator.html#dtor.RibbonBackstageSeparator"/>
+            <keyword name="~RibbonBackstageView" id="RibbonBackstageView::~RibbonBackstageView" ref="ribbonbackstageview.html#dtor.RibbonBackstageView"/>
+            <keyword name="~RibbonBar" id="RibbonBar::~RibbonBar" ref="ribbonbar.html#dtor.RibbonBar"/>
+            <keyword name="~RibbonCustomizeDialog" id="RibbonCustomizeDialog::~RibbonCustomizeDialog" ref="ribboncustomizedialog.html#dtor.RibbonCustomizeDialog"/>
+            <keyword name="~RibbonCustomizeManager" id="RibbonCustomizeManager::~RibbonCustomizeManager" ref="ribboncustomizemanager.html#dtor.RibbonCustomizeManager"/>
+            <keyword name="~RibbonGallery" id="RibbonGallery::~RibbonGallery" ref="ribbongallery.html#dtor.RibbonGallery"/>
+            <keyword name="~RibbonGalleryGroup" id="RibbonGalleryGroup::~RibbonGalleryGroup" ref="ribbongallerygroup.html#dtor.RibbonGalleryGroup"/>
+            <keyword name="~RibbonGalleryItem" id="RibbonGalleryItem::~RibbonGalleryItem" ref="ribbongalleryitem.html#dtor.RibbonGalleryItem"/>
+            <keyword name="~RibbonGroup" id="RibbonGroup::~RibbonGroup" ref="ribbongroup.html#dtor.RibbonGroup"/>
+            <keyword name="~RibbonMainWindow" id="RibbonMainWindow::~RibbonMainWindow" ref="ribbonmainwindow.html#dtor.RibbonMainWindow"/>
+            <keyword name="~RibbonPage" id="RibbonPage::~RibbonPage" ref="ribbonpage.html#dtor.RibbonPage"/>
+            <keyword name="~RibbonPageSystemRecentFileList" id="RibbonPageSystemRecentFileList::~RibbonPageSystemRecentFileList" ref="ribbonpagesystemrecentfilelist.html#dtor.RibbonPageSystemRecentFileList"/>
+            <keyword name="~RibbonQuickAccessBar" id="RibbonQuickAccessBar::~RibbonQuickAccessBar" ref="ribbonquickaccessbar.html#dtor.RibbonQuickAccessBar"/>
+            <keyword name="~RibbonStatusBar" id="RibbonStatusBar::~RibbonStatusBar" ref="ribbonstatusbar.html#dtor.RibbonStatusBar"/>
+            <keyword name="~RibbonStyle" id="RibbonStyle::~RibbonStyle" ref="ribbonstyle.html#dtor.RibbonStyle"/>
+            <keyword name="~RibbonSystemPopupBar" id="RibbonSystemPopupBar::~RibbonSystemPopupBar" ref="ribbonsystempopupbar.html#dtor.RibbonSystemPopupBar"/>
+            <keyword name="~RibbonToolTip" id="RibbonToolTip::~RibbonToolTip" ref="ribbontooltip.html#dtor.RibbonToolTip"/>
+        </keywords>
+        <files>
+            <file>classes.html</file>
+            <file>classlists.html</file>
+            <file>commonstyle-members.html</file>
+            <file>commonstyle.html</file>
+            <file>images/arrow_bc.png</file>
+            <file>images/bgrContent.png</file>
+            <file>images/btn_next.png</file>
+            <file>images/btn_prev.png</file>
+            <file>images/bullet_dn.png</file>
+            <file>images/bullet_sq.png</file>
+            <file>images/dm_logo64x64.png</file>
+            <file>images/dm_topheader.png</file>
+            <file>images/home.png</file>
+            <file>images/ico_note.png</file>
+            <file>images/ico_note_attention.png</file>
+            <file>images/ico_out.png</file>
+            <file>images/qtitanribbon.png</file>
+            <file>images/qtitanribbon_banner.png</file>
+            <file>images/qtitanribbon_quickstart_pic1.png</file>
+            <file>images/qtitanribbon_quickstart_pic10.png</file>
+            <file>images/qtitanribbon_quickstart_pic11.png</file>
+            <file>images/qtitanribbon_quickstart_pic12.png</file>
+            <file>images/qtitanribbon_quickstart_pic13.png</file>
+            <file>images/qtitanribbon_quickstart_pic14.png</file>
+            <file>images/qtitanribbon_quickstart_pic15.png</file>
+            <file>images/qtitanribbon_quickstart_pic16.png</file>
+            <file>images/qtitanribbon_quickstart_pic17.png</file>
+            <file>images/qtitanribbon_quickstart_pic18.png</file>
+            <file>images/qtitanribbon_quickstart_pic19.png</file>
+            <file>images/qtitanribbon_quickstart_pic2.png</file>
+            <file>images/qtitanribbon_quickstart_pic20.png</file>
+            <file>images/qtitanribbon_quickstart_pic21.png</file>
+            <file>images/qtitanribbon_quickstart_pic22.png</file>
+            <file>images/qtitanribbon_quickstart_pic23.png</file>
+            <file>images/qtitanribbon_quickstart_pic3.png</file>
+            <file>images/qtitanribbon_quickstart_pic4.png</file>
+            <file>images/qtitanribbon_quickstart_pic5.png</file>
+            <file>images/qtitanribbon_quickstart_pic6.png</file>
+            <file>images/qtitanribbon_quickstart_pic7.png</file>
+            <file>images/qtitanribbon_quickstart_pic8.png</file>
+            <file>images/qtitanribbon_quickstart_pic9.png</file>
+            <file>images/ribbon_colorbutton.png</file>
+            <file>images/ribbonui_officepopupwindow1.png</file>
+            <file>images/ribbonui_officepopupwindow2.png</file>
+            <file>images/ribbonui_officepopupwindow3.png</file>
+            <file>images/ribbonui_officepopupwindow4.png</file>
+            <file>images/ribbonui_officepopupwindow5.png</file>
+            <file>index.html</file>
+            <file>license.html</file>
+            <file>officepopupwindow-members.html</file>
+            <file>officepopupwindow.html</file>
+            <file>officestyle-members.html</file>
+            <file>officestyle.html</file>
+            <file>popupcolorbutton-members.html</file>
+            <file>popupcolorbutton.html</file>
+            <file>qtitanribbonchangelog.html</file>
+            <file>qtitanribbonquickstart.html</file>
+            <file>ribbonbackstagebutton-members.html</file>
+            <file>ribbonbackstagebutton.html</file>
+            <file>ribbonbackstagepage-members.html</file>
+            <file>ribbonbackstagepage.html</file>
+            <file>ribbonbackstageseparator-members.html</file>
+            <file>ribbonbackstageseparator.html</file>
+            <file>ribbonbackstageview-members.html</file>
+            <file>ribbonbackstageview.html</file>
+            <file>ribbonbar-members.html</file>
+            <file>ribbonbar.html</file>
+            <file>ribboncustomizedialog-members.html</file>
+            <file>ribboncustomizedialog.html</file>
+            <file>ribboncustomizemanager-members.html</file>
+            <file>ribboncustomizemanager.html</file>
+            <file>ribbongallery-members.html</file>
+            <file>ribbongallery.html</file>
+            <file>ribbongallerygroup-members.html</file>
+            <file>ribbongallerygroup.html</file>
+            <file>ribbongalleryitem-members.html</file>
+            <file>ribbongalleryitem.html</file>
+            <file>ribbongroup-members.html</file>
+            <file>ribbongroup.html</file>
+            <file>ribbonmainwindow-members.html</file>
+            <file>ribbonmainwindow.html</file>
+            <file>ribbonpage-members.html</file>
+            <file>ribbonpage.html</file>
+            <file>ribbonpagesystemrecentfilelist-members.html</file>
+            <file>ribbonpagesystemrecentfilelist.html</file>
+            <file>ribbonquickaccessbar-members.html</file>
+            <file>ribbonquickaccessbar.html</file>
+            <file>ribbonstatusbar-members.html</file>
+            <file>ribbonstatusbar.html</file>
+            <file>ribbonstyle-members.html</file>
+            <file>ribbonstyle.html</file>
+            <file>ribbonsystempopupbar-members.html</file>
+            <file>ribbonsystempopupbar.html</file>
+            <file>ribbontooltip-members.html</file>
+            <file>ribbontooltip.html</file>
+            <file>style/online.css</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

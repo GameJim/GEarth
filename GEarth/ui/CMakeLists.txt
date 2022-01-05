@@ -3,10 +3,8 @@ project(ui)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add sub directories
-# add_subdirectory(common)
-
-# set_property(TARGET common PROPERTY FOLDER ui)
-
+add_subdirectory(symboldesigner)
+set_property(TARGET SymbolDesigner PROPERTY FOLDER ui)
 
 
 

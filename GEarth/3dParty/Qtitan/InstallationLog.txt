@@ -1,0 +1,142 @@
+************************************* Invoked: 周二 五月 15 14:40:32 2018
+Operations start: 141885
+Operations end: 16
+Resource count: 1
+Data block size: 28527951
+Magic marker: 302133811
+Magic cookie: 14007050384008702200
+Index size: 48
+End of data: 42932047
+Number of operations: 0
+Warning: libpng warning: iCCP: known incorrect sRGB profile (:0, )
+StartMenuPath: 	 "C:\\Users\\luoty\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs"
+DesktopDir: 	 "C:\\Users\\luoty\\Desktop"
+Operations sanity check succeeded.
+Unable to open translated license file. Using untranslated fallback.
+components list is empty in bool __thiscall QInstaller::PackageManagerCorePrivate::appendComponentsToUninstall(const class QList<class QInstaller::Component *> &)
+Tmp and install folder are on the same volume. Volume mount point: "C:\\" Free space available: "35.50 GiB"
+Installation space required: "94.09 MiB" Temporary space required: "0.00 bytes" Local repository size: "0.00 bytes"
+perform  operation: Mkdir
+\t- arguments: C:/Program Files (x86)/Developer Machines
+Done
+backup  operation: Mkdir
+\t- arguments: C:/Program Files (x86)/Developer Machines/QtitanRibbon
+Done
+perform  operation: Mkdir
+\t- arguments: C:/Program Files (x86)/Developer Machines/QtitanRibbon
+Done
+Install size: 7 components
+backup devmachines.qt operation: Extract
+\t- arguments: installer://devmachines.qt/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.qt operation: Extract
+\t- arguments: installer://devmachines.qt/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1content.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1content.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1include.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1include.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1src.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.public operation: Extract
+\t- arguments: installer://devmachines.public/4.17.1src.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1res.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1res.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1src.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1src.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1translations.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.private operation: Extract
+\t- arguments: installer://devmachines.private/4.17.1translations.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.docs operation: Extract
+\t- arguments: installer://devmachines.docs/4.17.1documentation.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.docs operation: Extract
+\t- arguments: installer://devmachines.docs/4.17.1documentation.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.misc operation: Extract
+\t- arguments: installer://devmachines.misc/4.17.1content.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.misc operation: Extract
+\t- arguments: installer://devmachines.misc/4.17.1content.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.misc operation: Extract
+\t- arguments: installer://devmachines.misc/4.17.1Licenses.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.misc operation: Extract
+\t- arguments: installer://devmachines.misc/4.17.1Licenses.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.misc operation: License
+\t- arguments: 
+Done
+perform devmachines.misc operation: License
+\t- arguments: 
+Done
+backup devmachines.designer operation: Extract
+\t- arguments: installer://devmachines.designer/4.17.1designer.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.designer operation: Extract
+\t- arguments: installer://devmachines.designer/4.17.1designer.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.designer operation: Extract
+\t- arguments: installer://devmachines.designer/4.17.1qtcreator.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.designer operation: Extract
+\t- arguments: installer://devmachines.designer/4.17.1qtcreator.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.designer operation: CopyDirectory
+\t- arguments: C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon/qtcreator/wizards/, C:/Qt/Qt5.6.3/Tools/QtCreator/share/qtcreator/templates/wizards/
+Done
+perform devmachines.designer operation: CopyDirectory
+\t- arguments: C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon/qtcreator/wizards/, C:/Qt/Qt5.6.3/Tools/QtCreator/share/qtcreator/templates/wizards/
+Done
+backup devmachines.demo operation: Extract
+\t- arguments: installer://devmachines.demo/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.demo operation: Extract
+\t- arguments: installer://devmachines.demo/4.17.1bin.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+backup devmachines.demo operation: Extract
+\t- arguments: installer://devmachines.demo/4.17.1demos.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+perform devmachines.demo operation: Extract
+\t- arguments: installer://devmachines.demo/4.17.1demos.7z, C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon
+Done
+create Error-Exception: "ò??òμ??t????êy?Y???t￡?μ?×÷?a°2×°3ìDòó|??′ó×??oμ??t???????t?D?áè??t????×ê?′!"
+Operations start: 141885
+Operations end: 16
+Resource count: 1
+Data block size: 28527951
+Magic marker: 302133811
+Magic cookie: 14007050384008702200
+Index size: 48
+End of data: 42932047
+Writing uninstaller: "C:\\Program Files (x86)\\Developer Machines\\QtitanRibbon/Uninstall.exe.new"
+Maintenance tool restart: false.
+SHOW FINISHED PAGE

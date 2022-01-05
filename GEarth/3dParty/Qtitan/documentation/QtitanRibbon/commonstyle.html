@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- QtnCommonStyle.qdoc -->
+  <title>CommonStyle Class | QtitanRibbon 4.17</title>
+  <link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="qtdocheader"></div>
+    <div class="nav" id="qt13a-header">
+        <div class="qt13a-gradient">
+        <div class="qt13a-container qt13a-dynamicREMOVE" >
+                <div id="qt13a-register">
+                    <a href="http://www.devmachines.com">Home</a>
+                    <a href="http://www.devmachines.com/tech-support.html">Tech Support</a>
+                </div>
+                <div class="qt13a-sixCol">
+                    <div id="qt13a-logo">
+                        <a href="http://www.devmachines.com" class="qt13a-site-logo">
+                            <img src="images/dm_logo64x64.png" alt="Developer Machines"></img>
+                        </a>
+                    </div>
+                    <div id="qt13a-title_nav">
+                        <div id="qt13a-title">
+                                <p class="qt13a-title">QtitanRibbon Documentation</p>
+                        </div>
+                            <div class="qt13a-nav">
+                                <ul>
+                                    <li>
+                                        <a href="index.html">Index</a>
+                                    </li>
+                                    <li>
+                                        <a href="classes.html">All Classes</a>
+                                    </li>
+                                    <li>
+                                        <a href="examples.html">Examples</a>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+            <ul>
+<li>CommonStyle</li>
+            </ul>
+        </div>
+<div class="content">
+    <div class="line">
+        <div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#protected-functions">Protected Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title">CommonStyle Class</h1>
+<!-- $$$CommonStyle-brief -->
+<p><a href="commonstyle.html">CommonStyle</a> is an intermediate class between QWindowsStyle and <a href="officestyle.html">OfficeStyle</a>, it implements some of the supporting mechanisms. <a href="#details">More...</a></p>
+<!-- @@@CommonStyle -->
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;CommonStyle&gt;</span>
+</td></tr><tr><td class="memItemLeft rightAlign topAlign"> Inherited By:</td><td class="memItemRight bottomAlign"> <p><a href="officestyle.html">OfficeStyle</a></p>
+</td></tr></table></div><ul>
+<li><a href="commonstyle-members.html">List of all members, including inherited members</a></li>
+</ul>
+<a name="public-functions"></a>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#drawComplexControl">drawComplexControl</a></b>(ComplexControl <i>cc</i>, const QStyleOptionComplex *<i>opt</i>, QPainter *<i>p</i>, const QWidget *<i>widget</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#drawControl">drawControl</a></b>(ControlElement <i>element</i>, const QStyleOption *<i>opt</i>, QPainter *<i>p</i>, const QWidget *<i>widget</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#drawPrimitive">drawPrimitive</a></b>(PrimitiveElement <i>pe</i>, const QStyleOption *<i>option</i>, QPainter *<i>p</i>, const QWidget *<i>widget</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QColor </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#getThemeColor">getThemeColor</a></b>(const QString &amp;<i>sectionName</i>, const QString &amp;<i>keyName</i>, QColor <i>color</i> = QColor()) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#pixelMetric">pixelMetric</a></b>(PixelMetric <i>pm</i>, const QStyleOption *<i>option</i> = 0, const QWidget *<i>widget</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#polish">polish</a></b>(QApplication *<i>pApp</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#polish-1">polish</a></b>(QWidget *<i>widget</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QSize </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#sizeFromContents">sizeFromContents</a></b>(ContentsType <i>ct</i>, const QStyleOption *<i>opt</i>, const QSize &amp;<i>contentsSize</i>, const QWidget *<i>w</i> = 0) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QIcon </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#standardIcon">standardIcon</a></b>(StandardPixmap <i>standardIcon</i>, const QStyleOption *<i>opt</i> = Q_NULL, const QWidget *<i>widget</i> = Q_NULL) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual int </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#styleHint">styleHint</a></b>(StyleHint <i>hint</i>, const QStyleOption *<i>opt</i> = Q_NULL, const QWidget *<i>widget</i> = Q_NULL, QStyleHintReturn *<i>returnData</i> = Q_NULL) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual QRect </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#subControlRect">subControlRect</a></b>(ComplexControl <i>cc</i>, const QStyleOptionComplex *<i>opt</i>, SubControl <i>sc</i>, const QWidget *<i>widget</i>) const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#unpolish">unpolish</a></b>(QApplication *<i>app</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual void </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#unpolish-1">unpolish</a></b>(QWidget *<i>widget</i>)</td></tr>
+</table></div>
+<a name="protected-functions"></a>
+<h2 id="protected-functions">Protected Functions</h2>
+<div class="table"><table class="alignedsummary">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#CommonStyle">CommonStyle</a></b>(CommonStylePrivate &amp;<i>d</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#dtor.CommonStyle">~CommonStyle</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#event">event</a></b>(QEvent *<i>e</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#eventFilter">eventFilter</a></b>(QObject *<i>watched</i>, QEvent *<i>event</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> virtual bool </td><td class="memItemRight bottomAlign"><b><a href="commonstyle.html#transitionsEnabled">transitionsEnabled</a></b>() const</td></tr>
+</table></div>
+<a name="details"></a>
+<!-- $$$CommonStyle-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p><a href="commonstyle.html">CommonStyle</a> is an intermediate class between QWindowsStyle and <a href="officestyle.html">OfficeStyle</a>, it implements some of the supporting mechanisms.</p>
+</div>
+<!-- @@@CommonStyle -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$CommonStyle[overload1]$$$CommonStyleCommonStylePrivate& -->
+<h3 class="fn" id="CommonStyle"><a name="CommonStyle"></a><code>[protected] </code>CommonStyle::<span class="name">CommonStyle</span>(<span class="type">CommonStylePrivate</span> &amp;<i>d</i>)</h3>
+<p>Constuctor of <a href="commonstyle.html">CommonStyle</a> class. You can't use this class directly.</p>
+<p><b>See also </b><a href="officestyle.html">OfficeStyle</a> and <a href="ribbonstyle.html">RibbonStyle</a>.</p>
+<!-- @@@CommonStyle -->
+<!-- $$$~CommonStyle[overload1]$$$~CommonStyle -->
+<h3 class="fn" id="dtor.CommonStyle"><a name="dtor.CommonStyle"></a><code>[virtual protected] </code>CommonStyle::<span class="name">~CommonStyle</span>()</h3>
+<p>Destroys the instance of CommonStyle. The destructor is virtual.</p><!-- @@@~CommonStyle -->
+<!-- $$$drawComplexControl[overload1]$$$drawComplexControlComplexControlconstQStyleOptionComplex*QPainter*constQWidget* -->
+<h3 class="fn" id="drawComplexControl"><a name="drawComplexControl"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">drawComplexControl</span>(<span class="type">ComplexControl</span> <i>cc</i>, const <span class="type">QStyleOptionComplex</span> *<i>opt</i>, <span class="type">QPainter</span> *<i>p</i>, const <span class="type">QWidget</span> *<i>widget</i> = 0) const</h3>
+<!-- @@@drawComplexControl -->
+<!-- $$$drawControl[overload1]$$$drawControlControlElementconstQStyleOption*QPainter*constQWidget* -->
+<h3 class="fn" id="drawControl"><a name="drawControl"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">drawControl</span>(<span class="type">ControlElement</span> <i>element</i>, const <span class="type">QStyleOption</span> *<i>opt</i>, <span class="type">QPainter</span> *<i>p</i>, const <span class="type">QWidget</span> *<i>widget</i> = 0) const</h3>
+<!-- @@@drawControl -->
+<!-- $$$drawPrimitive[overload1]$$$drawPrimitivePrimitiveElementconstQStyleOption*QPainter*constQWidget* -->
+<h3 class="fn" id="drawPrimitive"><a name="drawPrimitive"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">drawPrimitive</span>(<span class="type">PrimitiveElement</span> <i>pe</i>, const <span class="type">QStyleOption</span> *<i>option</i>, <span class="type">QPainter</span> *<i>p</i>, const <span class="type">QWidget</span> *<i>widget</i> = 0) const</h3>
+<!-- @@@drawPrimitive -->
+<!-- $$$event[overload1]$$$eventQEvent* -->
+<h3 class="fn" id="event"><a name="event"></a><code>[virtual protected] </code><span class="type">bool</span> CommonStyle::<span class="name">event</span>(<span class="type">QEvent</span> *<i>e</i>)</h3>
+<!-- @@@event -->
+<!-- $$$eventFilter[overload1]$$$eventFilterQObject*QEvent* -->
+<h3 class="fn" id="eventFilter"><a name="eventFilter"></a><code>[virtual protected] </code><span class="type">bool</span> CommonStyle::<span class="name">eventFilter</span>(<span class="type">QObject</span> *<i>watched</i>, <span class="type">QEvent</span> *<i>event</i>)</h3>
+<!-- @@@eventFilter -->
+<!-- $$$getThemeColor[overload1]$$$getThemeColorconstQString&constQString&QColor -->
+<h3 class="fn" id="getThemeColor"><a name="getThemeColor"></a><span class="type">QColor</span> CommonStyle::<span class="name">getThemeColor</span>(const <span class="type">QString</span> &amp;<i>sectionName</i>, const <span class="type">QString</span> &amp;<i>keyName</i>, <span class="type">QColor</span> <i>color</i> = QColor()) const</h3>
+<!-- @@@getThemeColor -->
+<!-- $$$pixelMetric[overload1]$$$pixelMetricPixelMetricconstQStyleOption*constQWidget* -->
+<h3 class="fn" id="pixelMetric"><a name="pixelMetric"></a><code>[virtual] </code><span class="type">int</span> CommonStyle::<span class="name">pixelMetric</span>(<span class="type">PixelMetric</span> <i>pm</i>, const <span class="type">QStyleOption</span> *<i>option</i> = 0, const <span class="type">QWidget</span> *<i>widget</i> = 0) const</h3>
+<!-- @@@pixelMetric -->
+<!-- $$$polish[overload1]$$$polishQApplication* -->
+<h3 class="fn" id="polish"><a name="polish"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">polish</span>(<span class="type">QApplication</span> *<i>pApp</i>)</h3>
+<!-- @@@polish -->
+<!-- $$$polish$$$polishQWidget* -->
+<h3 class="fn" id="polish-1"><a name="polish-1"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">polish</span>(<span class="type">QWidget</span> *<i>widget</i>)</h3>
+<!-- @@@polish -->
+<!-- $$$sizeFromContents[overload1]$$$sizeFromContentsContentsTypeconstQStyleOption*constQSize&constQWidget* -->
+<h3 class="fn" id="sizeFromContents"><a name="sizeFromContents"></a><code>[virtual] </code><span class="type">QSize</span> CommonStyle::<span class="name">sizeFromContents</span>(<span class="type">ContentsType</span> <i>ct</i>, const <span class="type">QStyleOption</span> *<i>opt</i>, const <span class="type">QSize</span> &amp;<i>contentsSize</i>, const <span class="type">QWidget</span> *<i>w</i> = 0) const</h3>
+<!-- @@@sizeFromContents -->
+<!-- $$$standardIcon[overload1]$$$standardIconStandardPixmapconstQStyleOption*constQWidget* -->
+<h3 class="fn" id="standardIcon"><a name="standardIcon"></a><code>[virtual] </code><span class="type">QIcon</span> CommonStyle::<span class="name">standardIcon</span>(<span class="type">StandardPixmap</span> <i>standardIcon</i>, const <span class="type">QStyleOption</span> *<i>opt</i> = Q_NULL, const <span class="type">QWidget</span> *<i>widget</i> = Q_NULL) const</h3>
+<!-- @@@standardIcon -->
+<!-- $$$styleHint[overload1]$$$styleHintStyleHintconstQStyleOption*constQWidget*QStyleHintReturn* -->
+<h3 class="fn" id="styleHint"><a name="styleHint"></a><code>[virtual] </code><span class="type">int</span> CommonStyle::<span class="name">styleHint</span>(<span class="type">StyleHint</span> <i>hint</i>, const <span class="type">QStyleOption</span> *<i>opt</i> = Q_NULL, const <span class="type">QWidget</span> *<i>widget</i> = Q_NULL, <span class="type">QStyleHintReturn</span> *<i>returnData</i> = Q_NULL) const</h3>
+<!-- @@@styleHint -->
+<!-- $$$subControlRect[overload1]$$$subControlRectComplexControlconstQStyleOptionComplex*SubControlconstQWidget* -->
+<h3 class="fn" id="subControlRect"><a name="subControlRect"></a><code>[virtual] </code><span class="type">QRect</span> CommonStyle::<span class="name">subControlRect</span>(<span class="type">ComplexControl</span> <i>cc</i>, const <span class="type">QStyleOptionComplex</span> *<i>opt</i>, <span class="type">SubControl</span> <i>sc</i>, const <span class="type">QWidget</span> *<i>widget</i>) const</h3>
+<!-- @@@subControlRect -->
+<!-- $$$transitionsEnabled[overload1]$$$transitionsEnabled -->
+<h3 class="fn" id="transitionsEnabled"><a name="transitionsEnabled"></a><code>[virtual protected] </code><span class="type">bool</span> CommonStyle::<span class="name">transitionsEnabled</span>() const</h3>
+<!-- @@@transitionsEnabled -->
+<!-- $$$unpolish[overload1]$$$unpolishQApplication* -->
+<h3 class="fn" id="unpolish"><a name="unpolish"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">unpolish</span>(<span class="type">QApplication</span> *<i>app</i>)</h3>
+<!-- @@@unpolish -->
+<!-- $$$unpolish$$$unpolishQWidget* -->
+<h3 class="fn" id="unpolish-1"><a name="unpolish-1"></a><code>[virtual] </code><span class="type">void</span> CommonStyle::<span class="name">unpolish</span>(<span class="type">QWidget</span> *<i>widget</i>)</h3>
+<!-- @@@unpolish -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+    <p>
+      <acronym title="Copyright">&copy;</acronym> 2009-2017 Developer Machines<br><br>       Qt and their respective logos are trademarks of Digia Corporation 
+      in Finland and/or other countries worldwide.</p>
+    <p>
+      All other trademarks are property of their respective owners. <a title="Privacy Policy"
+        href="http://www.devmachines.com/company/privacy-policy.html">Privacy Policy</a></p>
+</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17002018-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</body>
+</html>

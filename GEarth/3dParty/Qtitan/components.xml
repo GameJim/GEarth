@@ -1,0 +1,83 @@
+<Packages>
+    <ApplicationName>QtitanRibbon 4.17.1 for Qt.C++ (Licensed Source Code)</ApplicationName>
+    <ApplicationVersion>4.17.1</ApplicationVersion>
+    <Package>
+        <Name>devmachines.qt</Name>
+        <Pixmap></Pixmap>
+        <Title>Qt Framework</Title>
+        <Description>Installation of Qt libraries that were used to build the QtitanRibbon binaries. This option allows you to avoid problems with the launch of the demo examples due to a mismatch of Qt versions.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>44771944</Size>
+        <Dependencies></Dependencies>
+    </Package>
+    <Package>
+        <Name>devmachines.public</Name>
+        <Pixmap></Pixmap>
+        <Title>QtitanRibbon Headers &amp; Libraries</Title>
+        <Description>QtitanRibbon Public Qt.C++ Headers &amp; Libraries.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>23438799</Size>
+        <Dependencies></Dependencies>
+    </Package>
+    <Package>
+        <Name>devmachines.private</Name>
+        <Pixmap></Pixmap>
+        <Title>Licensed Source Code</Title>
+        <Description>QtitanRibbon Source Code (Private C++ Headers &amp; Files)</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>5457021</Size>
+        <Dependencies></Dependencies>
+    </Package>
+    <Package>
+        <Name>devmachines.docs</Name>
+        <Pixmap></Pixmap>
+        <Title>Documentation</Title>
+        <Description>QtitanRibbon component documentation in HTML and QCH formats.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>7886974</Size>
+        <Dependencies></Dependencies>
+    </Package>
+    <Package>
+        <Name>devmachines.misc</Name>
+        <Pixmap></Pixmap>
+        <Title>Misc Files</Title>
+        <Description>Misc Files.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>30851</Size>
+        <Dependencies></Dependencies>
+        <ForcedInstallation>true</ForcedInstallation>
+        <Virtual>true</Virtual>
+    </Package>
+    <Package>
+        <Name>devmachines.designer</Name>
+        <Pixmap></Pixmap>
+        <Title>Plugin for Qt-Designer</Title>
+        <Description>QtitanRibbon design-time plugin. Allows add component to UI form in Qt-Designer.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>3907725</Size>
+        <Dependencies>devmachines.public</Dependencies>
+    </Package>
+    <Package>
+        <Name>devmachines.demo</Name>
+        <Pixmap></Pixmap>
+        <Title>Demos &amp; Examples</Title>
+        <Description>QtitanRibbon Demo &amp; Examples. Contains Qt-Projects and binaries for demonstration of main product's features.</Description>
+        <Version>4.17.1</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2018-05-15</InstallDate>
+        <Size>4194020</Size>
+        <Dependencies>devmachines.public,devmachines.designer</Dependencies>
+    </Package>
+</Packages>
