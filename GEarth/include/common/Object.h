@@ -6,9 +6,9 @@
 #pragma once
 #include "Common/byte.h"
 #include "Common/ApiDescription.h"
-#include "Common/Subject.h"
 #include <assert.h>
-#include <memory>
+
+
 class CORE_PUBLIC CObject 
 {
 public:
