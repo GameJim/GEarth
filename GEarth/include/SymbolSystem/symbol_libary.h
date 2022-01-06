@@ -1,0 +1,68 @@
+﻿/*!
+*@File    symbol_libary.h
+*@Brief   文件描述:下次一定
+*@Date    2021/12/22
+*/
+#pragma once
+#include "Common/Object.h"
+#include "Common/Image.h"
+#include "Common/object_manager.h"
+#include "SymbolSystem/marker_symbol.h"
+#include "SymbolSystem/line_symbol.h"
+#include "SymbolSystem/fill_symbol.h"
+#include "SymbolSystem/animation_symbol.h"
+#include "SymbolSystem/custom_symbol.h"
+#include <string>
+class CORE_PUBLIC SymbolLibary : public CObject
+{
+public:
+	SymbolLibary();
+    SymbolLibary(const std::string& sPath);
+	virtual ~SymbolLibary() = default;
+
+	bool Save2File(const std::string& sPath);
+
+	/*!
+	/* @Brief:     序列化
+	/* @Date:      2021/12/21
+	/* @Parameter: CByte* data
+	/* @Return     void
+	*/
+	virtual void Serialize(CByte& data);
+
+	/*!
+	/* @Brief:     反序列化
+	/* @Date:      2021/12/22
+	/* @Parameter: CByte & data
+	/* @Return     void
+	*/
+	virtual void Deserialize(CByte& data);
+
+	/*!
+	/* @Brief:     获取字节大小
+	/* @Date:      2021/12/22
+	/* @Return     size_t
+	*/
+	virtual size_t GetSize();
+
+
+    virtual std::string GetName();
+
+    virtual void SetName(const std::string& sName);
+public:
+
+    /*!
+    /* @Brief:     从文件中导入符号库
+    /* @Date:      2021/12/30
+    /* @Parameter: const std::string & sPath
+    /* @Return     bool
+    */
+    bool LoadFromFile(const std::string& sPath);
+
+protected:
+    std::string m_sName; //符号库的名称
+ 	std::string m_sVer;  //数据版本
+	std::vector<std::shared_ptr<Symbol>>  m_pSymbols; //符号组
+};
+
+
