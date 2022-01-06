@@ -40,17 +40,17 @@ void CMainWindow::CreateSymbolLibraryPage(RibbonPage* pPage)
 
 	RibbonToolBarControl* toolBar = new RibbonToolBarControl();
 	//打开，绑定事件
-	QAction* pAction =toolBar->addAction(QIcon(QStringLiteral("./res/NewFile.png")), tr("New"), Qt::ToolButtonTextUnderIcon);
+	QAction* pAction =toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/NewFile.png")), tr("New"), Qt::ToolButtonTextUnderIcon);
 	connect(pAction, SIGNAL(triggered()), this, SLOT(CreateSymbolLibary()));
 
 
-	pAction = toolBar->addAction(QIcon(QStringLiteral("./res/OpenFile.png")), tr("Open"), Qt::ToolButtonTextUnderIcon);
+	pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/OpenFile.png")), tr("Open"), Qt::ToolButtonTextUnderIcon);
 	connect(pAction, SIGNAL(triggered()), this, SLOT(OpenSymbolLibary()));
 
-	toolBar->addAction(QIcon(QStringLiteral("./res/Save.png")), tr("Save"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Save.png")), tr("Save"), Qt::ToolButtonTextUnderIcon);
 	toolBar->addSeparator();
-	toolBar->addAction(QIcon(QStringLiteral("./res/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
 	group->addControl(toolBar);
 }
 
@@ -63,9 +63,9 @@ void CMainWindow::CreateWindowsPage(RibbonPage* pPage)
 	toolBar->addAction(QIcon(QStringLiteral("./res/OpenFile.png")), tr("Open"), Qt::ToolButtonTextUnderIcon);
 	toolBar->addAction(QIcon(QStringLiteral("./res/Save.png")), tr("Save"), Qt::ToolButtonTextUnderIcon);*/
 
-	toolBar->addAction(QIcon(QStringLiteral("./res/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/Setting.png")), tr("Setiting2"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
+	toolBar->addAction(QIcon(QStringLiteral("./res/ui/symboldesigner/Setting.png")), tr("Setiting2"), Qt::ToolButtonTextUnderIcon);
 	group->addControl(toolBar);
 }
 
