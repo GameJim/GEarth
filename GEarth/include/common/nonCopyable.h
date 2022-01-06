@@ -1,13 +1,16 @@
-#pragma once
-#include "Common/ApiDescription.h"
-//≤ªø…øΩ±¥¿‡
-class CORE_PUBLIC CNonCopyable
+Ôªø#pragma once
+#include "common/apiDescription.h"
+//‰∏çÂèØÊã∑Ë¥ùÁ±ª
+namespace COMMON_NAMESPACE
 {
-public:
-	CNonCopyable() = default;
-	CNonCopyable& operator=(const CNonCopyable&) = delete;
-	CNonCopyable(const CNonCopyable&) = delete;
+    class CORE_PUBLIC CNonCopyable
+    {
+    public:
+        CNonCopyable() = default;
+        CNonCopyable& operator=(const CNonCopyable&) = delete;
+        CNonCopyable(const CNonCopyable&) = delete;
 
-protected:
-	virtual ~CNonCopyable() = default;
-};
+    protected:
+        virtual ~CNonCopyable() = default;
+    };
+}

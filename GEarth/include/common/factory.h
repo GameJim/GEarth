@@ -1,19 +1,21 @@
-#pragma once
-#include "Common/NonCopyable.h"
+ï»¿#pragma once
+#include "common/mutexable.h"
 
-//¹¤³§Àà,µ¥ÀıÄ£Ê½
-template<class T>
-class CORE_PUBLIC CFactory : public CNonCopyable
+//å·¥å‚ç±»,æ”¯æŒå¤šçº¿ç¨‹
+namespace COMMON_NAMESPACE
 {
-public:
-	virtual ~CFactory() = default;
-	static T& GetInstance()
-	{
-		//¶ÔÏó
-		static T m_Factory;
-		return m_Factory;
-	}
-protected:
-	CFactory() = default;
-};
-
+    template<class T>
+    class CORE_PUBLIC CFactory : public CMutexable
+    {
+    public:
+        virtual ~CFactory() = default;
+        static T& GetInstance()
+        {
+            //å¯¹è±¡
+            static T m_Factory;
+            return m_Factory;
+        }
+    protected:
+        CFactory() = default;
+    };
+}

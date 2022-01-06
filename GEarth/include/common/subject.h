@@ -1,48 +1,52 @@
-#pragma once
-#include "Common/NonCopyable.h"
+ï»¿#pragma once
+#include "common/noncopyable.h"
 #include <set>
 
-class IObserver;
-class CORE_PUBLIC CSubject 
+namespace COMMON_NAMESPACE
 {
-public:
-	/*!
-	/* @Brief:     Ìí¼Ó¹Û²ìÕß
-	/* @Date:      2021/12/21
-	/* @FullName:  CSubject::Attach
-	/* @Parameter: IObserver * pObserver
-	/* @Return     void
-	*/
-	virtual void Attach(IObserver* pObserver);
-	/*!
-	/* @Brief:     ÒÆ³ı¹Û²ìÕß
-	/* @Date:      2021/12/21
-	/* @FullName:  CSubject::Detach
-	/* @Parameter: IObserver * pObserver
-	/* @Return     void
-	*/
-	virtual void Detach(IObserver* pObserver);
-	/*!
-	/* @Brief:     Í¨Öª¹Û²ìÕß·¢Éú±ä¸ü
-	/* @Date:      2021/12/21
-	/* @FullName:  CSubject::Notify
-	/* @Parameter: unsigned & nEvent
-	/* @Parameter: void * data
-	/* @Return     void
-	*/
-	virtual void Notify(unsigned& nEvent,void* data);
+    class IObserver;
+    class CORE_PUBLIC CSubject
+    {
+    public:
+        /*!
+        /* @Brief:     æ·»åŠ è§‚å¯Ÿè€…
+        /* @Date:      2021/12/21
+        /* @FullName:  CSubject::Attach
+        /* @Parameter: IObserver * pObserver
+        /* @Return     void
+        */
+        virtual void Attach(IObserver* pObserver);
+        /*!
+        /* @Brief:     ç§»é™¤è§‚å¯Ÿè€…
+        /* @Date:      2021/12/21
+        /* @FullName:  CSubject::Detach
+        /* @Parameter: IObserver * pObserver
+        /* @Return     void
+        */
+        virtual void Detach(IObserver* pObserver);
+        /*!
+        /* @Brief:     é€šçŸ¥è§‚å¯Ÿè€…å‘ç”Ÿå˜æ›´
+        /* @Date:      2021/12/21
+        /* @FullName:  CSubject::Notify
+        /* @Parameter: unsigned & nEvent
+        /* @Parameter: void * data
+        /* @Return     void
+        */
+        virtual void Notify(unsigned& nEvent, void* data);
 
-	
-	/*!
-	/* @Brief:     ĞèÒª¿½±´¹Û²ìÕß
-	/* @Date:      2021/12/22
-	/* @Parameter: const CSubject & other
-	/* @Return     CSubject&
-	*/
-	virtual CSubject& operator=(const CSubject& other);
-protected:
-	CSubject() = default;
-	virtual ~CSubject();
-	std::set<IObserver*> m_pObserver;
-};
+
+        /*!
+        /* @Brief:     éœ€è¦æ‹·è´è§‚å¯Ÿè€…
+        /* @Date:      2021/12/22
+        /* @Parameter: const CSubject & other
+        /* @Return     CSubject&
+        */
+        virtual CSubject& operator=(const CSubject& other);
+    protected:
+        CSubject() = default;
+        virtual ~CSubject();
+        std::set<IObserver*> m_pObserver;
+    };
+}
+
 

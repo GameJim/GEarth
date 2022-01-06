@@ -28,3 +28,5 @@
 #endif
 
 
+//命名空间
+#define COMMON_NAMESPACE common

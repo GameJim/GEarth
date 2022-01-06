@@ -1,39 +1,40 @@
-/*!
+ï»¿/*!
 *@File    register.h
-*@Brief   ×¢²áÀà
+*@Brief   æ³¨å†Œç±»
 *@Date    2021/12/22
 */
 #pragma once
-#include "Common/ApiDescription.h"
+#include "common/apidescription.h"
 #include <map>
 
+namespace COMMON_NAMESPACE
+{
+    typedef void * (*fun_ptr) ();
+    typedef std::map<const char *, fun_ptr> create_obj_map;
 
-typedef void * (*fun_ptr) ();
-typedef std::map<const char *, fun_ptr> create_obj_map;
-
-class _Static {
-public:
-	template<int N, class T>
-	static T & _static() {
-		//initial once
-		static T _instance;
-		return _instance;
-	}
-};
+    class _Static {
+    public:
+        template<int N, class T>
+        static T & _static() {
+            //initial once
+            static T _instance;
+            return _instance;
+        }
+    };
 
 
-class CORE_PUBLIC ClassFactory {
-public:
-	static void  * get_instance(const char *);
-	static void register_class(const char *, fun_ptr);
-};
+    class CORE_PUBLIC ClassFactory {
+    public:
+        static void  * get_instance(const char *);
+        static void register_class(const char *, fun_ptr);
+    };
 
-class CORE_PUBLIC Register {
-public:
-	Register(const char *, fun_ptr);
-};
+    class CORE_PUBLIC Register {
+    public:
+        Register(const char *, fun_ptr);
+    };
 
-//×¢²áÀà¶ÔÏó
+    //æ³¨å†Œç±»å¯¹è±¡
 #define REGISTER_CLASS(class_name)   \
 	private:                         \
 		static void* instance()      \
@@ -44,9 +45,12 @@ public:
 		std::string m_sClassName = #class_name
 
 
-//×¢²áÀà³ÉÔ±£¬±ØĞëÔÚCPPÎÄ¼şÖĞ¶¨Òå
+    //æ³¨å†Œç±»æˆå‘˜ï¼Œå¿…é¡»åœ¨CPPæ–‡ä»¶ä¸­å®šä¹‰
 #define REGISTER_OBJECT(class_name) \
 		const Register class_name::_static_register(#class_name, class_name::instance);
+}
+
+
 
 
 

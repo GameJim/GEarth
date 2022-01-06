@@ -1,58 +1,62 @@
-#include "Common/Subject.h"
+ï»¿#include "Common/Subject.h"
 #include "Common/IObserver.h"
 
-
-CSubject::~CSubject()
+namespace COMMON_NAMESPACE
 {
-	for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
-	{
-		//ÒÆ³ý°ó¶¨
-		(*itr)->RemoveSubject(this);
-	}
-	m_pObserver.clear();
-}
-void CSubject::Attach(IObserver* pObserver)
-{
-	if (!pObserver)
-		return;
+    CSubject::~CSubject()
+    {
+        for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
+        {
+            //ç§»é™¤ç»‘å®š
+            (*itr)->RemoveSubject(this);
+        }
+        m_pObserver.clear();
+    }
+    void CSubject::Attach(IObserver* pObserver)
+    {
+        if (!pObserver)
+            return;
 
-	for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
-	{
-		(*itr)->AddSubject(this);
-	}
-	
-	m_pObserver.insert(pObserver);
+        for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
+        {
+            (*itr)->AddSubject(this);
+        }
+
+        m_pObserver.insert(pObserver);
+    }
+
+    void CSubject::Detach(IObserver* pObserver)
+    {
+        std::set<IObserver*>::iterator itr = m_pObserver.find(pObserver);
+        if (itr != m_pObserver.end())
+        {
+            //ç§»é™¤ç»‘å®š
+            (*itr)->RemoveSubject(this);
+            //ç§»é™¤è§‚å¯Ÿè€…
+            m_pObserver.erase(itr);
+        }
+    }
+
+    void CSubject::Notify(unsigned& nEvent, void* data)
+    {
+        for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
+        {
+            (*itr)->Update(this, nEvent, data);
+        }
+
+    }
+
+    CSubject& CSubject::operator=(const CSubject& other)
+    {
+        m_pObserver = other.m_pObserver;
+        for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
+        {
+            //ç»™è§‚å¯Ÿè€…æ·»åŠ æ–°çš„ç»‘å®š
+            (*itr)->AddSubject(this);
+        }
+
+        return *this;
+    }
+
 }
 
-void CSubject::Detach(IObserver* pObserver)
-{
-	std::set<IObserver*>::iterator itr = m_pObserver.find(pObserver);
-	if (itr != m_pObserver.end())
-	{
-		//ÒÆ³ý°ó¶¨
-		(*itr)->RemoveSubject(this);
-		//ÒÆ³ý¹Û²ìÕß
-		m_pObserver.erase(itr);
-	}
-}
-
-void CSubject::Notify(unsigned& nEvent, void* data)
-{
-	for (std::set<IObserver*>::iterator itr = m_pObserver.begin();itr !=  m_pObserver.end(); itr++)
-	{
-		(*itr)->Update(this, nEvent, data);
-	}
-		
-}
-
-CSubject& CSubject::operator=(const CSubject& other)
-{
-	m_pObserver = other.m_pObserver;
-	for (std::set<IObserver*>::iterator itr = m_pObserver.begin(); itr != m_pObserver.end(); itr++)
-	{
-		//¸ø¹Û²ìÕßÌí¼ÓÐÂµÄ°ó¶¨
-		(*itr)->AddSubject(this);
-	}
-
-	return *this;
-}

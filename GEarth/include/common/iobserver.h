@@ -1,25 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include "Common/NonCopyable.h"
 #include <set>
-class CSubject;
-class CORE_PUBLIC IObserver : public CNonCopyable
-{
-	friend class CSubject;
-protected:
-	/*!
-	/* @Brief:     ¹Û²ìÕß¼àÊÓµ½¸üĞÂ
-	/* @Date:      2021/12/21
-	/* @Parameter: const CSubject * pSubject   Êı¾İÀ´Ô´
-	/* @Parameter: unsigned & nEvent           ĞÅÏ¢ÀàĞÍ
-	/* @Parameter: void * data                  ĞÅÏ¢Êı¾İ
-	/* @Return     void
-	*/
-	virtual void Update(const CSubject* pSubject,unsigned& nEvent, void* data) = 0;
-protected:
-	IObserver() = default;
-	virtual ~IObserver();
-	virtual void AddSubject(CSubject* pSubject);
-	virtual void RemoveSubject(CSubject* pSubject);
 
-	std::set<CSubject*> m_pSubjects;        //±»¹Û²ìµÄÊı¾İ
-};
+namespace COMMON_NAMESPACE
+{
+    class CSubject;
+    class CORE_PUBLIC IObserver : public CNonCopyable
+    {
+        friend class CSubject;
+    protected:
+        /*!
+        /* @Brief:     è§‚å¯Ÿè€…ç›‘è§†åˆ°æ›´æ–°
+        /* @Date:      2021/12/21
+        /* @Parameter: const CSubject * pSubject   æ•°æ®æ¥æº
+        /* @Parameter: unsigned & nEvent           ä¿¡æ¯ç±»å‹
+        /* @Parameter: void * data                  ä¿¡æ¯æ•°æ®
+        /* @Return     void
+        */
+        virtual void Update(const CSubject* pSubject, unsigned& nEvent, void* data) = 0;
+    protected:
+        IObserver() = default;
+        virtual ~IObserver();
+        virtual void AddSubject(CSubject* pSubject);
+        virtual void RemoveSubject(CSubject* pSubject);
+
+        std::set<CSubject*> m_pSubjects;        //è¢«è§‚å¯Ÿçš„æ•°æ®
+    };
+}

@@ -1,28 +1,31 @@
-#include "Common/IObserver.h"
-#include "Common/Subject.h"
+﻿#include "common/iobserver.h"
+#include "common/subject.h"
 
-
-IObserver::~IObserver()
+namespace COMMON_NAMESPACE
 {
-	//�Ƴ�
-	for (auto& pSubject :m_pSubjects)
-	{
-		pSubject->Detach(this);
-	}
+    IObserver::~IObserver()
+    {
+        //移除
+        for (auto& pSubject : m_pSubjects)
+        {
+            pSubject->Detach(this);
+        }
 
-	m_pSubjects.clear();
-}
+        m_pSubjects.clear();
+    }
 
-void IObserver::AddSubject(CSubject* pSubject)
-{
-	m_pSubjects.insert(pSubject);
-}
+    void IObserver::AddSubject(CSubject* pSubject)
+    {
+        m_pSubjects.insert(pSubject);
+    }
 
-void IObserver::RemoveSubject(CSubject* pSubject)
-{
-	auto itr = m_pSubjects.find(pSubject);
-	if (itr != m_pSubjects.end())
-	{
-		m_pSubjects.erase(itr);
-	}
+    void IObserver::RemoveSubject(CSubject* pSubject)
+    {
+        auto itr = m_pSubjects.find(pSubject);
+        if (itr != m_pSubjects.end())
+        {
+            m_pSubjects.erase(itr);
+        }
+    }
+
 }

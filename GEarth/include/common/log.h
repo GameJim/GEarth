@@ -1,6 +1,6 @@
-/*!
+Ôªø/*!
 *@File    Log.h
-*@Brief   »’÷æŒƒº˛
+*@Brief   Êó•ÂøóÊñá‰ª∂
 *@Date    2021/12/21
 */
 #pragma once
@@ -8,30 +8,34 @@
 #include "Common/Mutexable.h"
 #include <string>
 
+namespace COMMON_NAMESPACE
+{
 #define LOG_INFO(log) CLogManager::GetInstance().Log(CLogManager::EnLogLevel::LOG_LEVEL_INFO,log);
 #define LOG_DEBUG(log) CLogManager::GetInstance().Log(CLogManager::EnLogLevel::LOG_LEVEL_DEBUG,log);
 #define LOG_ERROR(log) CLogManager::GetInstance().Log(CLogManager::EnLogLevel::LOG_LEVEL_ERROR,log);
 
-class CORE_PUBLIC CLogManager : public CFactory<CLogManager>, public CMutexable
-{
-public:
-	enum EnLogLevel
-	{
-		LOG_LEVEL_INFO = 0,
-		LOG_LEVEL_DEBUG,
-		LOG_LEVEL_ERROR
-	};
+    class CORE_PUBLIC CLogManager : public CFactory<CLogManager>
+    {
+    public:
+        enum EnLogLevel
+        {
+            LOG_LEVEL_INFO = 0,
+            LOG_LEVEL_DEBUG,
+            LOG_LEVEL_ERROR
+        };
 
-	void Log(const EnLogLevel& level, const std::string& log);
+        void Log(const EnLogLevel& level, const std::string& log);
 
-	bool IsEanble() const;
-	void SetEnable(const bool& enable);
+        bool IsEanble() const;
+        void SetEnable(const bool& enable);
 
-	CLogManager() = default;
-	virtual ~CLogManager() = default;
-protected:
-	
-	bool m_IsEnable = true;  //ƒ¨»œ «∆Ù”√µƒ
-};
+        CLogManager() = default;
+        virtual ~CLogManager() = default;
+    protected:
+
+        bool m_IsEnable = true;  //ÈªòËÆ§ÊòØÂêØÁî®ÁöÑ
+    };
+}
+
 
 

@@ -1,37 +1,43 @@
-#pragma once
+ï»¿#pragma once
 /*!
 *@File    OS.h
-*@Brief   ²Ù×÷ÏµÍ³Àà
+*@Brief   æ“ä½œç³»ç»Ÿç±»
 *@Date    2021/12/21
 */
-#include "Common/Factory.h"
+#include "common/factory.h"
 #include <string>
-class CORE_PUBLIC COS : public CFactory<COS>
+
+namespace COMMON_NAMESPACE
 {
-public:
-	/*!
-	/* @Brief:     »ñÈ¡µ±Ç°³ÌĞòÕ¼ÓÃÄÚ´æ
-	/* @Date:      2021/12/27
-	/* @Return     double
-	*/
-	virtual double GetMemory();
+    class CORE_PUBLIC COS : public CFactory<COS>
+    {
+    public:
+        /*!
+        /* @Brief:     è·å–å½“å‰ç¨‹åºå ç”¨å†…å­˜
+        /* @Date:      2021/12/27
+        /* @Return     double
+        */
+        virtual double GetMemory();
 
-	/*!
-	/* @Brief:     Éú³ÉÈ«¾ÖÎ¨Ò»id
-	/* @Date:      2021/12/27
-	/* @Return     unsigned int
-	*/
-	virtual unsigned int GenerateUID() const;
+        /*!
+        /* @Brief:     ç”Ÿæˆå…¨å±€å”¯ä¸€id
+        /* @Date:      2021/12/27
+        /* @Return     unsigned int
+        */
+        virtual unsigned int GenerateUID() const;
 
-	/*!
-	/* @Brief:     Éú²úÈ«¾ÖÎ¨Ò»id
-	/* @Date:      2021/12/27
-	/* @Return     std::string
-	*/
-	virtual std::string GenerateUSID() const; 
+        /*!
+        /* @Brief:     ç”Ÿäº§å…¨å±€å”¯ä¸€id
+        /* @Date:      2021/12/27
+        /* @Return     std::string
+        */
+        virtual std::string GenerateUSID() const;
 
-	virtual ~COS();
-protected:
-	COS();
-};
+        virtual ~COS();
+    protected:
+        COS();
+    };
+
+}
+
 

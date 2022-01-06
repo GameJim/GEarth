@@ -1,15 +1,20 @@
-/*!
+Ôªø/*!
 *@File    Mutexable.h
-*@Brief   ∂‡œﬂ≥Ã÷ß≥÷
+*@Brief   Â§öÁ∫øÁ®ãÊîØÊåÅ
 *@Date    2021/12/21
 */
 #pragma once
-#include "Common/NonCopyable.h"
+#include "common/nonCopyable.h"
 #include <mutex>
-class CMutexable : public CNonCopyable
+
+namespace COMMON_NAMESPACE
 {
-protected:
-	CMutexable() = default;
-	virtual ~CMutexable() = default;
-	std::mutex m_Mutex;
-};
+    class CORE_PUBLIC CMutexable : public CNonCopyable
+    {
+    protected:
+        CMutexable() = default;
+        virtual ~CMutexable() = default;
+        std::mutex m_Mutex;
+    };
+}
+
