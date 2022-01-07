@@ -6,6 +6,7 @@
 #pragma once
 #include <common/object.h>
 #include "common/box.h"
+#include "common/color.h"
 namespace symbol
 {
     using namespace common;
@@ -49,18 +50,25 @@ namespace symbol
 
         virtual bool IsEnable() const;
 
-        CVec3d GetPos() const;
+        CVec3f GetPos() const;
 
-        void SetPos(const CVec3d& pos);
+        void SetPos(const CVec3f& pos);
 
         void SetEnable(const bool& enable);
 
         virtual CBox3f GetBoundBox() = 0;
+
+        void SetColor(std::unique_ptr<CColor> pColor);
+
+        CColor* GetOrCreateColor();
     protected:
         CMarkerLayer(const EnMarkerLayerType& type);
         EnMarkerLayerType m_eMarkerLayerType;
-        CVec3d m_pos;            //数据的偏移，可以看做起点
+
+        //关键数据
         bool   m_IsEnable;       //数据是否启用
+        CVec3f m_pos;                          //数据的偏移，可以看做起点
+        std::unique_ptr<CColor>   m_pColor;    //颜色
     };
 
 

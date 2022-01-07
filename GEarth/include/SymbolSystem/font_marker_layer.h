@@ -12,11 +12,11 @@ namespace symbol
     class CFontMarkerLayer : public CMarkerLayer
     {
     public:
-        CFontMarkerLayer();
-        ~CFontMarkerLayer() = default;
-        CFontMarkerLayer(std::shared_ptr<CFont> pFont);
+        CFontMarkerLayer() = delete;
+        ~CFontMarkerLayer();
+        CFontMarkerLayer(CFont& pFont);
     protected:
-        std::shared_ptr<CFont>  m_pFont;
+        CFont&  m_pFont;
     };
 
 }

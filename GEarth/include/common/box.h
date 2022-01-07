@@ -62,6 +62,7 @@ namespace COMMON_NAMESPACE
     };
    
     using CVec3d = glm::vec<3, double, glm::qualifier::defaultp>;
+    using CVec3f = glm::vec<3, float, glm::qualifier::defaultp>;
 
     using CBox2i = CBox<int, 2>;
     using CBox2d = CBox<double, 2>;
