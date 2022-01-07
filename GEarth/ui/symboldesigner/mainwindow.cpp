@@ -1,5 +1,5 @@
 ﻿#include "mainwindow.hpp"
-
+#include "SymbolSystem/symbol_libary.h"
 #include <QFileDialog>
 CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 	RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
@@ -76,16 +76,15 @@ void CMainWindow::CreateOptions()
 
 void CMainWindow::CreateSymbolLibary()
 {
-	// QString sName = QString("../%1%2").arg(2021).arg(6);
-	// auto path = QFileDialog::getSaveFileName(this, tr("New Symbol Library"), sName,tr("Symbol Libary(*.gsl)"));
-	// SymbolLibary* pSymbolLibary = new SymbolLibary();
-	// pSymbolLibary->Save2File(path.toStdString());
+    QString sName = QString("../%1%2").arg(2021).arg(6);
+    auto path = QFileDialog::getSaveFileName(this, tr("New Symbol Library"), sName, tr("Symbol Libary(*.gsl)"));
+    symbol::SymbolLibary* pSymbolLibary = new symbol::SymbolLibary();
+    pSymbolLibary->Save2File(path.toStdString());
 }
 
 void CMainWindow::OpenSymbolLibary()
 {
-	
-	// auto path = QFileDialog::getOpenFileName(this, tr("Open Symbol Library"),"", tr("Symbol Libary(*.gsl)"));
-	// SymbolLibary* pSymbolLibary = new SymbolLibary();
-	// pSymbolLibary->LoadFromFile(path.toStdString());
+    auto path = QFileDialog::getOpenFileName(this, tr("Open Symbol Library"), "", tr("Symbol Libary(*.gsl)"));
+    symbol::SymbolLibary* pSymbolLibary = new symbol::SymbolLibary();
+    pSymbolLibary->LoadFromFile(path.toStdString());
 }

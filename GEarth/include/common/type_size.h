@@ -1,6 +1,6 @@
-/*!
+Ôªø/*!
 *@File    type_size.h
-*@Brief   ¿‡–Õ¥Û–°
+*@Brief   Á±ªÂûãÂ§ßÂ∞è
 *@Date    2021/12/22
 */
 #pragma once
@@ -13,10 +13,6 @@ const int UINT_SIZE = 4;
 const int FLOAT_SIZE = 4;
 const int INT64_SIZE = 8;
 const int DOUBLE_SIZE = 8;
-
-
-
-
 
 
 

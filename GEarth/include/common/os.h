@@ -24,14 +24,14 @@ namespace COMMON_NAMESPACE
         /* @Date:      2021/12/27
         /* @Return     unsigned int
         */
-        virtual unsigned int GenerateUID() const;
+        virtual unsigned int GenerateUID();
 
         /*!
         /* @Brief:     生产全局唯一id
         /* @Date:      2021/12/27
         /* @Return     std::string
         */
-        virtual std::string GenerateUSID() const;
+        virtual std::string GenerateUSID();
 
         virtual ~COS();
     protected:

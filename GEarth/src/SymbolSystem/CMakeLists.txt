@@ -39,7 +39,8 @@ FILE(GLOB_RECURSE SRC_FILES *.cpp *.c)
 FILE(GLOB_RECURSE FORMS *.ui)
 FILE(GLOB_RECURSE RESOURCE_FILES *.qrc *.rc)
 
-
+#头文件部分包含，不然VS类图无法生成类视图
+FILE(GLOB_RECURSE EXTERN_HEADER_FILES "${GEARTH_DIR}/include/${PROJECT_NAME}/*.*h" "${GEARTH_DIR}/include/${PROJECT_NAME}/*.*hpp")
 
 #链接三方库
 function(import_3dParty NAME HEADER_PATH LIB_PATH)
@@ -62,7 +63,7 @@ link_directories(${CMAKE_BINARY_DIR}/x64)
 # 生成可执行文件
 #add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES})
 # 生成可执行文件SHARED STATIC 
-add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES} ${EXTERN_HEADER_FILES})
 
 #3dParty
 function(import_3dPartylib NAME lib_debug lib_release dll_debug dll_release)

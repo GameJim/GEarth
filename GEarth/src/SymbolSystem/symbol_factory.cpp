@@ -1,8 +1,11 @@
-#include "symbolsystem/symbol_factory.h"
+﻿#include "symbolsystem/symbol_factory.h"
 
 
-
-CMarkerSymbol* CSymbolFactory::GetDefaultMarkerSymbol()
+namespace symbol
 {
-	return nullptr;
+    CMarkerSymbol* CSymbolFactory::GetDefaultMarkerSymbol()
+    {
+        return nullptr;
+    }
+
 }

@@ -1,5 +1,5 @@
-﻿#include "Common/Subject.h"
-#include "Common/IObserver.h"
+﻿#include "common/subject.h"
+#include "common/iobserver.h"
 
 namespace COMMON_NAMESPACE
 {

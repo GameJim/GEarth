@@ -1,6 +1,6 @@
-/*!
+ï»¿/*!
 *@File    line_symbol.h
-*@Brief   ÎÄ¼şÃèÊö:ÏÂ´ÎÒ»¶¨
+*@Brief   æ–‡ä»¶æè¿°:ä¸‹æ¬¡ä¸€å®š
 *@Date    2021/12/22
 */
 #pragma once
@@ -8,15 +8,19 @@
 #include "SymbolSystem/Symbol.h"
 #include <vector>
 
-class CLineSymbol : public Symbol
+namespace symbol
 {
-	REGISTER_CLASS(CLineSymbol);
-public:
-	CLineSymbol();
-	virtual ~CLineSymbol() = default;
-protected:
+    class CLineSymbol : public Symbol
+    {
+        REGISTER_CLASS(CLineSymbol);
+    public:
+        CLineSymbol();
+        virtual ~CLineSymbol() = default;
+    protected:
 
-};
+    };
+}
+
 
 
 

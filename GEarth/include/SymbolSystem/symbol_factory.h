@@ -1,18 +1,22 @@
-/*!
+ï»¿/*!
 *@File    symbol_factory.h
-*@Brief   ÎÄ¼şÃèÊö:ÏÂ´ÎÒ»¶¨
+*@Brief   æ–‡ä»¶æè¿°:ä¸‹æ¬¡ä¸€å®š
 *@Date    2021/12/22
 */
 #pragma once
 
-#include "Common/Factory.h"
+#include "common/factory.h"
 #include "SymbolSystem/marker_symbol.h"
 
-
-class CSymbolFactory : public CFactory<CSymbolFactory>
+namespace symbol
 {
-public:
-	CMarkerSymbol* GetDefaultMarkerSymbol();
-};
+    class CSymbolFactory : public CFactory<CSymbolFactory>
+    {
+    public:
+        CMarkerSymbol* GetDefaultMarkerSymbol();
+    };
+
+}
+
 
 

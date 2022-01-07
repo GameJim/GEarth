@@ -5,20 +5,23 @@
 */
 #pragma once
 #include "SymbolSystem/marker_layer.h"
-#include "Common/Image.h"
+#include "common/image.h"
 #include <memory>
-class CImageMarkerLayer : public CMarkerLayer
+
+namespace symbol
 {
-	CImageMarkerLayer() ;
-	~CImageMarkerLayer() = default;
+    class CImageMarkerLayer : public CMarkerLayer
+    {
+        CImageMarkerLayer();
+        ~CImageMarkerLayer() = default;
 
-    virtual bool IsEnable() const;
+        virtual bool IsEnable() const;
 
-	CImage* GetImage() const;
-	void SetImage(CImage* pImage);
-protected:
-	CImage*  m_pImage; //纹理数据
-};
-
+        CImage* GetImage() const;
+        void SetImage(CImage* pImage);
+    protected:
+        CImage*  m_pImage; //纹理数据
+    };
+}
 
 

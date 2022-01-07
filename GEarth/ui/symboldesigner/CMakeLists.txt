@@ -217,6 +217,33 @@ else()
 endif()
 
 
+
+#关闭控制台
+option(USE_CONSOLE_LOG "option for debug" ON)
+if(USE_CONSOLE_LOG)
+else()
+	if(WIN32)
+			if(MSVC)
+					set_target_properties(${PROJECT_NAME} PROPERTIES
+							WIN32_EXECUTABLE YES
+							LINK_FLAGS "/ENTRY:mainCRTStartup"
+					)
+			elseif(CMAKE_COMPILER_IS_GNUCXX)
+							SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mwindows") # Not tested
+			else()
+					message(SEND_ERROR "You are using an unsupported Windows compiler! (Not MSVC or GCC)")
+			endif(MSVC)
+	elseif(APPLE)
+			set_target_properties(${PROJECT_NAME} PROPERTIES
+							MACOSX_BUNDLE YES
+			)
+	elseif(UNIX)
+			# Nothing special required
+	else()
+			message(SEND_ERROR "You are on an unsupported platform! (Not Win32, Mac OS X or Unix)")
+	endif(WIN32)
+endif(USE_CONSOLE_LOG)
+
 #拷贝res
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
     COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_if_different..."
@@ -226,6 +253,12 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build 
 	COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_if_different..."
         ${GEARTH_DIR}/res/ui/${PROJECT_NAME}                   # <--this is in-file
         ${CMAKE_CURRENT_BINARY_DIR}/res/ui/${PROJECT_NAME})                 # <--this is out-file path
+		
+target_link_libraries(${PROJECT_NAME} debug SymbolSystemd.lib)
+target_link_libraries(${PROJECT_NAME} optimized SymbolSystem.lib)
+
+target_link_libraries(${PROJECT_NAME} debug commond.lib)
+target_link_libraries(${PROJECT_NAME} optimized common.lib)
 
 #构建后cmake目录
 #message(${CMAKE_CURRENT_BINARY_DIR})

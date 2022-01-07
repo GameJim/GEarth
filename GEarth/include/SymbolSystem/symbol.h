@@ -1,86 +1,90 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
-#include "Common/register.h"
-#include "common/Object.h"
+#include "common/register.h"
+#include "common/object.h"
 
 /*!
 *@class   Symbol
-*@Brief   ·ûºÅÊôĞÔÀà£¬»ùÀà
+*@Brief   ç¬¦å·å±æ€§ç±»ï¼ŒåŸºç±»
 *@Date    2021/12/21
 */
-class CORE_PUBLIC SymbolProperty
+
+namespace symbol
 {
-public:
-	virtual ~SymbolProperty() = default;
-	virtual void Serialize(CByte& byte) = 0;
-	virtual void Deserialize(CByte& byte) = 0;
-	virtual size_t GetSize() = 0;
-protected:
-	SymbolProperty() = default;        
-};
+    using namespace common;
+    class CORE_PUBLIC SymbolProperty : public CObject
+    {
+    public:
+        virtual ~SymbolProperty() = default;
+    protected:
+        SymbolProperty() = default;
+    };
 
 
-/*!
-*@class   Symbol
-*@Brief   ·ûºÅµÄ»ùÀà
-*@Date    2021/12/21
-*/
-class CORE_PUBLIC Symbol : public CObject
-{
-public:
-	virtual ~Symbol();
-	enum EnSymbolType : uint8_t
-	{
-		SYMBOL_TYPE_MARKER = 0,     //µã·ûºÅ
-		SYMBOL_TYPE_LINE = 1,       //Ïß·ûºÅ
-		SYMBOL_TYPE_FILL = 2,       //Ìî³ä·ûºÅ 
-		SYMBOL_TYPE_ANIMATION = 3,  //¶¯»­·ûºÅ£¨¶¯Ì¬·ûºÅ£©
-		SYMBOL_TYPE_CUSTOM          //×Ô¶¨Òå·ûºÅ
-	};
-	
-	/*!
-	/* @Brief:     ·ûºÅÀàĞÍ
-	/* @Date:      2021/12/21
-	/* @Return     Symbol::EnSymbolType
-	*/
-	EnSymbolType SymbolType() const;
+    /*!
+    *@class   Symbol
+    *@Brief   ç¬¦å·çš„åŸºç±»
+    *@Date    2021/12/21
+    */
 
-	
-	/*!
-	/* @Brief:     Ìí¼Ó·ûºÅÊôĞÔ
-	/* @Date:      2021/12/21
-	/* @Parameter: SymbolProperty * pProperty
-	/* @Return     void
-	*/
-	void SetProperty(SymbolProperty* pProperty);
+    class CORE_PUBLIC Symbol : public CObject
+    {
+    public:
+        virtual ~Symbol();
+        enum EnSymbolType : uint8_t
+        {
+            SYMBOL_TYPE_MARKER = 0,     //ç‚¹ç¬¦å·
+            SYMBOL_TYPE_LINE = 1,       //çº¿ç¬¦å·
+            SYMBOL_TYPE_FILL = 2,       //å¡«å……ç¬¦å· 
+            SYMBOL_TYPE_ANIMATION = 3,  //åŠ¨ç”»ç¬¦å·ï¼ˆåŠ¨æ€ç¬¦å·ï¼‰
+            SYMBOL_TYPE_CUSTOM          //è‡ªå®šä¹‰ç¬¦å·
+        };
+
+        /*!
+        /* @Brief:     ç¬¦å·ç±»å‹
+        /* @Date:      2021/12/21
+        /* @Return     Symbol::EnSymbolType
+        */
+        EnSymbolType SymbolType() const;
 
 
-	SymbolProperty* Property() const;
-	/*!
-	/* @Brief:     ĞòÁĞ»¯
-	/* @Date:      2021/12/21
-	/* @Parameter: CByte* data
-	/* @Return     void
-	*/
-	virtual void Serialize(CByte& data);    //ĞòÁĞ»¯
+        /*!
+        /* @Brief:     æ·»åŠ ç¬¦å·å±æ€§
+        /* @Date:      2021/12/21
+        /* @Parameter: SymbolProperty * pProperty
+        /* @Return     void
+        */
+        void SetProperty(SymbolProperty* pProperty);
 
-	/*!
-	/* @Brief:     ·´ĞòÁĞ»¯
-	/* @Date:      2021/12/21
-	/* @Parameter: CByte * data
-	/* @Return     void
-	*/
-	virtual void Deserialize(CByte& data);  //·´ĞòÁĞ»¯
 
-	/*!
-	/* @Brief:     »ñÈ¡´óĞ¡
-	/* @Date:      2021/12/21
-	/* @Return     size_t
-	*/
-	virtual size_t GetSize();                       // ÎÄ¼şµÄ×Ü×Ö½ÚÊı
-protected:
-	Symbol(const EnSymbolType& symbolType);
-	EnSymbolType m_eSymbolType;                   //·ûºÅÀàĞÍ
-	SymbolProperty* m_pProperty;
-};
+        SymbolProperty* Property() const;
+        /*!
+        /* @Brief:     åºåˆ—åŒ–
+        /* @Date:      2021/12/21
+        /* @Parameter: CByte* data
+        /* @Return     void
+        */
+        virtual void Serialize(CByte& data);    //åºåˆ—åŒ–
+
+                                                /*!
+                                                /* @Brief:     ååºåˆ—åŒ–
+                                                /* @Date:      2021/12/21
+                                                /* @Parameter: CByte * data
+                                                /* @Return     void
+                                                */
+        virtual void Deserialize(CByte& data);  //ååºåˆ—åŒ–
+
+                                                /*!
+                                                /* @Brief:     è·å–å¤§å°
+                                                /* @Date:      2021/12/21
+                                                /* @Return     size_t
+                                                */
+        virtual size_t GetSize();                       // æ–‡ä»¶çš„æ€»å­—èŠ‚æ•°
+    protected:
+        Symbol(const EnSymbolType& symbolType);
+        EnSymbolType m_eSymbolType;                   //ç¬¦å·ç±»å‹
+        SymbolProperty* m_pProperty;
+    };
+
+}
 

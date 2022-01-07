@@ -1,22 +1,25 @@
-/*!
+ï»¿/*!
 *@File    custom_symbol.h
-*@Brief   ÎÄ¼şÃèÊö:ÏÂ´ÎÒ»¶¨
+*@Brief   æ–‡ä»¶æè¿°:ä¸‹æ¬¡ä¸€å®š
 *@Date    2021/12/22
 */
 #pragma once
-#include "Common/register.h"
-#include "SymbolSystem/Symbol.h"
+#include "common/register.h"
+#include "SymbolSystem/symbol.h"
 #include <vector>
 
-class CCustomSymbol : public Symbol
+namespace symbol
 {
-	REGISTER_CLASS(CCustomSymbol);
-public:
-	CCustomSymbol();
-	virtual ~CCustomSymbol() = default;
-protected:
+    class CCustomSymbol : public Symbol
+    {
+        REGISTER_CLASS(CCustomSymbol);
+    public:
+        CCustomSymbol();
+        virtual ~CCustomSymbol() = default;
+    protected:
 
-};
+    };
+}
 
 
 

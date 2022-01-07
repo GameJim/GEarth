@@ -13,6 +13,8 @@ namespace COMMON_NAMESPACE
 
     double COS::GetMemory()
     {
+        //锁，保证只有一个线程访问
+        std::unique_lock<std::mutex> lock(m_Mutex);
 #ifdef _WIN32
 #define ProcessVmCounters 3
 #define NT_SUCCESS(x) ((x) >= 0)
@@ -59,13 +61,18 @@ namespace COMMON_NAMESPACE
         return 0.0;
     }
 
-    unsigned int COS::GenerateUID() const
+    unsigned int COS::GenerateUID() 
     {
+        //锁，保证只有一个线程访问
+        std::unique_lock<std::mutex> lock(m_Mutex);
         return 0;
     }
 
-    std::string COS::GenerateUSID() const
+    std::string COS::GenerateUSID() 
     {
+        //锁，保证只有一个线程访问
+        std::unique_lock<std::mutex> lock(m_Mutex);
+
         return "0";
     }
 

@@ -1,7 +1,8 @@
-﻿#include "Common/Log.h"
+﻿#include "common/log.h"
 #include <iostream>
 namespace COMMON_NAMESPACE
 {
+    //template<>
     void CLogManager::Log(const EnLogLevel& level, const std::string& log)
     {
         if (!m_IsEnable)
@@ -25,10 +26,18 @@ namespace COMMON_NAMESPACE
         default:
             break;
         }
-
-
-
     }
+
+
+  /*  template<class T>
+    void CLogManager::Log(const EnLogLevel& level, const T& log)
+    {
+        std::string sLog = std::to_string(log);
+        log(level, sLog);
+    }*/
+
+    
+  
 
     bool CLogManager::IsEanble() const
     {

@@ -5,17 +5,19 @@
 */
 #pragma once
 #include "SymbolSystem/marker_layer.h"
-#include "Common/font_library.h"
+#include "common/font_library.h"
 
-class CFontMarkerLayer : public CMarkerLayer
+namespace symbol
 {
-public:
-    CFontMarkerLayer();
-    ~CFontMarkerLayer() = default;
-    CFontMarkerLayer(std::shared_ptr<CFont> pFont);
-protected:
-    std::shared_ptr<CFont>  m_pFont;
-};
+    class CFontMarkerLayer : public CMarkerLayer
+    {
+    public:
+        CFontMarkerLayer();
+        ~CFontMarkerLayer() = default;
+        CFontMarkerLayer(std::shared_ptr<CFont> pFont);
+    protected:
+        std::shared_ptr<CFont>  m_pFont;
+    };
 
-
+}
 

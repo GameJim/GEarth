@@ -1,7 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 set(CMAKE_USE_RELATIVE_PATHS true)         #开启相对路径
-set(GEARTH_DIR ${PROJECT_SOURCE_DIR}/../)  # 父路径
+set(GEARTH_DIR ${PROJECT_SOURCE_DIR}/..)  # 父路径
 
 project(common)                    # 工程名称  必填
 set(PROJECT_NAME common PARENT_SCOPE)
@@ -42,6 +42,13 @@ FILE(GLOB_RECURSE RESOURCE_FILES *.qrc *.rc)
 
 
 
+#头文件部分包含，不然VS类图无法生成类视图
+FILE(GLOB_RECURSE EXTERN_HEADER_FILES "${GEARTH_DIR}/include/${PROJECT_NAME}/*.*h" "${GEARTH_DIR}/include/${PROJECT_NAME}/*.*hpp")
+
+# foreach (_path IN LISTS EXTERN_HEADER_FILES)
+# message(${_path})
+# endforeach()
+
 #链接三方库
 function(import_3dParty NAME HEADER_PATH LIB_PATH)
 #头文件
@@ -63,7 +70,7 @@ link_directories(${CMAKE_BINARY_DIR}/x64)
 # 生成可执行文件
 #add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES})
 # 生成可执行文件SHARED STATIC 
-add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES} ${EXTERN_HEADER_FILES})
 
 #3dParty
 function(import_3dPartylib NAME lib_debug lib_release dll_debug dll_release)

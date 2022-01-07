@@ -13,7 +13,7 @@ namespace COMMON_NAMESPACE
     {
     public:
         CRef() = default;
-        ~CRef() = protected;
+       virtual ~CRef() = default;
     };
 
 }

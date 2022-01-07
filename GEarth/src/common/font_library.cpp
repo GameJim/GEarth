@@ -1,4 +1,4 @@
-﻿#include "Common/font_library.h"
+﻿#include "common/font_library.h"
 #include "freetype/freetype.h"
 
 namespace COMMON_NAMESPACE

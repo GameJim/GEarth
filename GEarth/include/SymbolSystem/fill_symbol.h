@@ -1,6 +1,6 @@
-/*!
+ï»¿/*!
 *@File    fill_symbol.h
-*@Brief   ÎÄ¼şÃèÊö:ÏÂ´ÎÒ»¶¨
+*@Brief   æ–‡ä»¶æè¿°:ä¸‹æ¬¡ä¸€å®š
 *@Date    2021/12/22
 */
 #pragma once
@@ -8,16 +8,18 @@
 #include "SymbolSystem/Symbol.h"
 #include <vector>
 
-class CFillSymbol : public Symbol
+namespace symbol
 {
-	REGISTER_CLASS(CFillSymbol);
-public:
-	CFillSymbol();
-	virtual ~CFillSymbol() = default;
-protected:
+    class CFillSymbol : public Symbol
+    {
+        REGISTER_CLASS(CFillSymbol);
+    public:
+        CFillSymbol();
+        virtual ~CFillSymbol() = default;
+    protected:
 
-};
+    };
 
-
+}
 
 

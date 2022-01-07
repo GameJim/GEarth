@@ -1,6 +1,6 @@
 ﻿/*!
 *@File    register.h
-*@Brief   注册类
+*@Brief   注册类,通过名字构造对应对象
 *@Date    2021/12/22
 */
 #pragma once
@@ -33,26 +33,24 @@ namespace COMMON_NAMESPACE
     public:
         Register(const char *, fun_ptr);
     };
+}
 
-    //注册类对象
+
+
+//注册类对象
 #define REGISTER_CLASS(class_name)   \
 	private:                         \
 		static void* instance()      \
 		{                            \
            return new class_name;    \
 		}                            \
-		static const Register _static_register; \
+		static const COMMON_NAMESPACE::Register _static_register; \
 		std::string m_sClassName = #class_name
 
 
-    //注册类成员，必须在CPP文件中定义
+//注册类成员，必须在CPP文件中定义
 #define REGISTER_OBJECT(class_name) \
-		const Register class_name::_static_register(#class_name, class_name::instance);
-}
-
-
-
-
+		const COMMON_NAMESPACE::Register class_name::_static_register(#class_name, class_name::instance);
 
 
 

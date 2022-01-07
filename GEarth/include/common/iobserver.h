@@ -5,7 +5,7 @@
 namespace COMMON_NAMESPACE
 {
     class CSubject;
-    class CORE_PUBLIC IObserver : public CNonCopyable
+    class CORE_PUBLIC IObserver
     {
         friend class CSubject;
     protected:
