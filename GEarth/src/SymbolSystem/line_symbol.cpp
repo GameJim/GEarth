@@ -2,10 +2,9 @@
 
 namespace symbol
 {
-    REGISTER_OBJECT(CLineSymbol)
 
         CLineSymbol::CLineSymbol()
-        :Symbol(Symbol::EnSymbolType::SYMBOL_TYPE_LINE)
+        :CSymbol(CSymbol::EnSymbolType::SYMBOL_TYPE_LINE)
     {
 
     }

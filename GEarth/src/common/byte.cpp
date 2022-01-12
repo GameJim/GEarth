@@ -9,7 +9,7 @@ namespace COMMON_NAMESPACE
     }
 
 
-    CByte::CByte(unsigned nSize)
+    CByte::CByte(size_t nSize)
         :m_nSize(nSize)
     {
         m_pData = new unsigned char[nSize];
@@ -18,6 +18,7 @@ namespace COMMON_NAMESPACE
 
     CByte::~CByte()
     {
+        unsigned n = itr - m_pData;
         if (m_pData)
         {
             delete[] m_pData;

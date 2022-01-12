@@ -1,22 +1,32 @@
 ﻿#include "symbolsystem/symbol_libary.h"
+#include "SymbolSystem/marker_symbol.h"
+#include "SymbolSystem/line_symbol.h"
+#include "SymbolSystem/fill_symbol.h"
+#include "SymbolSystem/animation_symbol.h"
+#include "SymbolSystem/custom_symbol.h"
 #include <iostream>
 #include <fstream>
-#include "Common/Log.h"
-
+#include "common/log.h"
+#include "common/type_size.h"
 namespace symbol
 {
-    SymbolLibary::SymbolLibary()
+    CSymbolLibary::CSymbolLibary()
         :m_sVer("0.0"), m_sName("UnNamed")
     {
-
+        m_pSymbols = new std::vector<std::unique_ptr<CSymbol>>();
     }
 
-    SymbolLibary::SymbolLibary(const std::string& sPath)
+    CSymbolLibary::~CSymbolLibary()
+    {
+        delete m_pSymbols;
+    }
+
+    CSymbolLibary::CSymbolLibary(const std::string& sPath)
     {
         LoadFromFile(sPath);
     }
 
-    bool SymbolLibary::LoadFromFile(const std::string& sPath)
+    bool CSymbolLibary::LoadFromFile(const std::string& sPath)
     {
         std::ifstream file(sPath.c_str(), std::ios::in | std::ios::binary);
         if (!file.is_open())
@@ -42,7 +52,7 @@ namespace symbol
         return true;
     }
 
-    bool SymbolLibary::Save2File(const std::string& sPath)
+    bool CSymbolLibary::Save2File(const std::string& sPath)
     {
         std::ofstream file(sPath.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
         if (!file.is_open())
@@ -52,7 +62,7 @@ namespace symbol
         }
         else
         {
-            unsigned nSize = GetSize();
+            size_t nSize = GetSize();
 
             CByte byte(nSize);
             //序列化数据
@@ -64,95 +74,92 @@ namespace symbol
         return true;
     }
 
-    ////处理符号
-    //#define SERIALIZE_VEC_SHARE(data,vec)   \
-    //{                                       \
-//	unsigned nChild = vec.size();       \
-//	data << nChild;                     \
-//	for(auto child : vec)               \
-//	{                                   \
-//		child->Serialize(data);         \
-//	}                                   \
-//}
-//	
-
-    void SymbolLibary::Serialize(CByte& data)
+   
+    void CSymbolLibary::Serialize(CByte& data)
     {
-        data << m_sVer;
-        data << m_sName;
+        data << m_sVer << m_sName;
 
-        unsigned nChild = m_pSymbols.size();
+        unsigned nChild = m_pSymbols->size();
         data << nChild;
-        for (auto pSymbol : m_pSymbols)
+        for (auto& pSymbol : *m_pSymbols)
         {
+            uint8_t nType = pSymbol->SymbolType();
+            data << nType;
             pSymbol->Serialize(data);
         }
-
-
     }
 
-    ////处理符号
-    //#define DESERIALIZE_VEC_SHARE(data,vec,class_name)   \
-    //	{                                            \
-//		unsigned nChild;                        \
-//		std::string sClassName;                 \
-//		data >> nChild;                         \
-//		vec.reserve(nChild);                 \
-//		for (int i = 0; i < nChild; ++i)       \
-//		{                                      \
-//		data >> sClassName;                 \
-//		assert(sClassName == #class_name);  \
-//		class_name* pTemp = static_cast<class_name*>(ClassFactory::get_instance(sClassName.c_str()));  \
-//		std::shared_ptr<class_name> pChild;   \
-//		pChild.reset(pTemp);                  \
-//		pChild->Deserialize(data);                 \
-//		vec.push_back(pChild);                  \
-//		}                                       \
-//	}
 
-
-    void SymbolLibary::Deserialize(CByte& data)
+    void CSymbolLibary::Deserialize(CByte& data)
     {
-        data >> m_sVer;
-        data >> m_sName;
+        data >> m_sVer >> m_sName;
 
         unsigned nChild;
-        std::string sClassName;
         data >> nChild;
-        m_pSymbols.reserve(nChild);
-        for (int i = 0; i < nChild; ++i)
+        m_pSymbols->reserve(nChild);
+        for (unsigned i = 0; i < nChild; ++i)
         {
-            data >> sClassName;
-            Symbol* pTemp = static_cast<Symbol*>(ClassFactory::get_instance(sClassName.c_str()));
-            std::shared_ptr<Symbol> pChild(pTemp);
-
-            pChild->Deserialize(data);
-            m_pSymbols.push_back(pChild);
+            uint8_t nType;
+            data >> nType;
+            CSymbol::EnSymbolType eSymbolType = (CSymbol::EnSymbolType)nType;
+          
+            std::unique_ptr<CSymbol> pSymbol;
+            switch (eSymbolType)
+            {
+            case symbol::CSymbol::SYMBOL_TYPE_MARKER:
+                pSymbol = std::make_unique<CMarkerSymbol>();
+                break;
+            case symbol::CSymbol::SYMBOL_TYPE_LINE:
+                pSymbol = std::make_unique<CLineSymbol>();
+                break;
+            case symbol::CSymbol::SYMBOL_TYPE_FILL:
+                pSymbol = std::make_unique<CFillSymbol>();
+                break;
+            case symbol::CSymbol::SYMBOL_TYPE_ANIMATION:
+                pSymbol = std::make_unique<CAnimationSymbol>();
+                break;
+            case symbol::CSymbol::SYMBOL_TYPE_CUSTOM:
+            {
+                std::string sClassName;
+                data >> sClassName;
+                CSymbol* pTemp = static_cast<CSymbol*>(ClassFactory::get_instance(sClassName.c_str()));
+                pSymbol.reset(pTemp);
+            }
+            break;
+            default:
+                break;
+            }
+            pSymbol->Deserialize(data);
+            m_pSymbols->push_back(std::move(pSymbol));
         }
     }
 
-    size_t SymbolLibary::GetSize()
+    size_t CSymbolLibary::GetSize()
     {
         //字符串和符号
-        unsigned nSize = 4 + m_sVer.size() + 4 + m_sName.size();
-        nSize += 4;
-        for (auto symbol : m_pSymbols)
+        size_t nSize = CTypeSize::Instance().GetSize(m_sName) + CTypeSize::Instance().GetSize(m_sVer);
+        nSize = nSize + 4 + m_pSymbols->size();
+        for (auto& symbol : *m_pSymbols)
         {
             nSize += symbol->GetSize();
         }
 
-
         return nSize;
     }
 
-    std::string SymbolLibary::GetName()
+    std::string CSymbolLibary::GetName()
     {
         return m_sName;
     }
 
-    void SymbolLibary::SetName(const std::string& sName)
+    void CSymbolLibary::SetName(const std::string& sName)
     {
         m_sName = sName;
+    }
+
+    void CSymbolLibary::AddSymbol(std::unique_ptr<CSymbol> pSymbol)
+    {
+        m_pSymbols->push_back(std::move(pSymbol));
     }
 
 }

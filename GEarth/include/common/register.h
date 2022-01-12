@@ -6,11 +6,12 @@
 #pragma once
 #include "common/apidescription.h"
 #include <map>
+#include <string>
 
 namespace COMMON_NAMESPACE
 {
     typedef void * (*fun_ptr) ();
-    typedef std::map<const char *, fun_ptr> create_obj_map;
+    typedef std::map<const std::string, fun_ptr> create_obj_map;
 
     class _Static {
     public:
@@ -25,13 +26,13 @@ namespace COMMON_NAMESPACE
 
     class CORE_PUBLIC ClassFactory {
     public:
-        static void  * get_instance(const char *);
-        static void register_class(const char *, fun_ptr);
+        static void  * get_instance(const std::string&);
+        static void register_class(const std::string&, fun_ptr);
     };
 
     class CORE_PUBLIC Register {
     public:
-        Register(const char *, fun_ptr);
+        Register(const std::string&, fun_ptr);
     };
 }
 

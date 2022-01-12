@@ -10,9 +10,9 @@
 
 namespace symbol
 {
-    class CLineSymbol : public Symbol
+    class CLineSymbol : public CSymbol
     {
-        REGISTER_CLASS(CLineSymbol);
+    
     public:
         CLineSymbol();
         virtual ~CLineSymbol() = default;

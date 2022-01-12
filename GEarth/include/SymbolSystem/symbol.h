@@ -2,7 +2,7 @@
 #include <string>
 #include "common/register.h"
 #include "common/object.h"
-
+#include <memory>
 /*!
 *@class   Symbol
 *@Brief   符号属性类，基类
@@ -12,12 +12,38 @@
 namespace symbol
 {
     using namespace common;
-    class CORE_PUBLIC SymbolProperty : public CObject
+    class CORE_PUBLIC CSymbolProperty : public CObject
     {
+        REGISTER_CLASS(CSymbolProperty);
     public:
-        virtual ~SymbolProperty() = default;
+   
+        virtual ~CSymbolProperty() = default;
+
+        /*!
+        /* @Brief:     序列化
+        /* @Date:      2021/12/21
+        /* @Parameter: CByte* data
+        /* @Return     void
+        */
+        virtual void Serialize(CByte& data) ;
+
+        /*!
+        /* @Brief:     反序列化
+        /* @Date:      2021/12/22
+        /* @Parameter: CByte & data
+        /* @Return     void
+        */
+        virtual void Deserialize(CByte& data);
+
+        /*!
+        /* @Brief:     获取字节大小
+        /* @Date:      2021/12/22
+        /* @Return     size_t
+        */
+        virtual size_t GetSize();
+        CSymbolProperty() = default;
     protected:
-        SymbolProperty() = default;
+        std::string m_sName = "";  //符号名称
     };
 
 
@@ -27,10 +53,10 @@ namespace symbol
     *@Date    2021/12/21
     */
 
-    class CORE_PUBLIC Symbol : public CObject
+    class CORE_PUBLIC CSymbol : public CObject
     {
     public:
-        virtual ~Symbol();
+        virtual ~CSymbol();
         enum EnSymbolType : uint8_t
         {
             SYMBOL_TYPE_MARKER = 0,     //点符号
@@ -54,10 +80,10 @@ namespace symbol
         /* @Parameter: SymbolProperty * pProperty
         /* @Return     void
         */
-        void SetProperty(SymbolProperty* pProperty);
+        void SetProperty(std::unique_ptr<CSymbolProperty> pProperty);
 
 
-        SymbolProperty* Property() const;
+        CSymbolProperty* Property() const;
         /*!
         /* @Brief:     序列化
         /* @Date:      2021/12/21
@@ -80,10 +106,13 @@ namespace symbol
                                                 /* @Return     size_t
                                                 */
         virtual size_t GetSize();                       // 文件的总字节数
+       
+    public:
+       
     protected:
-        Symbol(const EnSymbolType& symbolType);
+        CSymbol(const EnSymbolType& symbolType);
         EnSymbolType m_eSymbolType;                   //符号类型
-        SymbolProperty* m_pProperty;
+        std::unique_ptr<CSymbolProperty> m_pProperty;
     };
 
 }

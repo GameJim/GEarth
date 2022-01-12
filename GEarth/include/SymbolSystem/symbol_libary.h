@@ -9,15 +9,15 @@
 #include "Common/object_manager.h"
 #include "SymbolSystem/symbol.h"
 #include <string>
-
+#include <memory>
 namespace symbol
 {
-    class CORE_PUBLIC SymbolLibary : public CObject
+    class CORE_PUBLIC CSymbolLibary : public CObject
     {
     public:
-        SymbolLibary();
-        SymbolLibary(const std::string& sPath);
-        virtual ~SymbolLibary() = default;
+        CSymbolLibary();
+        CSymbolLibary(const std::string& sPath);
+        virtual ~CSymbolLibary();
 
         bool Save2File(const std::string& sPath);
 
@@ -48,6 +48,8 @@ namespace symbol
         virtual std::string GetName();
 
         virtual void SetName(const std::string& sName);
+
+        virtual void AddSymbol(std::unique_ptr<CSymbol> pSymbol);
     public:
 
         /*!
@@ -61,7 +63,7 @@ namespace symbol
     protected:
         std::string m_sName; //符号库的名称
         std::string m_sVer;  //数据版本
-        std::vector<std::shared_ptr<Symbol>>  m_pSymbols; //符号组
+        std::vector<std::unique_ptr<CSymbol>>*  m_pSymbols; //符号组
     };
 }
 

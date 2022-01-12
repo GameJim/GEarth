@@ -10,9 +10,8 @@
 
 namespace symbol
 {
-    class CFillSymbol : public Symbol
+    class CFillSymbol : public CSymbol
     {
-        REGISTER_CLASS(CFillSymbol);
     public:
         CFillSymbol();
         virtual ~CFillSymbol() = default;

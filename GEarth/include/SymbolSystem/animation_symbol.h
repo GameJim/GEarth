@@ -10,9 +10,8 @@
 
 namespace symbol
 {
-    class CAnimationSymbol : public Symbol
+    class CAnimationSymbol : public CSymbol
     {
-        REGISTER_CLASS(CAnimationSymbol);
     public:
         CAnimationSymbol();
         virtual ~CAnimationSymbol() = default;

@@ -3,10 +3,8 @@
 
 namespace symbol
 {
-    REGISTER_OBJECT(CFillSymbol)
-
         CFillSymbol::CFillSymbol()
-        :Symbol(Symbol::EnSymbolType::SYMBOL_TYPE_FILL)
+        :CSymbol(CSymbol::EnSymbolType::SYMBOL_TYPE_FILL)
     {
 
     }

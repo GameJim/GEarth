@@ -5,10 +5,10 @@
 */
 #pragma once
 #include "common/object.h"
-
+#include <memory>
 namespace COMMON_NAMESPACE
 {
-    class CImage : public CObject
+    class CORE_PUBLIC CImage : public CObject
     {
     public:
         //float和int都是4个字节 
@@ -26,7 +26,7 @@ namespace COMMON_NAMESPACE
 
         CImage();
 
-        CImage(unsigned char* data, unsigned nWidth, unsigned nHegith, unsigned nChannel, const EnImageFormateType& eImageFormateType = IFT_DEFAULT);
+        CImage(std::unique_ptr<uint8_t[]> pData, unsigned nWidth, unsigned nHegith, unsigned nChannel, const EnImageFormateType& eImageFormateType = IFT_DEFAULT);
         virtual ~CImage();
 
         unsigned GetImageSize() const;
@@ -82,10 +82,10 @@ namespace COMMON_NAMESPACE
         void UpdateSubArea(const unsigned char* data, const unsigned& nWidth, const unsigned& nHegith, const unsigned& x = 0, const unsigned& y = 0);
     protected:
 
-        unsigned char* m_pData;            //字节数据
+        std::unique_ptr<uint8_t[]>        m_pData;
         unsigned m_nWidth;                 //图片宽度
         unsigned m_nHeigth;                //图片高度
-        unsigned short  m_nChannel;        //颜色通道
+        uint8_t  m_nChannel;              //颜色通道
         EnImageFormateType m_eImageFormateType;  //纹理数据的数据格式
     };
 }

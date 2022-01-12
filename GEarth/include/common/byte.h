@@ -7,13 +7,15 @@
 #include <memory>
 #include <string>
 #include "common/nonCopyable.h"
+#include "common/type.h"
+
 namespace COMMON_NAMESPACE
 {
     class CORE_PUBLIC CByte : public CNonCopyable
     {
     public:
         CByte(unsigned char* src, unsigned nSize = 0);
-        CByte(unsigned nSize);
+        CByte(size_t nSize);
         CByte() = delete;
         virtual ~CByte();
 
@@ -36,6 +38,9 @@ namespace COMMON_NAMESPACE
         CByte& operator >> (double& ui);
         CByte& operator >> (std::string& str);
 
+       
+       
+
 
 
         CByte& operator << (const uint8_t& ui8);
@@ -52,11 +57,145 @@ namespace COMMON_NAMESPACE
         //处理数组
         void ReadCharArry(unsigned char* data, unsigned nSize);
         void WriteCharArry(unsigned char* data, unsigned nSize);
+
+
+        template<class T>
+        void ReadArry(T*, const unsigned& nSize);
+        template<class T>
+        void WriteArry(T*, const unsigned& nSize);
+
+        template<class T>
+        void ReadObjectArry(T*, const unsigned& nSize);
+        template<class T>
+        void WriteObjectArry(T*, const unsigned& nSize);
+
+        template<class T>
+        CByte& operator >> (CVec2<T>& vec);
+        template<class T>
+        CByte& operator << (const CVec2<T>& vec);
+
+        template<class T>
+        CByte& operator >> (CVec3<T>& vec);
+        template<class T>
+        CByte& operator << (const CVec3<T>& vec);
+
+        template<class T>
+        CByte& operator >> (CVec4<T>& vec);
+        template<class T>
+        CByte& operator << (const CVec4<T>& vec);
+
+
+        template<class T>
+        CByte& operator >> (CMatrix<T>& vec);
+        template<class T>
+        CByte& operator << (const CMatrix<T>& vec);
+        
     protected:
         unsigned char* itr;     //数据的浏览器
 
         unsigned char* m_pData;
-        unsigned m_nSize;   //字节大小，如果为0则不代表有意义
+        size_t m_nSize;   //字节大小，如果为0则不代表有意义
         bool m_IsSwap;  //判断数据大小端
     };
+
+    template<class T>
+    void CByte::ReadArry(T*, const unsigned& nSize)
+    {
+        for (int i = 0;i < nSize;++i)
+        {
+            this << T[i];
+        }
+    }
+
+    template<class T>
+    void CByte::WriteArry(T*, const unsigned& nSize)
+    {
+        for (int i = 0; i < nSize; ++i)
+        {
+            this >> T[i];
+        }
+    }
+
+    template<class T>
+    void CByte::ReadObjectArry(T*, const unsigned& nSize)
+    {
+        for (int i = 0; i < nSize; ++i)
+        {
+            T[i].Serialize(*this);
+        }
+    }
+
+    template<class T>
+    void CByte::WriteObjectArry(T*, const unsigned& nSize)
+    {
+        T[i].Deserialize(*this);
+    }
+
+    template<class T>
+    CByte& CByte::operator >> (CVec2<T>& vec)
+    {
+        *this >> vec.x >> vec.y;
+
+        return *this;
+    }
+
+
+    template<class T>
+    CByte& CByte::operator << (const CVec2<T>& vec)
+    {
+        *this << vec.x << vec.y;
+
+        return *this;
+    }
+  
+
+    template<class T>
+    CByte& CByte::operator >> (CVec3<T>& vec)
+    {
+        *this >> vec.x >> vec.y >> vec.z;
+
+        return *this;
+    }
+
+
+    template<class T>
+    CByte& CByte::operator << (const CVec3<T>& vec)
+    {
+        *this << vec.x << vec.y << vec.z;
+
+        return *this;
+    }
+
+    template<class T>
+    CByte& CByte::operator >> (CVec4<T>& vec)
+    {
+        *this >> vec.x >> vec.y >> vec.z >> vec.w;
+
+        return *this;
+    }
+
+
+    template<class T>
+    CByte& CByte::operator << (const CVec4<T>& vec)
+    {
+        *this << vec.x << vec.y << vec.z << vec.w;
+
+        return *this;
+    }
+
+    template<class T>
+    CByte& CByte::operator<<(const CMatrix<T>& matrix)
+    {
+        *this << matrix[0] << matrix[1] << matrix[2] << matrix[3];
+        return *this;
+    }
+
+
+    template<class T>
+    CByte& CByte::operator >> (CMatrix<T>& matrix)
+    {
+        *this >> matrix[0] >> matrix[1] >> matrix[2] >> matrix[3];
+        return *this;
+    }
+
 }

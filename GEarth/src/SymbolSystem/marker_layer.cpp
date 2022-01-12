@@ -10,12 +10,13 @@ namespace symbol
 
     void CMarkerLayer::Serialize(CByte& data)
     {
-        data << m_IsEnable;
-        data << m_pos.x << m_pos.y << m_pos.z;
-
+        data << m_IsEnable << m_pos << m_Matrix;
+       
+       
         if (m_pColor)
         {
-            data << true << m_pColor->r << m_pColor->g << m_pColor->b << m_pColor->a;
+            data << true;
+            m_pColor->Serialize(data);
         }
         else
         {
@@ -25,25 +26,24 @@ namespace symbol
 
     void CMarkerLayer::Deserialize(CByte& data)
     {
-        data >> m_IsEnable;
-        data >> m_pos.x >> m_pos.y >> m_pos.z;
+        data >> m_IsEnable >> m_pos >> m_Matrix;
 
         bool hasObject;
         data >> hasObject;
         if (hasObject)
         {
             m_pColor = std::make_unique<CColor>();
-            data >> m_pColor->r >> m_pColor->g >> m_pColor->b >> m_pColor->a;
+            m_pColor->Deserialize(data);
         }
        
     }
 
     size_t CMarkerLayer::GetSize()
     {
-        size_t nSize = 1 + 3 * FLOAT_SIZE;
+        size_t nSize = 1 + common::CTypeSize::Instance().GetSize(m_pos) + common::CTypeSize::Instance().GetSize(m_Matrix) + 1;
         if (m_pColor)
         {
-            nSize + 1 + 4 * FLOAT_SIZE;
+            nSize = nSize + m_pColor->GetSize();
         }
         return nSize;
     }
@@ -53,12 +53,12 @@ namespace symbol
         return m_IsEnable;
     }
 
-    CVec3f CMarkerLayer::GetPos() const
+    CVec3d CMarkerLayer::GetPos() const
     {
         return m_pos;
     }
 
-    void CMarkerLayer::SetPos(const CVec3f& pos)
+    void CMarkerLayer::SetPos(const CVec3d& pos)
     {
         m_pos = pos;
     }
@@ -81,6 +81,16 @@ namespace symbol
         }
 
         return m_pColor.get();
+    }
+
+    void CMarkerLayer::SetMatrix(const CMatrix4d& matrix)
+    {
+        m_Matrix = matrix;
+    }
+
+    CMatrix4d CMarkerLayer::GetMatrix() const
+    {
+        return m_Matrix;
     }
 
     CMarkerLayer::CMarkerLayer(const EnMarkerLayerType& type)

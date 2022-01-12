@@ -5,17 +5,18 @@
 */
 #pragma once
 #include <common/object.h>
+#include "common/nonCopyable.h"
 #include "common/box.h"
 #include "common/color.h"
 namespace symbol
 {
     using namespace common;
-    class CMarkerLayer : public CObject
+    class CORE_PUBLIC CMarkerLayer : public CObject, public CNonCopyable
     {
     public:
         enum EnMarkerLayerType : uint8_t
         {
-            SYMBOL_TYPE_GEOMETRY = 0,   //矢量
+            SYMBOL_TYPE_SHAPE = 0,   //矢量
             SYMBOL_TYPE_IMAGE = 1,      //栅格
             SYMBOL_TYPE_FONT = 2,      //栅格
             SYMBOL_TYPE_CUSTOM          //自定义
@@ -50,25 +51,36 @@ namespace symbol
 
         virtual bool IsEnable() const;
 
-        CVec3f GetPos() const;
+        CVec3d GetPos() const;
 
-        void SetPos(const CVec3f& pos);
+        void SetPos(const CVec3d& pos);
 
         void SetEnable(const bool& enable);
 
-        virtual CBox3f GetBoundBox() = 0;
+        /*!
+        /* @Brief:     每次获取包围盒都需要重新计算，因此涉及效率问题
+        /* @Date:      2022/1/10
+        /* @Return     COMMON_NAMESPACE::CBox3d
+        */
+        virtual CBox3d GetBoundBox() = 0;
 
         void SetColor(std::unique_ptr<CColor> pColor);
 
         CColor* GetOrCreateColor();
+
+        virtual void SetMatrix(const CMatrix4d& matrix);
+        CMatrix4d GetMatrix() const;
     protected:
         CMarkerLayer(const EnMarkerLayerType& type);
         EnMarkerLayerType m_eMarkerLayerType;
 
         //关键数据
-        bool   m_IsEnable;       //数据是否启用
-        CVec3f m_pos;                          //数据的偏移，可以看做起点
+        bool   m_IsEnable;                     //数据是否启用
         std::unique_ptr<CColor>   m_pColor;    //颜色
+
+        CVec3d m_pos;                          //数据的偏移，可以看做起点
+        CMatrix4d m_Matrix;                    //数据仿射矩阵，用于旋转放缩,注意其对数据包围盒的影响！
+
     };
 
 

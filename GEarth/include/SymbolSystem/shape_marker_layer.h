@@ -1,20 +1,23 @@
 ﻿/*!
-*@File    image_marker_layer.h
+*@File    geometry_marker_layer.h
 *@Brief   文件描述:下次一定
-*@Date    2021/12/22
+*@Date    2021/12/30
 */
 #pragma once
-#include "SymbolSystem/marker_layer.h"
-#include "common/image.h"
-#include <memory>
 
+#include "SymbolSystem/marker_layer.h"
+#include "SymbolSystem/shape.h"
+#include "SymbolSystem/fill_symbol.h"
+#include <vector>
+#include <memory>
 namespace symbol
 {
-    class CORE_PUBLIC CImageMarkerLayer : public CMarkerLayer
+   
+    class CORE_PUBLIC CShapeMarkerLayer : public CMarkerLayer
     {
     public:
-        CImageMarkerLayer();
-        ~CImageMarkerLayer() = default;
+        CShapeMarkerLayer();
+        virtual ~CShapeMarkerLayer();
 
 
         virtual CBox3d GetBoundBox() override;
@@ -44,11 +47,13 @@ namespace symbol
 
         virtual bool IsEnable() const;
 
-        CImage* GetImage() const;
-        void SetImage(std::unique_ptr<CImage> pImage);
     protected:
-        std::unique_ptr<CImage>  m_pImage; //纹理数据
+        //
+        std::vector<std::unique_ptr<CShape>>*  m_vShapes;
+        std::unique_ptr<CFillSymbol>  m_pFillSymbol;     //包含填充和线
     };
-}
 
+    
+
+}
 

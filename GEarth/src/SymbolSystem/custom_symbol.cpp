@@ -2,10 +2,10 @@
 
 namespace symbol
 {
-    REGISTER_OBJECT(CCustomSymbol)
+    /*REGISTER_OBJECT(CCustomSymbol)*/
 
         CCustomSymbol::CCustomSymbol()
-        :Symbol(Symbol::EnSymbolType::SYMBOL_TYPE_CUSTOM)
+        :CSymbol(CSymbol::EnSymbolType::SYMBOL_TYPE_CUSTOM)
     {
 
     }

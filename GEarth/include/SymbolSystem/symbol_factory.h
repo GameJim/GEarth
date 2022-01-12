@@ -10,10 +10,10 @@
 
 namespace symbol
 {
-    class CSymbolFactory : public CFactory<CSymbolFactory>
+    class CORE_PUBLIC CSymbolFactory : public CFactory<CSymbolFactory>
     {
     public:
-        CMarkerSymbol* GetDefaultMarkerSymbol();
+        std::unique_ptr<CMarkerSymbol> GetDefaultMarkerSymbol();
     };
 
 }

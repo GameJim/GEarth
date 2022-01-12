@@ -12,8 +12,8 @@ namespace COMMON_NAMESPACE
 
     }
 
-    CImage::CImage(unsigned char* data, unsigned nWidth, unsigned nHegith, unsigned nChannel, const EnImageFormateType& eImageFormateType /*= IFT_DEFAULT*/)
-        :m_pData(data)
+    CImage::CImage(std::unique_ptr<uint8_t[]> data, unsigned nWidth, unsigned nHegith, unsigned nChannel, const EnImageFormateType& eImageFormateType /*= IFT_DEFAULT*/)
+        :m_pData(std::move(data))
         , m_nWidth(nWidth)
         , m_nHeigth(nChannel)
         , m_eImageFormateType(eImageFormateType)
@@ -41,10 +41,7 @@ namespace COMMON_NAMESPACE
 
     CImage::~CImage()
     {
-        if (m_pData)
-        {
-            delete m_pData;
-        }
+        m_pData = nullptr;
     }
 
     unsigned CImage::GetImageSize() const
@@ -60,14 +57,11 @@ namespace COMMON_NAMESPACE
 
     CImage& CImage::operator=(const CImage& image)
     {
-        if (m_pData)
-        {
-            delete[] m_pData;
-        }
+       
 
         unsigned nSize = GetImageSize();
-        m_pData = new unsigned char[nSize];
-        memcpy(m_pData, image.m_pData, nSize);
+        m_pData = std::make_unique<uint8_t[]>(nSize);
+        memcpy(m_pData.get(), image.m_pData.get(), nSize);
 
         m_nHeigth = image.m_nHeigth;
         m_nWidth = image.m_nWidth;
@@ -80,17 +74,24 @@ namespace COMMON_NAMESPACE
     void CImage::Serialize(CByte& data)
     {
         data << m_nWidth << m_nHeigth << m_nChannel << m_eImageFormateType;
-        data.WriteCharArry(m_pData, GetImageSize());
+        data.WriteCharArry(m_pData.get(), GetImageSize());
     }
 
     void CImage::Deserialize(CByte& data)
     {
-        data.ReadCharArry(m_pData, GetImageSize());
+        uint8_t type;
+        data >> m_nWidth >> m_nHeigth >> m_nChannel >> type;
+        m_eImageFormateType = (EnImageFormateType)type;
+       
+
+        unsigned nSize = GetImageSize();
+        m_pData = std::make_unique<uint8_t[]>(nSize);
+        data.ReadCharArry(m_pData.get(), nSize);
     }
 
     size_t CImage::GetSize()
     {
-        return 4 + 4 + 2 + GetImageSize() + 1;
+        return 4 + 4 + 2 + GetImageSize();
     }
 
     bool CImage::IsEnable() const

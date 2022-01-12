@@ -10,9 +10,9 @@
 
 namespace symbol
 {
-    class CCustomSymbol : public Symbol
+    class CCustomSymbol : public CSymbol
     {
-        REGISTER_CLASS(CCustomSymbol);
+        /*REGISTER_CLASS(CCustomSymbol);*/
     public:
         CCustomSymbol();
         virtual ~CCustomSymbol() = default;

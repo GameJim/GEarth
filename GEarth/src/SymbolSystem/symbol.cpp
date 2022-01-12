@@ -1,34 +1,28 @@
 ﻿#include "SymbolSystem/Symbol.h"
 #include "Common/register.h"
-
+#include "common/type_size.h"
 namespace symbol
 {
-    Symbol::EnSymbolType Symbol::SymbolType() const
+    REGISTER_OBJECT(CSymbolProperty)
+
+    CSymbol::EnSymbolType CSymbol::SymbolType() const
     {
         return m_eSymbolType;
     }
 
 
-    void Symbol::SetProperty(SymbolProperty* pProperty)
+    void CSymbol::SetProperty(std::unique_ptr<CSymbolProperty> pProperty)
     {
-        if (!pProperty)
-            return;
-
-        if (m_pProperty)
-        {
-            delete m_pProperty;
-        }
-        m_pProperty = pProperty;
+        m_pProperty = std::move(pProperty);
     }
 
-    SymbolProperty* Symbol::Property() const
+    CSymbolProperty* CSymbol::Property() const
     {
-        return m_pProperty;
+        return m_pProperty.get();
     }
 
-    void Symbol::Serialize(CByte& data)
+    void CSymbol::Serialize(CByte& data)
     {
-        data << m_eSymbolType;
         bool hasObject = false;
         if (m_pProperty)
         {
@@ -42,11 +36,9 @@ namespace symbol
         }
     }
 
-    void Symbol::Deserialize(CByte& data)
+    void CSymbol::Deserialize(CByte& data)
     {
-        uint8_t nType;
-        data >> nType;
-        m_eSymbolType = (EnSymbolType)nType;
+
         bool hasObject = false;
         data >> hasObject;
         if (hasObject)
@@ -55,16 +47,17 @@ namespace symbol
             std::string sClassName;
             data >> sClassName;
             //获取对应的类型
-            m_pProperty = static_cast<SymbolProperty*>(ClassFactory::get_instance(sClassName.c_str()));
+            CSymbolProperty* pSymbolProperty = static_cast<CSymbolProperty*>(ClassFactory::get_instance(sClassName.c_str()));
             //序列化初始化
-            m_pProperty->Serialize(data);
+            pSymbolProperty->Deserialize(data);
+            m_pProperty.reset(pSymbolProperty);
         }
     }
 
-    size_t Symbol::GetSize()
+    size_t CSymbol::GetSize()
     {
         size_t size = 0;
-        size = 1 + 1; //类型、是否存在属性
+        size = 1; //类型、是否存在属性
         if (m_pProperty)
         {
             size += m_pProperty->GetSize();
@@ -73,18 +66,31 @@ namespace symbol
         return size;
     }
 
-    Symbol::Symbol(const EnSymbolType& symbolType)
-        :m_eSymbolType(symbolType), m_pProperty(nullptr)
+    CSymbol::CSymbol(const EnSymbolType& symbolType)
+        :m_eSymbolType(symbolType), m_pProperty(std::make_unique<CSymbolProperty>())
     {
 
     }
 
-    Symbol::~Symbol()
+    CSymbol::~CSymbol()
     {
-        if (m_pProperty)
-        {
-            delete m_pProperty;
-        }
+
         m_pProperty = nullptr;
     }
+
+    void CSymbolProperty::Serialize(CByte& data)
+    {
+        data << m_sClassName << m_sName;
+    }
+
+    void CSymbolProperty::Deserialize(CByte& data)
+    {
+        data >> m_sName;
+    }
+
+    size_t CSymbolProperty::GetSize()
+    {
+        return CTypeSize::Instance().GetSize(m_sName) + CTypeSize::Instance().GetSize(m_sClassName);
+    }
+
 }

@@ -5,9 +5,9 @@
 */
 #pragma once
 #include <common/apiDescription.h>
+#include <common/type.h>
 #include <array>
-#include "glm/vec2.hpp"
-#include "glm/vec3.hpp"
+
 namespace COMMON_NAMESPACE
 {
 
@@ -15,19 +15,19 @@ namespace COMMON_NAMESPACE
     class CORE_PUBLIC CSize {};
 
      template<class T>
-     class CORE_PUBLIC CSize<T, 2> : public glm::vec<2, T, glm::qualifier::defaultp>
+     class CORE_PUBLIC CSize<T, 2> : public CVec2<T>
      {
      public:
-         CSize() :glm::vec<2, T, glm::qualifier::defaultp>() {};
+         CSize() :CVec2<T>() {};
          CSize(const T& _X, const T& _Y)
          {
              x = _X;
              y = _Y;
          }
 
-         CSize(const glm::vec<2, T, glm::qualifier::defaultp>& data)
+         CSize(const CVec2<T>& data)
          {
-             glm::vec<2, T, glm::qualifier::defaultp>::operator=(data);
+             CVec2::operator=(data);
          }
 
          T& Width()
@@ -48,19 +48,19 @@ namespace COMMON_NAMESPACE
 
 
     template<class T>
-    class CORE_PUBLIC CSize<T, 3> : public glm::vec<3, T, glm::qualifier::defaultp>
+    class CORE_PUBLIC CSize<T, 3> : public CVec3<T>
     {
     public:
-        CSize() :glm::vec<3, T, glm::qualifier::defaultp>() {};
+        CSize() : CVec3<T>{};
         CSize(const T& _X, const T& _Y)
         {
             x = _X;
             y = _Y;
         }
 
-        CSize(const glm::vec<3, T, glm::qualifier::defaultp>& data)
+        CSize(const CVec3<T>& data)
         {
-            glm::vec<3, T, glm::qualifier::defaultp>::operator=(data);
+            CVec3::operator=(data);
         }
 
         T& Width()
