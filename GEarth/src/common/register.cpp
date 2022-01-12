@@ -5,7 +5,7 @@
 namespace COMMON_NAMESPACE
 {
     void * ClassFactory::get_instance(const std::string& class_name) {
-        if (_Static::_static<0, create_obj_map>().find(class_name) == data.end()) {
+        if (_Static::_static<0, create_obj_map>().find(class_name) == _Static::_static<0, create_obj_map>().end()) {
             LOG_INFO(("Failed to find class:") + std::string(class_name));
             return NULL;
         }
