@@ -23,6 +23,7 @@ namespace symbol
 
     void CSymbol::Serialize(CByte& data)
     {
+        data << m_MaxOpacity;
         bool hasObject = false;
         if (m_pProperty)
         {
@@ -40,7 +41,7 @@ namespace symbol
     {
 
         bool hasObject = false;
-        data >> hasObject;
+        data >> m_MaxOpacity >>  hasObject;
         if (hasObject)
         {
             //获取文件名称
@@ -57,7 +58,7 @@ namespace symbol
     size_t CSymbol::GetSize()
     {
         size_t size = 0;
-        size = 1; //类型、是否存在属性
+        size = 1 + FLOAT_SIZE; //类型、是否存在属性
         if (m_pProperty)
         {
             size += m_pProperty->GetSize();
@@ -66,8 +67,22 @@ namespace symbol
         return size;
     }
 
+    void CSymbol::SetMaxOpacity(const float& fOpacity)
+    {
+        m_MaxOpacity = fOpacity;
+        m_MaxOpacity = m_MaxOpacity < 0.0f ? 0.0f : m_MaxOpacity;
+        m_MaxOpacity = m_MaxOpacity > 1.0f ? 1.0f : m_MaxOpacity;
+
+    }
+
+    float CSymbol::GetMaxOpacity() const
+    {
+        return m_MaxOpacity;
+    }
+
     CSymbol::CSymbol(const EnSymbolType& symbolType)
         :m_eSymbolType(symbolType), m_pProperty(std::make_unique<CSymbolProperty>())
+        , m_MaxOpacity(1.0f)
     {
 
     }

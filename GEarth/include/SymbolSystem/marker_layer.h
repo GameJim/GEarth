@@ -8,18 +8,20 @@
 #include "common/nonCopyable.h"
 #include "common/box.h"
 #include "common/color.h"
+#include "common/unit.h"
 namespace symbol
 {
     using namespace common;
     class CORE_PUBLIC CMarkerLayer : public CObject, public CNonCopyable
     {
     public:
+        using CMarkerSize = CUnitValue<float>;                     //符号大小
         enum EnMarkerLayerType : uint8_t
         {
-            SYMBOL_TYPE_SHAPE = 0,   //矢量
-            SYMBOL_TYPE_IMAGE = 1,      //栅格
-            SYMBOL_TYPE_FONT = 2,      //栅格
-            SYMBOL_TYPE_CUSTOM          //自定义
+            MARKER_LAYER_TYPE_SHAPE = 0,   //矢量
+            MARKER_LAYER_TYPE_IMAGE = 1,      //栅格
+            MARKER_LAYER_TYPE_FONT = 2,      //栅格
+            MARKER_LAYER_TYPE_CUSTOM          //自定义
         };
 
         virtual ~CMarkerLayer() = default;
@@ -70,6 +72,10 @@ namespace symbol
 
         virtual void SetMatrix(const CMatrix4d& matrix);
         CMatrix4d GetMatrix() const;
+
+        CMarkerSize& GetMarkerSize();
+
+        void SetMakerSize(const CMarkerSize& markerSize);
     protected:
         CMarkerLayer(const EnMarkerLayerType& type);
         EnMarkerLayerType m_eMarkerLayerType;
@@ -81,7 +87,6 @@ namespace symbol
         CVec3d m_pos;                          //数据的偏移，可以看做起点
         CMatrix4d m_Matrix;                    //数据仿射矩阵，用于旋转放缩,注意其对数据包围盒的影响！
 
+        CMarkerSize m_markerSize;                    //符号大小
     };
-
-
 }

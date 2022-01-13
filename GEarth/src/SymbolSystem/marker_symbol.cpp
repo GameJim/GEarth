@@ -10,7 +10,6 @@ namespace symbol
   
     CMarkerSymbol::CMarkerSymbol()
         : CSymbol(CSymbol::EnSymbolType::SYMBOL_TYPE_MARKER)
-        , m_symbolSize(1.0)
     {
         m_pLayers = new std::vector<std::unique_ptr<CMarkerLayer>>();
     }
@@ -86,14 +85,13 @@ namespace symbol
 
         unsigned nSize = m_pLayers->size();
         data << nSize;
-        for (auto& pMakerLayer : *m_pLayers)
+        for (auto& pMarkerLayer : *m_pLayers)
         {
-            uint8_t nType = pMakerLayer->MarkerLayerType();
+            uint8_t nType = pMarkerLayer->MarkerLayerType();
             data << nType;
-            pMakerLayer->Serialize(data);
+            pMarkerLayer->Serialize(data);
         }
 
-        m_symbolSize.Serialize(data);
     }
 
     void CMarkerSymbol::Deserialize(CByte& data)
@@ -111,16 +109,16 @@ namespace symbol
             std::unique_ptr<CMarkerLayer> pMarkerLayer;
             switch (eMarkerLayerType)
             {
-            case symbol::CMarkerLayer::SYMBOL_TYPE_SHAPE:
+            case symbol::CMarkerLayer::MARKER_LAYER_TYPE_SHAPE:
                 pMarkerLayer = std::make_unique<CShapeMarkerLayer>();
                 break;
-            case symbol::CMarkerLayer::SYMBOL_TYPE_IMAGE:
+            case symbol::CMarkerLayer::MARKER_LAYER_TYPE_IMAGE:
                 pMarkerLayer = std::make_unique<CImageMarkerLayer>();
                 break;
-            case symbol::CMarkerLayer::SYMBOL_TYPE_FONT:
+            case symbol::CMarkerLayer::MARKER_LAYER_TYPE_FONT:
                 pMarkerLayer = std::make_unique<CFontMarkerLayer>();
                 break;
-            case symbol::CMarkerLayer::SYMBOL_TYPE_CUSTOM:
+            case symbol::CMarkerLayer::MARKER_LAYER_TYPE_CUSTOM:
             {
                 std::string sClassName;
                 data >> sClassName;
@@ -135,18 +133,18 @@ namespace symbol
             m_pLayers->push_back(std::move(pMarkerLayer));
         }
        
-        m_symbolSize.Deserialize(data);
+      
     }
 
     size_t CMarkerSymbol::GetSize()
     {
         size_t nSize = m_pLayers->size() + 4 + CSymbol::GetSize();
-        for (auto& pMakerLayer : *m_pLayers)
+        for (auto& pMarkerLayer : *m_pLayers)
         {
-            nSize += pMakerLayer->GetSize();
+            nSize += pMarkerLayer->GetSize();
         }
 
-        return nSize + m_symbolSize.GetSize();
+        return nSize;
     }
 
 }

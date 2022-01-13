@@ -107,12 +107,16 @@ namespace symbol
                                                 */
         virtual size_t GetSize();                       // 文件的总字节数
        
+        void SetMaxOpacity(const float& fOpacity);
+        float GetMaxOpacity() const;
     public:
        
     protected:
         CSymbol(const EnSymbolType& symbolType);
         EnSymbolType m_eSymbolType;                   //符号类型
         std::unique_ptr<CSymbolProperty> m_pProperty;
+
+        float m_MaxOpacity;                           //符号的最大不透明1.0位不透明，0.0为透明
     };
 
 }

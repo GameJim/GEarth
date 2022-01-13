@@ -4,8 +4,9 @@
 *@Date    2021/12/22
 */
 #pragma once
-#include "Common/register.h"
+
 #include "SymbolSystem/Symbol.h"
+#include "SymbolSystem/line_layer.h"
 #include <vector>
 
 namespace symbol
@@ -15,9 +16,21 @@ namespace symbol
     
     public:
         CLineSymbol();
-        virtual ~CLineSymbol() = default;
+        virtual ~CLineSymbol();
+
+        void AddLineLayer(std::unique_ptr<CLineLayer> pLineLayer);
+        CLineLayer* GetLineLayer(const unsigned& index);
+        void RemoveLineLayer(CLineLayer* pLineLayer);
+        void RemoveLineLayer(const unsigned& index);
+
+        virtual void Serialize(CByte& data) override;
+
+        virtual void Deserialize(CByte& data) override;
+
+        virtual size_t GetSize() override;
     protected:
 
+        std::vector<std::unique_ptr<CLineLayer>>*  m_pLayers;   //图层
     };
 }
 

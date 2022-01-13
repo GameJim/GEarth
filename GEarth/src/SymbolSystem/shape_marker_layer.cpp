@@ -5,7 +5,7 @@ namespace symbol
 {
 
     CShapeMarkerLayer::CShapeMarkerLayer()
-        :CMarkerLayer(SYMBOL_TYPE_SHAPE), m_pFillSymbol(nullptr)
+        :CMarkerLayer(MARKER_LAYER_TYPE_SHAPE), m_pFillSymbol(nullptr)
     {
         m_vShapes = new std::vector<std::unique_ptr<CShape>>();
     }

@@ -4,13 +4,13 @@ namespace symbol
 {
 
     CFontMarkerLayer::CFontMarkerLayer(CFont& pFont)
-        :CMarkerLayer(SYMBOL_TYPE_FONT),m_pFont(pFont)
+        :CMarkerLayer(MARKER_LAYER_TYPE_FONT),m_pFont(pFont)
     {
 
     }
 
     CFontMarkerLayer::CFontMarkerLayer()
-        : CMarkerLayer(SYMBOL_TYPE_FONT), m_pFont(CFontFactory::GetInstance().CreateDefaultFont())
+        : CMarkerLayer(MARKER_LAYER_TYPE_FONT), m_pFont(CFontFactory::GetInstance().CreateDefaultFont())
     {
 
     }

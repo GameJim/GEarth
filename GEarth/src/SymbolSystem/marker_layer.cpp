@@ -22,6 +22,8 @@ namespace symbol
         {
             data << false;
         }
+
+        m_markerSize.Serialize(data);
     }
 
     void CMarkerLayer::Deserialize(CByte& data)
@@ -36,6 +38,7 @@ namespace symbol
             m_pColor->Deserialize(data);
         }
        
+        m_markerSize.Deserialize(data);
     }
 
     size_t CMarkerLayer::GetSize()
@@ -45,7 +48,7 @@ namespace symbol
         {
             nSize = nSize + m_pColor->GetSize();
         }
-        return nSize;
+        return nSize + m_markerSize.GetSize();
     }
 
     bool CMarkerLayer::IsEnable() const
@@ -93,8 +96,18 @@ namespace symbol
         return m_Matrix;
     }
 
-    CMarkerLayer::CMarkerLayer(const EnMarkerLayerType& type)
-        :m_IsEnable(true), m_eMarkerLayerType(type), m_pos(0.0f, 0.0f, 0.0f), m_pColor(nullptr)
+   CMarkerLayer::CMarkerSize& CMarkerLayer::GetMarkerSize()
+    {
+       return m_markerSize;
+    }
+
+   void CMarkerLayer::SetMakerSize(const CMarkerSize& markerSize)
+   {
+       m_markerSize = markerSize;
+   }
+
+   CMarkerLayer::CMarkerLayer(const EnMarkerLayerType& type)
+        :m_IsEnable(true), m_eMarkerLayerType(type), m_pos(0.0f, 0.0f, 0.0f), m_pColor(nullptr),m_markerSize(2.0)
     {
 
     }

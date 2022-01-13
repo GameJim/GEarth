@@ -99,36 +99,36 @@ namespace COMMON_NAMESPACE
     };
 
     template<class T>
-    void CByte::ReadArry(T*, const unsigned& nSize)
+    void CByte::ReadArry(T* data, const unsigned& nSize)
     {
         for (int i = 0;i < nSize;++i)
         {
-            this << T[i];
+            *this << data[i];
         }
     }
 
     template<class T>
-    void CByte::WriteArry(T*, const unsigned& nSize)
+    void CByte::WriteArry(T* data, const unsigned& nSize)
     {
         for (int i = 0; i < nSize; ++i)
         {
-            this >> T[i];
+            *this >> data[i];
         }
     }
 
     template<class T>
-    void CByte::ReadObjectArry(T*, const unsigned& nSize)
+    void CByte::ReadObjectArry(T* data, const unsigned& nSize)
     {
         for (int i = 0; i < nSize; ++i)
         {
-            T[i].Serialize(*this);
+            data[i].Serialize(*this);
         }
     }
 
     template<class T>
-    void CByte::WriteObjectArry(T*, const unsigned& nSize)
+    void CByte::WriteObjectArry(T* data, const unsigned& nSize)
     {
-        T[i].Deserialize(*this);
+        data[i].Deserialize(*this);
     }
 
     template<class T>

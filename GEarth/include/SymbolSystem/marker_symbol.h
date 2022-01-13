@@ -17,7 +17,7 @@ namespace symbol
     {
        
     public:
-        using CSymbolSize = CUnitValue<float>;                     //符号大小
+       
         CMarkerSymbol();
         virtual ~CMarkerSymbol();
 
@@ -37,7 +37,7 @@ namespace symbol
         virtual size_t GetSize() override;
     protected:
         std::vector<std::unique_ptr<CMarkerLayer>>*  m_pLayers;   //图层
-        CSymbolSize m_symbolSize;                    //符号大小
+       
     };
 }
 

@@ -4,7 +4,7 @@
 namespace symbol
 {
     CImageMarkerLayer::CImageMarkerLayer() :
-        CMarkerLayer(CMarkerLayer::EnMarkerLayerType::SYMBOL_TYPE_IMAGE)
+        CMarkerLayer(CMarkerLayer::EnMarkerLayerType::MARKER_LAYER_TYPE_IMAGE)
         ,m_pImage(nullptr)
     {
 
