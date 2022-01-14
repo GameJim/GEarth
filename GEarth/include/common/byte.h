@@ -101,7 +101,7 @@ namespace COMMON_NAMESPACE
     template<class T>
     void CByte::ReadArry(T* data, const unsigned& nSize)
     {
-        for (int i = 0;i < nSize;++i)
+        for (unsigned i = 0;i < nSize;++i)
         {
             *this << data[i];
         }
@@ -110,7 +110,7 @@ namespace COMMON_NAMESPACE
     template<class T>
     void CByte::WriteArry(T* data, const unsigned& nSize)
     {
-        for (int i = 0; i < nSize; ++i)
+        for (unsigned i = 0; i < nSize; ++i)
         {
             *this >> data[i];
         }
@@ -119,7 +119,7 @@ namespace COMMON_NAMESPACE
     template<class T>
     void CByte::ReadObjectArry(T* data, const unsigned& nSize)
     {
-        for (int i = 0; i < nSize; ++i)
+        for (unsigned i = 0; i < nSize; ++i)
         {
             data[i].Serialize(*this);
         }

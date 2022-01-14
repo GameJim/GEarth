@@ -3,9 +3,6 @@
 namespace symbol
 {
 
-
-
-
     CSimpleLineLayer::CSimpleLineLayer()
         :CLineLayer(CLineLayer::EnLineLayerType::LINE_LAYER_TYPE_SIMPLE)
         , m_pColor(std::make_unique<CColor>())

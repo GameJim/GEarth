@@ -118,7 +118,7 @@ namespace symbol
         unsigned nSize = m_Poss.size();
         data << nSize;
 
-        for (int i = 0;i < nSize;i++)
+        for (unsigned i = 0;i < nSize;i++)
         {
             data << m_Poss[i];
         }
@@ -130,7 +130,7 @@ namespace symbol
         data >> nSize;
 
         m_Poss.resize(nSize);
-        for (int i = 0; i < nSize; i++)
+        for (unsigned i = 0; i < nSize; i++)
         {
             data >> m_Poss[i];
         }
