@@ -1,0 +1,75 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_LOCATORS_H
+#define OSGEARTH_LOCATORS_H 1
+
+#include <osgEarth/Common>
+#include <osgEarth/GeoData>
+#include <osg/Matrixd>
+
+namespace osgEarth { namespace Util
+{
+    /**
+     * Object that facilitates the conversion between map or world coordinates
+     * and a local unit coordinate space defined by a geospatial extent.
+     */
+    class /* header only */ GeoLocator
+    {
+    public:
+        //! Construct with an extent that defines the unit [0..1] space
+        GeoLocator(const GeoExtent& extent)
+        {
+            _srs = extent.getSRS();
+
+            _transform.set(
+                extent.width(), 0.0, 0.0, 0.0,
+                0.0, extent.height(), 0.0, 0.0,
+                0.0, 0.0, 1.0, 0.0,
+                extent.xMin(), extent.yMin(), 0.0, 1.0);
+
+            _inverse.invert(_transform);
+        }
+
+        //! Convert world coordinates to unit space
+        inline void worldToUnit(const osg::Vec3d& world, osg::Vec3d& unit) const
+        {
+            if (_srs->isGeographic())
+                unit = _srs->getEllipsoid().geocentricToGeodetic(world) * _inverse;
+            else
+                unit = world * _inverse;
+        }
+
+        //! Convert unit coordinates to world space
+        inline void unitToWorld(const osg::Vec3d& unit, osg::Vec3d& world) const
+        {
+            world = unit * _transform;
+            if (_srs->isGeographic())
+                world = _srs->getEllipsoid().geodeticToGeocentric(world);
+        }
+        
+    protected:
+        osg::Matrixd _transform;
+        osg::Matrixd _inverse;
+        double _x0, _y0, _x1, _y1;
+        osg::ref_ptr<const SpatialReference> _srs;
+    };
+} }
+
+#endif // OSGEARTH_LOCATORS_H

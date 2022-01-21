@@ -1,0 +1,240 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+#ifndef OSGEARTH_LAND_COVER_H
+#define OSGEARTH_LAND_COVER_H 1
+
+#include <osgEarth/Config>
+#include <osgEarth/Layer>
+#include <osgEarth/ImageLayer>
+#include <osgEarth/Color>
+#include <vector>
+
+namespace osgEarth
+{
+    struct OSGEARTH_EXPORT LandCover
+    {
+        //! Creates a new image configured to hold land cover data
+        static osg::Image* createImage(unsigned s, unsigned t =0u);
+
+        //! Create an empty no-data image
+        static osg::Image* createEmptyImage();
+
+        //! Create an empty no-data texture
+        static osg::Texture* createEmptyTexture();
+
+        //! the internal texture format used for land cover data
+        static GLint getTextureFormat();
+
+        static bool isLandCover(const osg::Image*);
+    };
+
+    /**
+     * A single classification definition of land cover and the coded
+     * value that osgEarth uses to represent the class in a coverage raster.
+     *
+     * For example, "forest"=11 or "water"=230.
+     *
+     * A collection of these makes up a land cover dictionary.
+     * Note: use set/getName to set the classification text that maps to the value.
+     */
+    class OSGEARTH_EXPORT LandCoverClass : public osg::Object
+    {
+    public:
+        META_Object(osgEarth, LandCoverClass);
+
+        //! Construct an empty land cover class.
+        LandCoverClass();
+
+        //! Construct a land cover class with the given name and numerical value
+        LandCoverClass(const std::string& name, int value);
+
+        //! Construct a land cover class from a serialized Config.
+        LandCoverClass(const Config& conf);
+
+        //! Copy constructor
+        LandCoverClass(const LandCoverClass& rhs, const osg::CopyOp& op);
+
+        //! Code value that represents this class in a coverage raster
+        void setValue(int value) { _value = value; }
+        int getValue() const { return _value; }
+
+    public:
+        void fromConfig(const Config& conf);
+        Config getConfig() const;
+
+    private:
+        int _value;
+    };
+    typedef std::vector< osg::ref_ptr<LandCoverClass> > LandCoverClassVector;
+    
+
+    /**
+     * Complete set of available land cover classes.
+     * Add this to a Map so that land cover facilities can find and use it.
+     * Adding more than one LandCoverDictionary to a Map will have undefined results!
+     */
+    class OSGEARTH_EXPORT LandCoverDictionary : public Layer
+    {
+    public: // serialization
+        class OSGEARTH_EXPORT Options : public Layer::Options {
+        public:
+            META_LayerOptions(osgEarth, Options, Layer::Options);
+            LandCoverClassVector& classes() { return _landCoverClasses; }
+            const LandCoverClassVector& classes() const { return _landCoverClasses; }
+            bool loadFromXML(const URI& uri);        
+            virtual Config getConfig() const;
+
+        private:
+            void fromConfig(const Config& conf);
+            LandCoverClassVector _landCoverClasses;
+        };
+
+    public:
+        META_Layer(osgEarth, LandCoverDictionary, Options, Layer, LandCoverDictionary);
+
+        //! Add a class.
+        void addClass(const std::string& name, int value =INT_MAX);
+
+        //! Load from an XML file.
+        bool loadFromXML(const URI& uri);
+        
+    public:
+        LandCoverClassVector& getClasses() { return options().classes(); }
+        const LandCoverClassVector& getClasses() const { return options().classes(); }
+
+        //! Gets a land cover class by its name.
+        const LandCoverClass* getClassByName(const std::string& name) const;
+
+        //! Gets the land cover class corresponding to the integer value.
+        const LandCoverClass* getClassByValue(int value) const;
+
+        //! Given a land cover tile, get the land cover class at the given unit
+        //! coordinates [0..1].
+        const LandCoverClass* getClassByUV(const GeoImage& tile, double u, double v) const;
+    };
+
+
+    /**
+     * Maps an integral value from a land cover coverage raster to one of the 
+     * land cover classes in the dictionary.
+     * For example, 42 -> "tundra".
+     */
+    class OSGEARTH_EXPORT LandCoverValueMapping : public osg::Object
+    {
+    public:
+        META_Object(osgEarth, LandCoverValueMapping);
+
+        //! Construct a blank mapping
+        LandCoverValueMapping();
+
+        //! Construct with values
+        LandCoverValueMapping(int value, const std::string& className);
+
+        //! Deserialize a mapping
+        LandCoverValueMapping(const Config& conf);
+
+        //! Copy a mapping
+        LandCoverValueMapping(const LandCoverValueMapping& rhs, const osg::CopyOp& op);
+
+    public:
+        //! Value in the coverage raster to map to a land over class
+        void setValue(int value) { _value = value; }
+        int getValue() const { return _value.get(); }
+
+        //! Name of the land cover class we are mapping to
+        void setLandCoverClassName(const std::string& name) { _lcClassName = name; }
+        const std::string& getLandCoverClassName() const { return _lcClassName.get(); }
+
+    public:
+        void fromConfig(const Config&);
+        Config getConfig() const;
+
+    private:
+        optional<int> _value;
+        optional<std::string> _lcClassName;
+    };
+    typedef std::vector< osg::ref_ptr<LandCoverValueMapping> > LandCoverValueMappingVector;
+
+    /**
+     * Component coverage layer of a LandCoverLayer.
+     * This layer only lives inside a LandCoverLayer; it makes no sense to add
+     * it to a map directly.
+     */
+    class OSGEARTH_EXPORT LandCoverCoverageLayer : public Layer
+    {
+    public:
+        class OSGEARTH_EXPORT Options : public Layer::Options {
+        public:
+            META_LayerOptions(osgEarth, Options, Layer::Options);
+            OE_OPTION(float, warp);
+            OE_OPTION(ConfigOptions, layer);
+            LandCoverValueMappingVector& mappings() { return _mappings; }
+            const LandCoverValueMappingVector& mappings() const { return _mappings; }
+            virtual Config getConfig() const;
+            void map(int value, const std::string& className);
+            bool loadMappingsFromXML(const URI& uri);
+
+        private:
+            void fromConfig(const Config& conf);
+            LandCoverValueMappingVector _mappings;
+        };
+
+    public:
+        META_Layer(osgEarth, LandCoverCoverageLayer, Options, Layer, Coverage);
+
+        //! Code mappings.
+        LandCoverValueMappingVector& getMappings() { return options().mappings(); }
+        const LandCoverValueMappingVector& getMappings() const { return options().mappings(); }
+
+        //! Land cover dictionary to use.
+        void setDictionary(LandCoverDictionary* value) { _lcDictionary = value; }
+        LandCoverDictionary* getDictionary() const { return _lcDictionary.get(); }
+
+        //! Sets the warping amount
+        void setWarp(const float& value);
+        const float& getWarp() const;
+
+        //! Sets the underlying image layer
+        void setImageLayer(ImageLayer* value);
+        ImageLayer* getImageLayer() { return _imageLayer.get(); }
+
+        //! Load mappings from XML
+        bool loadMappingsFromXML(const URI& uri) { return options().loadMappingsFromXML(uri); }
+        
+        //! Add a mapping.
+        void map(int value, const std::string& className) { options().map(value, className); }
+
+    public: // Layer
+
+        virtual void addedToMap(const class Map*);
+
+        virtual void removedFromMap(const class Map*);
+
+    protected: // Layer
+
+        virtual Status openImplementation();
+
+    private:
+        osg::ref_ptr<LandCoverDictionary> _lcDictionary;
+        osg::ref_ptr<ImageLayer> _imageLayer;
+    };
+
+} // namespace osgEarth
+
+#endif // OSGEARTH_LAND_COVER_H

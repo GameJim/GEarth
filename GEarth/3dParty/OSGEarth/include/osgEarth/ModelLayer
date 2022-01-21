@@ -1,0 +1,160 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_MODEL_LAYER_H
+#define OSGEARTH_MODEL_LAYER_H 1
+
+#include <osgEarth/Common>
+#include <osgEarth/VisibleLayer>
+#include <osgEarth/Cache>
+#include <osgEarth/ModelSource>
+#include <osgEarth/ShaderUtils>
+#include <osgEarth/URI>
+#include <osg/Node>
+#include <vector>
+
+namespace osgEarth
+{
+    class Map;
+
+    struct ModelLayerCallback : public VisibleLayerCallback
+    {
+        // Nothing - placeholder
+        typedef void (ModelLayerCallback::*MethodPtr)(class ModelLayer* layer);
+    };
+
+
+    /**
+     * Layer that contains an OSG scene graph
+     */
+    class OSGEARTH_EXPORT ModelLayer : public VisibleLayer
+    {
+    public: // serialization
+        class OSGEARTH_EXPORT Options : public VisibleLayer::Options {
+        public:        
+            META_LayerOptions(osgEarth, Options, VisibleLayer::Options);
+            OE_OPTION(URI, url);
+            OE_OPTION(float, lodScale);
+            OE_OPTION(GeoPoint, location);
+            OE_OPTION(osg::Vec3, orientation);
+            OE_OPTION(ShaderPolicy, shaderPolicy);
+            OE_OPTION(float, loadingPriorityScale);
+            OE_OPTION(float, loadingPriorityOffset);
+            OE_OPTION(bool, paged);
+            OE_OPTION(bool, lightingEnabled);
+            OE_OPTION(unsigned, maskMinLevel);
+            OE_OPTION(ModelSourceOptions, driver);
+            virtual Config getConfig() const;
+        private:
+            void fromConfig( const Config& conf );
+        };
+
+    public:
+        META_Layer(osgEarth, ModelLayer, Options, VisibleLayer, Model);
+
+    public:
+        //! Sets the node to add to the map's scene graph. Set this OR setURL
+        //! Call this OR setURL, but not both.
+        void setNode(osg::Node* node);
+
+        //! URL from which to load the model to use in this layer.
+        //! Call this OR setNode, but not both. Call before opening the layer.
+        void setURL(const URI& url);
+        const URI& getURL() const;
+
+        //! LOD scale for the scene graph in this model layer.
+        //! Call before opening the layer.
+        void setLODScale(const float& value);
+        const float& getLODScale() const;
+
+        //! Whether the model loaded by setURL() should be paged in versus
+        //! loaded immediately. Only applicable when using setURL.
+        //! Call before opening the layer.
+        void setPaged(const bool& value);
+        const bool& getPaged() const;
+
+        //! Sets the location at which to position the model.
+        //! Call before opening the layer.
+        void setLocation(const GeoPoint& value);
+        const GeoPoint& getLocation() const;
+
+        //! Sets the orientation (HPR) of the model in degrees
+        //! Call before opening the layer.
+        void setOrientation(const osg::Vec3& value);
+        const osg::Vec3& getOrientation() const;
+
+        //! Minimum terrain LOD at which to apply the mask.
+        //! Call before opening the layer.
+        void setMaskMinLevel(const unsigned& value);
+        const unsigned& getMaskMinLevel() const;
+
+        //! Whether lighting should affect the model graph
+        void setLightingEnabled( bool value );
+        bool isLightingEnabled() const;
+
+        //! Whether to generate shaders or use the default shaders
+        void setShaderPolicy(const ShaderPolicy& value);
+        const ShaderPolicy& getShaderPolicy() const;
+
+    public: // deprecated
+
+        //! @deprecated - subclass ModelLayer instead of using ModelSource plugins
+        //! Access the underlying model source.
+        ModelSource* getModelSource() const { return _modelSource.get(); }
+
+    public: // Layer
+
+        //! Open the layer and return its status
+        virtual Status openImplementation();
+
+        //! Called when this layer is added to a Map
+        virtual void addedToMap(const Map*);
+
+        //! Called when this layer is removed from a Map
+        virtual void removedFromMap(const Map*);
+
+        //! Node created by this model layer
+        virtual osg::Node* getNode() const;
+
+        //! Generate a cache ID for this layer
+        virtual std::string getCacheID() const;
+
+    protected: // Layer
+
+        //! post-ctor initialization
+        virtual void init();
+
+    protected:
+
+        virtual ~ModelLayer();
+
+        osg::ref_ptr<ModelSource>     _modelSource;
+        Revision                      _modelSourceRev;
+        osg::ref_ptr<CacheSettings>   _cacheSettings;
+        osg::ref_ptr<osg::Group>      _root;
+
+        void fireCallback(ModelLayerCallback::MethodPtr method);
+    };
+
+    typedef std::vector< osg::ref_ptr<ModelLayer> > ModelLayerVector;
+}
+
+OSGEARTH_SPECIALIZE_CONFIG(osgEarth::ModelLayer::Options);
+
+#endif // OSGEARTH_MODEL_LAYER_H

@@ -1,0 +1,288 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+* Copyright 2020 Pelican Mapping
+* http://osgearth.org
+*
+* osgEarth is free software; you can redistribute it and/or modify
+* it under the terms of the GNU Lesser General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+* IN THE SOFTWARE.
+*
+* You should have received a copy of the GNU Lesser General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+#ifndef OSGEARTHUTIL_PAGEDNODE_H
+#define OSGEARTHUTIL_PAGEDNODE_H
+
+#include <osgEarth/Common>
+#include <osgEarth/optional>
+#include <osgEarth/Threading>
+#include <osgEarth/URI>
+#include <osgEarth/SceneGraphCallback>
+#include <osgEarth/Utils>
+#include <osgEarth/LoadableNode>
+
+#include <osg/PagedLOD>
+#include <osg/LOD>
+
+#include <queue>
+#include <list>
+#include <memory>
+#include <iterator>
+#include <unordered_map>
+
+namespace osgEarth { namespace Util
+{
+    using namespace osgEarth;
+    using namespace osgEarth::Threading;
+
+    /**
+     * Internal node type to handle on-demand loading and unloading
+     * of content.
+     * A PagedNode2 must have a PagingManager as a scene graph ancestor.
+     */
+    class OSGEARTH_EXPORT PagedNode2 : 
+        public osg::Group, 
+        public osgEarth::LoadableNode
+    {
+    public:
+        //! Type of function used to load content.
+        using Loader = std::function<osg::ref_ptr<osg::Node>(Cancelable*)>;
+
+    public:
+        //! Construct an empty paged node
+        PagedNode2();
+
+        //! Function to run to load the asychronous child
+        void setLoadFunction(const Loader& value);
+        const Loader& getLoadFunction() const {
+            return _load;
+        }
+
+        //! Set the center of this node, which is necessary since we
+        //! cannot compute the bounding sphere before the asynchronous load
+        void setCenter(const osg::Vec3& value) {
+            _userBS->center() = value;
+        }
+        const osg::Vec3& getCenter() const {
+            return _userBS->center();
+        }
+
+        //! Set the radius of this node's bounding sphere, which is necessary
+        //! since we cannot compute the bounding sphere before the asynchronous load
+        void setRadius(float value) {
+            _userBS->radius() = value;
+        }
+        float getRadius() const {
+            return _userBS->radius();
+        }
+
+        //! Minimum distance from camera at which to render.
+        void setMinRange(float value) {
+            _minRange = value, _useRange = true;
+        }
+
+        float getMinRange() const {
+            return _minRange;
+        }
+
+        //! Maximum distance from camera at which to render
+        void setMaxRange(float value) {
+            _maxRange = value, _useRange = true;
+        }
+        float getMaxRange() const {
+            return _maxRange;
+        }
+
+        //! Minimum pixel extent at which to render.
+        void setMinPixels(float value) {
+            _minPixels = value, _useRange = false;
+        }
+        float getMinPixels() const {
+            return _minPixels;
+        }
+
+        //! Maximum pixel extent at which to render.
+        void setMaxPixels(float value) {
+            _maxPixels = value, _useRange = false;
+        }
+        float getMaxPixels() const {
+            return _maxPixels;
+        }
+
+        //! Multiple the load job's priority by this number
+        void setPriorityScale(float value) {
+            _priorityScale = value;
+        }
+        float getPriorityScale() const {
+            return _priorityScale;
+        }
+
+        //! Pre- and post-merge callbacks for the async data
+        void setSceneGraphCallbacks(SceneGraphCallbacks* value) {
+            _callbacks = value;
+        }
+        SceneGraphCallbacks* getSceneGraphCallbacks() const {
+            return _callbacks.get();
+        }
+
+        //! Whether to continue rendering the normal children after
+        //! the asynchronous node becomes visible
+        //! Default value = REFINE_REPLACE
+        void setRefinePolicy(RefinePolicy value) {
+            _refinePolicy = value;
+        }
+        RefinePolicy getRefinePolicy() const {
+            return _refinePolicy;
+        }
+
+        //! Whether to pre-compile GL objects before merging
+        void setPreCompileGLObjects(bool value) {
+            _preCompile = value;
+        }
+        bool getPreCompileGLObjects() const {
+            return _preCompile;
+        }
+
+        //! Whether this node will automatically unload its content
+        //! when it goes not pass cull.
+        bool getAutoUnload() const  {
+            return _autoUnload;
+        }
+        void setAutoUnload(bool value)  {
+            _autoUnload = value;
+        }
+
+        bool isHighestResolution() const;
+
+        //! Loads the content for this node
+        void load(
+            float priority,
+            const osg::Object* host);
+
+        //! Loads the content for this node (convenience function)
+        void load() {
+            load(0.0, nullptr);
+        }
+
+        //! Unloads the content for this node
+        void unload();
+
+        //! Whether the content is loaded.
+        bool isLoaded() const;
+
+        //! Mark the content as "in use" so that it will not
+        //! be removed if setAutoUnload is true.
+        void touch();
+
+
+    public: // osg::Node overrides
+
+        virtual void traverse(osg::NodeVisitor& nv) override;
+
+        virtual osg::BoundingSphere computeBound() const override;
+
+    protected:
+
+        virtual ~PagedNode2();
+
+    private:
+        friend class PagingManager;
+
+        struct Loaded {
+            osg::ref_ptr<osg::Node> _node;
+            osg::ref_ptr<osgUtil::StateToCompile> _state;
+        };
+
+        void* _token;
+        class PagingManager* _pagingManager;
+        osg::ref_ptr<SceneGraphCallbacks> _callbacks;
+        RefinePolicy _refinePolicy;
+        std::atomic_bool _loadTriggered;
+        std::atomic_bool _compileTriggered;
+        std::atomic_bool _mergeTriggered;
+        bool _merged; // true if the compiled node was added as a child
+        bool _failed; // true if the child load failed and no more action is possible
+        Future<Loaded> _loaded;
+        Future<osg::ref_ptr<osg::Node>> _compiled;
+        Mutex _mutex;
+        optional<osg::BoundingSphere> _userBS;
+        float _minRange;
+        float _maxRange;
+        float _minPixels;
+        float _maxPixels;
+        bool _useRange;
+        float _priorityScale;
+        Job _job;
+        bool _preCompile;
+        std::function<osg::ref_ptr<osg::Node>(Cancelable*)> _load;
+        std::atomic_int _revision;
+        bool _autoUnload;
+
+        bool merge(int revision);
+    };
+
+    /**
+     * Group node class that performs memory management
+     * functions for a graph of PagedNodes. This object
+     * should be an ancestor of any PagedNode objects that
+     * it is going to manage.
+     */
+    class OSGEARTH_EXPORT PagingManager : public osg::Group
+    {
+    public:
+
+        PagingManager();
+
+        inline void* use(PagedNode2* node, void* token) {
+            ScopedMutexLock lock(_trackerMutex);
+            return _tracker.use(node, token);
+        }
+
+        //! Manually call an update on the PagingManager.  This should only be used if you are loading data outside of a traditional frameloop and want to merge data.
+        void update();
+
+    protected:
+        virtual ~PagingManager() { }
+
+    public:
+        void traverse(osg::NodeVisitor& nv);
+
+    private:
+        Mutex _trackerMutex;
+        SentryTracker<osg::ref_ptr<PagedNode2>> _tracker;
+        std::list<PagedNode2*> _trash;
+        using UpdateFunc = std::function<void(Cancelable*)>;
+        UpdateFunc _updateFunc;
+
+        mutable Mutex _mergeMutex;
+        struct ToMerge {
+            osg::observer_ptr<PagedNode2> _node;
+            int _revision;
+        };
+        std::queue<ToMerge> _mergeQueue;
+        unsigned _mergesPerFrame;
+        std::atomic_bool _newFrame;
+
+        inline void merge(PagedNode2* host) {
+            ScopedMutexLock lock(_mergeMutex);
+            ToMerge toMerge;
+            toMerge._node = host;
+            toMerge._revision = host->_revision;
+            _mergeQueue.push(std::move(toMerge));
+        }
+
+        friend class PagedNode2;
+    };
+
+} }
+
+#endif // OSGEARTHUTIL_PAGEDNODE_H

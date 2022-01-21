@@ -1,0 +1,146 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2008-2012 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_METRICS_H
+#define OSGEARTH_METRICS_H 1
+
+#include <osgEarth/Common>
+
+// forward
+namespace osgViewer {
+    class ViewerBase;
+}
+
+namespace osgEarth {
+    namespace Util
+    {
+        class OSGEARTH_EXPORT Metrics
+        {
+        public:
+            /**
+             * Convenience function to run the OSG frame loop with metrics.
+             */
+            static int run(osgViewer::ViewerBase& viewer);
+
+            static void frame();
+
+            /*
+            * Whether metrics collection is enabled.
+            */
+            static bool enabled();
+
+            /**
+             * Toggle on metrics collection
+             */
+            static void setEnabled(bool enabled);
+
+            //! Whether to install GPU profiling.
+            static void setGPUProfilingEnabled(bool enabled);
+        };
+    }
+}
+
+#ifdef OSGEARTH_PROFILING
+
+#include <osg/GL>
+
+#define TRACY_ENABLE
+#define TRACY_ON_DEMAND
+// #define TRACY_DELAYED_INIT
+#include <TracyClient/Tracy.hpp>
+
+#define OE_PROFILING_ZONE ZoneNamed( ___tracy_scoped_zone, osgEarth::Util::Metrics::enabled() )
+#define OE_PROFILING_ZONE_NAMED(functionName) ZoneNamedN(___tracy_scoped_zone, functionName, osgEarth::Util::Metrics::enabled())
+#define OE_PROFILING_ZONE_COLOR(color) ZoneScopedC(___tracy_scoped_zone, color, osgEarth::Util::Metrics::enabled())
+#define OE_PROFILING_ZONE_TEXT(text) _zoneSetText(___tracy_scoped_zone, text)
+#define OE_PROFILING_PLOT(name, value) if (osgEarth::Util::Metrics::enabled()) {TracyPlot(name, value);}
+#define OE_PROFILING_FRAME_MARK if (osgEarth::Util::Metrics::enabled()) {FrameMark;}
+#define OE_LOCKABLE(type, varname) TracyLockable(type, varname)
+#define OE_LOCKABLE_NAMED(type, varname, desc) TracyLockableN(type, varname, desc)
+#define OE_LOCKABLE_BASE( type ) LockableBase( type )
+
+#define OSGEARTH_GPU_PROFILING
+
+#ifdef OSGEARTH_GPU_PROFILING
+namespace osgEarth { namespace MetricsGL {
+#ifndef GL_TIMESTAMP
+#define GL_TIMESTAMP 0x8E28
+    //constexpr GLenum GL_TIMESTAMP = 0x8E28;
+#endif
+#ifndef GL_QUERY_COUNTER_BITS
+#define GL_QUERY_COUNTER_BITS 0x8864
+    //constexpr GLenum GL_QUERY_COUNTER_BITS = 0x8864;
+#endif
+#ifndef GL_QUERY_RESULT
+#define GL_QUERY_RESULT 0x8866
+    //constexpr GLenum GL_QUERY_RESULT = 0x8866;
+#endif
+#ifndef GL_QUERY_RESULT_AVAILABLE
+#define GL_QUERY_RESULT_AVAILABLE 0x8867
+    //constexpr GLenum GL_QUERY_RESULT_AVAILABLE = 0x8867;
+#endif
+
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glGenQueries)(GLsizei, GLuint*);
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glGetInteger64v)(GLenum, GLint64*);
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glGetQueryiv)(GLenum, GLenum, GLint*);
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glGetQueryObjectiv)(GLint, GLenum, GLint*);
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glGetQueryObjectui64v)(GLint, GLenum, GLuint64*);
+    extern OSGEARTH_EXPORT void (GL_APIENTRY * _glQueryCounter)(GLuint, GLenum);
+
+    #define glGenQueries _glGenQueries
+    #define glGetInteger64v _glGetInteger64v
+    #define glGetQueryiv _glGetQueryiv
+    #define glGetQueryObjectiv _glGetQueryObjectiv
+    #define glGetQueryObjectui64v _glGetQueryObjectui64v
+    #define glQueryCounter _glQueryCounter
+
+} }
+using namespace osgEarth::MetricsGL;
+#include <TracyClient/TracyOpenGL.hpp>
+#define OE_PROFILING_GPU_ZONE(name) TracyGpuZone( name )
+#else
+#define OE_PROFILING_GPU_ZONE(name)
+#endif
+
+#undef glGenQueries
+#undef glGetInteger64v
+#undef glGetQueryiv
+#undef glGetQueryObjectiv
+#undef glGetQueryObjectui64v
+#undef glQueryCounter
+
+inline void _zoneSetText(tracy::ScopedZone& zone, const char* text) {
+    zone.Text(text, strlen(text));
+}
+inline void _zoneSetText(tracy::ScopedZone& zone, const std::string& text) {
+    zone.Text(text.c_str(), text.size());
+}
+#else
+#define OE_PROFILING_ZONE
+#define OE_PROFILING_ZONE_NAMED(functionName)
+#define OE_PROFILING_ZONE_COLOR(color)
+#define OE_PROFILING_ZONE_TEXT(text)
+#define OE_PROFILING_PLOT(name, value)
+#define OE_PROFILING_FRAME_MARK
+#define OE_LOCKABLE(type, varname) type varname
+#define OE_LOCKABLE_BASE( type ) type
+#define OE_PROFILING_GPU_ZONE(name)
+#endif
+
+#endif

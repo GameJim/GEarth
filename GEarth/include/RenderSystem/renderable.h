@@ -7,13 +7,12 @@
 #include "common/apiDescription.h"
 namespace render
 {
+    //一份数据可以有多份状态机，与反射等。一个状态集合可以有多份数据
     //vertex, normals, texcoords
 
     //纹理若绑定
 
     //颜色不一定有
-
-  
     class CORE_PUBLIC CRenderable
     {
     public:
@@ -23,7 +22,7 @@ namespace render
         //顶点数组
         //纹理数据必定与顶点数据1对1
 
-        //物体的材质
+        //物体的材质e
        
     };
 }

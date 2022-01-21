@@ -1,0 +1,511 @@
+/* -*-c++-*- */
+/* osgEarth - Dynamic map generation toolkit for OpenSceneGraph
+ * Copyright 2008-2012 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_MATH_H
+#define OSGEARTH_MATH_H 1
+
+#include <osgEarth/Common>
+#include <osgEarth/Geometry>
+#include <osg/Quat>
+#include <osg/Vec3>
+#include <osg/BoundingBox>
+#include <osg/Array>
+#include <osg/Geometry>
+
+#include <iterator>
+
+namespace osgEarth
+{
+    struct Line2d;
+    struct Segment2d;
+    struct Ray2d;
+    struct Segment3d;
+
+    /** Infinite 2D line. */
+    struct OSGEARTH_EXPORT Line2d
+    {
+        osg::Vec3d _a, _b; // two points on the line (Z ignored)
+        Line2d() { }
+        Line2d(const osg::Vec3d& a, const osg::Vec3d& b) : _a(a), _b(b) { }
+        Line2d(const osg::Vec2d& a, const osg::Vec2d& b) : _a(a.x(), a.y(), 0), _b(b.x(), b.y(), 0) { }
+        Line2d(const osg::Vec4d& a, const osg::Vec4d& b) : _a(a.x()/a.w(), a.y()/a.w(), a.z()/a.w()), _b(b.x()/b.w(), b.y()/b.w(), b.z()/b.w()) { }
+        Line2d(const Line2d& rhs) : _a(rhs._a), _b(rhs._b) { }
+        bool intersect( const Line2d&    rhs, osg::Vec2d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec2d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec2d& out ) const;
+        bool intersect( const Line2d&    rhs, osg::Vec3d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec3d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec3d& out ) const;
+        bool intersect( const Line2d&    rhs, osg::Vec4d& out ) const;
+        bool isPointOnLeft( const osg::Vec2d& p ) const;
+        bool isPointOnLeft( const osg::Vec3d& p ) const;
+    };
+    
+    //// rotate a Line
+    //inline Line2d operator* (const osg::Quat& q, const Line2d& rhs) {
+    //    return Line( q * rhs._a, q * rhs._b );
+    //}
+
+    /** Endpoint and a direction vector */
+    struct OSGEARTH_EXPORT Ray2d
+    {
+        osg::Vec3d _a;  // endpoint
+        osg::Vec3d _dv; // directional vector
+        Ray2d() { }
+        Ray2d(const osg::Vec3d& a, const osg::Vec3d& dv) : _a(a), _dv(dv) { }
+        Ray2d(const osg::Vec2d& a, const osg::Vec2d& dv) : _a(a.x(), a.y(), 0), _dv(dv.x(), dv.y(), 0) { }
+        Ray2d(const Ray2d& rhs) : _a(rhs._a), _dv(rhs._dv) { }
+        bool intersect( const Line2d&    rhs, osg::Vec2d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec2d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec2d& out ) const;
+        bool intersect( const Line2d&    rhs, osg::Vec3d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec3d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec3d& out ) const;
+        bool isPointOnLeft( const osg::Vec2d& p ) const;
+        bool isPointOnLeft( const osg::Vec3d& p ) const;
+        double angle(const Segment2d& rhs) const;
+    };
+    
+    //// rotate a Ray
+    //inline Ray operator* (const osg::Quat& q, const Ray& rhs) {
+    //    return Ray( q * rhs._a, q * rhs._dv );
+    //}
+
+    /** Finite line between two endpoints */
+    struct OSGEARTH_EXPORT Segment2d
+    {
+        osg::Vec3d _a, _b; // endpoints
+        Segment2d() { }
+        Segment2d(const osg::Vec3d& a, const osg::Vec3d& b) : _a(a), _b(b) { }
+        Segment2d(const Segment2d& rhs) : _a(rhs._a), _b(rhs._b) { }
+        bool intersect( const Line2d&    rhs, osg::Vec2d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec2d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec2d& out ) const;
+        bool intersect( const Line2d&    rhs, osg::Vec3d& out ) const;
+        bool intersect( const Ray2d&     rhs, osg::Vec3d& out ) const;
+        bool intersect( const Segment2d& rhs, osg::Vec3d& out ) const;
+        bool isPointOnLeft( const osg::Vec2d& p ) const;
+        bool isPointOnLeft( const osg::Vec3d& p ) const;
+        Segment3d unrotateTo3D(const osg::Quat& q) const;
+        double angle(const Segment2d& rhs) const;
+        // Distance of point to segment; left side is positive
+        double leftDistanceXY( const osg::Vec3d&p ) const
+        {
+            osg::Vec2d base(_b.x() - _a.x(), _b.y() - _a.y());
+            // 2D cross product, 2 * area of triangle
+            double cross = base.x() * (p.y() - _a.y()) - base.y() * (p.x() - _a.x());
+            return cross / base.length();
+        }
+        double squaredDistanceTo(const osg::Vec3d& point) const;
+        osg::Vec3d closestPointTo(const osg::Vec3d& point) const;
+    };
+
+    struct OSGEARTH_EXPORT Segment3d
+    {
+        osg::Vec3d _a, _b; // endpoints
+        Segment3d() { }
+        Segment3d(const osg::Vec3d& a, const osg::Vec3d& b) : _a(a), _b(b) { }
+        Segment3d(const Segment3d& rhs) : _a(rhs._a), _b(rhs._b) { }
+        Segment3d(const Segment2d& seg2d, const osg::Vec3& planeNormal);
+        Segment2d rotateTo2D(const osg::Quat& q) { return Segment2d(q*_a, q*_b); }
+    };
+    
+    //// rotate a Segment
+    //inline Segment operator* (const osg::Quat& q, const Segment& rhs) {
+    //    return Segment( q * rhs._a, q * rhs._b );
+    //}
+
+    /** 2D traingle with CCW winding. */
+    struct OSGEARTH_EXPORT Triangle2d
+    {
+        osg::Vec3d _a, _b, _c;
+        Triangle2d(const osg::Vec3d& a, const osg::Vec3d& b, const osg::Vec3d& c) : _a(a), _b(b), _c(c) { }
+        bool contains(const osg::Vec3d& p) const;
+    };
+
+    // Work in progress. We want to use Ray without doing the work to
+    // fully support the other types.
+
+    struct Line;
+    struct Ray;
+
+#if 0
+    /** Infinite 3D line. */
+    struct Line
+    {
+        osg::Vec3d _a, _b; // two points on the line
+        Line(const osg::Vec3d& a, const osg::Vec3d& b) : _a(a), _b(b) { }
+        Line(const Line& rhs) : _a(rhs._a), _b(rhs._b) { }
+        bool intersectXY( const Line&    rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Ray&     rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Segment& rhs, osg::Vec3d& out ) const;
+    };
+    
+    // rotate a Line
+    inline Line operator* (const osg::Quat& q, const Line& rhs) {
+        return Line( q * rhs._a, q * rhs._b );
+    }
+#endif
+
+    /** Endpoint and a direction vector */
+    struct Ray
+    {
+        osg::Vec3d _a;  // endpoint
+        osg::Vec3d _dv; // directional vector
+        Ray(const osg::Vec3d& a, const osg::Vec3d& dv) : _a(a), _dv(dv) { }
+        Ray(const Ray& rhs) : _a(rhs._a), _dv(rhs._dv) { }
+#if 0
+        bool intersectXY( const Line&    rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Ray&     rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Segment& rhs, osg::Vec3d& out ) const;
+        bool isPointOnLeftXY( const osg::Vec3d& p ) const;
+#endif
+    };
+    
+    // rotate a Ray
+    inline Ray operator* (const osg::Quat& q, const Ray& rhs) {
+        return Ray( q * rhs._a, q * rhs._dv );
+    }
+
+#if 0
+    /** Finite line between two endpoints */
+    // This will need a new name before it's enabled; conflicts with a
+    // type in osgEarth/Geometry.
+    struct Segment
+    {
+        osg::Vec3d _a, _b; // endpoints
+        Segment(const osg::Vec3d& a, const osg::Vec3d& b) : _a(a), _b(b) { }
+        Segment(const Segment& rhs) : _a(rhs._a), _b(rhs._b) { }
+        bool intersectXY( const Line&    rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Ray&     rhs, osg::Vec3d& out ) const;
+        bool intersectXY( const Segment& rhs, osg::Vec3d& out ) const;
+        bool isPointOnLeftXY( const osg::Vec3d& p ) const;
+    };
+    
+    // rotate a Segment
+    inline Segment operator* (const osg::Quat& q, const Segment& rhs) {
+        return Segment( q * rhs._a, q * rhs._b );
+    }
+#endif
+
+    // Utility functions for arrays of points treated as a 2d polygon
+    OSGEARTH_EXPORT osg::BoundingBoxd polygonBBox2d(const osg::Vec3dArray& points);
+
+    template<typename Iterator>
+    osg::BoundingBoxd polygonBBox2d(Iterator begin, Iterator end)
+{
+    osg::BoundingBoxd result(DBL_MAX, DBL_MAX, DBL_MAX, -DBL_MAX, -DBL_MAX, -DBL_MAX);
+    for (Iterator itr = begin; itr != end; ++itr)
+    {
+        result.xMin() = std::min(result.xMin(), (*itr).x());
+        result.xMax() = std::max(result.xMax(), (*itr).x());
+        result.yMin() = std::min(result.yMin(), (*itr).y());
+        result.yMax() = std::max(result.yMax(), (*itr).y());
+    }
+    return result;
+}
+    OSGEARTH_EXPORT bool pointInPoly2d(const osg::Vec3d& pt, const Polygon& polyPoints,
+                                       double tolerance = 0.0);
+    OSGEARTH_EXPORT bool pointInPoly2d(const osg::Vec3d& pt, const osg::Geometry* polyPoints,
+                                       float tolerance = 0.0f);
+
+    // Winding number test; see http://geomalgorithms.com/a03-_inclusion.html
+    template<typename Pt, typename PtItr>
+    bool
+    pointInPoly2d(const Pt& pt, const PtItr& begin, const PtItr& end, double tolerance = 0.0)
+    {
+        int windingNum = 0;
+
+        for (PtItr itr = begin; itr != end; ++itr)
+        {
+            Segment2d seg = (std::next(itr) == end
+                             ? Segment2d(*itr, *begin)
+                             : Segment2d(*itr, *std::next(itr)));
+            // if the segment is horizontal, then the "is left" test
+            // isn't meaningful. We count the point as in if it's on or
+            // to the left of the segment.
+
+
+            if (seg._a.y() == seg._b.y() && fabs(pt.y() - seg._a.y()) <= tolerance)
+            {
+                if (pt.x() < seg._a.x() || pt.x() < seg._b.x())
+                {
+                    windingNum++;
+                }
+            }
+            else if (seg._a.y() <= pt.y())
+            {
+                if (seg._b.y() > pt.y())
+                {
+                    double dist = seg.leftDistanceXY(pt);
+                    if (dist > -tolerance)
+                    {
+                        windingNum++;
+                    }
+                }
+            }
+            else if (seg._b.y() <= pt.y())
+            {
+                double dist = seg.leftDistanceXY(pt);
+                if (dist < tolerance)
+                {
+                    windingNum--;
+                }
+            }
+        }
+        return windingNum != 0;
+    }
+
+    template<typename T>
+    inline T step(const T& edge, const T& x)
+    {
+        return x < edge ? static_cast<T>(0.0) : static_cast<T>(1.0);
+    }
+    
+    template<typename T>
+    inline T clamp(const T& x, const T& lo, const T& hi)
+    {
+        return x<lo ? lo : x>hi ? hi : x;
+    }
+
+    template<typename T>
+    inline T lerpstep(T lo, T hi, T x)
+    {
+        if (x <= lo) return static_cast<T>(0.0);
+        else if (x >= hi) return static_cast<T>(1.0);
+        else return (x - lo) / (hi - lo);
+    }
+
+    template<typename T>
+    inline T smoothstep(T lo, T hi, T x)
+    {
+        T t = clamp((x - lo) / (hi - lo), static_cast<T>(0.0), static_cast<T>(1.0));
+        return t * t*(static_cast<T>(3.0) - static_cast<T>(2.0)*t);
+    }
+
+    // move closer to one
+    template<typename T>
+    inline T harden(T x)
+    {
+        return static_cast<T>(1.0) - (static_cast<T>(1.0) - x)*(static_cast<T>(1.0) - x);
+    }
+
+    // move closer to zero
+    template<typename T>
+    inline T soften(T x)
+    {
+        return x * x;
+    }
+
+    template<typename T>
+    inline T threshold(T x, T thresh, T buf)
+    {
+        if (x < thresh - buf) return static_cast<T>(0.0);
+        else if (x > thresh + buf) return static_cast<T>(1.0);
+        else return clamp((x - (thresh - buf)) / (buf*static_cast<T>(2.0)), static_cast<T>(0.0), static_cast<T>(1.0));
+    }
+
+    template<typename T>
+    inline T fract(T x)
+    {
+        return x - floor(x);
+    }
+
+    template<typename T>
+    inline double unitremap(T a, T lo, T hi)
+    {
+        return clamp((a - lo) / (hi - lo), static_cast<T>(0.0), static_cast<T>(1.0));
+    }
+
+    template<typename T>
+    inline T mix(const T& a, const T& b, float c)
+    {
+        return a * (1.0 - c) + b * c;
+    }
+
+    template<typename T>
+    inline double dot2D(const T& a, const T& b)
+    {        
+        return a.x()*b.x() + a.y()*b.y();
+    }
+
+    template<typename T>
+    inline double dot3D(const T& a, const T& b)
+    {
+        return a.x()*b.x() + a.y()*b.y() + a.z()*b.z();
+    }
+
+    template<typename T>
+    inline double distanceSquared2D(const T& a, const T& b)
+    {
+        return 
+            (b.x() - a.x())*(b.x() - a.x()) + 
+            (b.y() - a.y())*(b.y() - a.y());
+    }
+
+    template<typename T>
+    inline double distanceSquared3D(const T& a, const T& b)
+    {
+        return
+            (b.x() - a.x())*(b.x() - a.x()) +
+            (b.y() - a.y())*(b.y() - a.y()) +
+            (b.z() - a.z())*(b.z() - a.z());
+    }
+
+    template<typename T>
+    inline double distance2D(const T& a, const T& b)
+    {
+        return sqrt(distanceSquared2D(a, b));
+    }
+
+    template<typename T>
+    inline double distance3D(const T& a, const T& b)
+    {
+        return sqrt(distanceSquared3D(a, b));
+    }
+
+    // Newton-Raphson solver
+    template<typename Func, typename FuncDeriv>
+    double solve(Func func, FuncDeriv deriv, double guess, double tolerance, bool& valid, int maxIterations = 16)
+    {
+        double xn = guess;
+        for (int i = 0; i <= maxIterations; ++i)
+        {
+            double f = func(xn);
+            if (fabs(f) <= tolerance)
+            {
+                valid = true;
+                return xn;
+            }
+            xn = xn - f / deriv(xn);
+        }
+        valid = false;
+        return xn;
+    }
+
+    // Courtesy of stackoverflow, return -1, 0, +1 based on the sign
+    // of a number
+    template<typename T>
+    int sgn(T val)
+    {
+        return (T(0) < val) - (val < T(0));
+    }
+    // Bisection solver, useful when the derivative of a function is
+    // unknown or expensive to calculate.
+    // x0 and x1 are initial guesses surrounding the root. The signs
+    // of func(x0) and func(x1) should be different; otherwise we bail
+    // immediately.
+    template<typename Func>
+    double solveBisect(const Func& func, double x0, double x1, double tolerance, int maxIterations = 8)
+    {
+        double f0 = func(x0);
+        double f1 =func(x1);
+        if (sgn(f0) == sgn(f1))
+        {
+            return x0;
+        }
+        double midPoint = 0.0;
+        for (int i = 0; i < maxIterations; ++i)
+        {
+            midPoint = (x0 + x1) / 2.0;
+            double fMidpoint = func(midPoint);
+            if (fabs(fMidpoint) <= tolerance)
+            {
+                return midPoint;
+            }
+            else if (sgn(f0) == sgn(fMidpoint))
+            {
+                x0 = midPoint;
+                f0 = fMidpoint;
+            }
+            else
+            {
+                x1 = midPoint;
+                f1 = fMidpoint;
+            }
+        }
+        return midPoint;
+    }
+
+    // Project osg::Vec3 a onto b.
+    template<typename VecType>
+    VecType vecProjection(const VecType& a, const VecType& b)
+    {
+        return b * ((a * b) / (b * b));
+    }
+
+    // Project osg::Vec3 a onto the plane perpendicular to b.
+    template<typename VecType>
+    VecType vecRejection(const VecType& a, const VecType& b)
+    {
+        return a - vecProjection(a, b);
+    }
+
+    // Round integral x to the nearest multiple of "multiple" greater than or equal to x
+    template<typename T>
+    T align(T x, T multiple) {
+        T isPositive = (T)(x >= 0);
+        return ((x + isPositive * (multiple - 1)) / multiple) * multiple;
+    }
+
+    inline int nextPowerOf2(int x)
+    {
+        --x;
+        x |= x >> 1;
+        x |= x >> 2;
+        x |= x >> 4;
+        x |= x >> 8;
+        x |= x >> 16;
+        return x + 1;
+    }
+
+    // Adapted from Boost - see boost license
+    // https://www.boost.org/users/license.html
+    template <class T> inline std::size_t hash_value_unsigned(T val) {
+        const int size_t_bits = std::numeric_limits<std::size_t>::digits;
+        const int length = (std::numeric_limits<T>::digits - 1) / size_t_bits;
+        std::size_t seed = 0;
+        for(unsigned int i = length * size_t_bits; i > 0; i -= size_t_bits)
+            seed ^= (std::size_t) (val >> i) + (seed<<6) + (seed>>2);
+        seed ^= (std::size_t) val + (seed<<6) + (seed>>2);
+        return seed;
+    }
+
+    template <class T> inline std::size_t hash_value_unsigned(T a, T b) {
+        std::size_t seed = hash_value_unsigned(a);
+        seed ^= hash_value_unsigned(b) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        return seed;
+    }
+
+    template <class T> inline std::size_t hash_value_unsigned(T a, T b, T c) {
+        std::size_t seed = hash_value_unsigned(a);
+        seed ^= hash_value_unsigned(b) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        seed ^= hash_value_unsigned(c) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        return seed;
+    }
+
+    template <class T> inline std::size_t hash_value_unsigned(T a, T b, T c, T d) {
+        std::size_t seed = hash_value_unsigned(a);
+        seed ^= hash_value_unsigned(b) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        seed ^= hash_value_unsigned(c) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        seed ^= hash_value_unsigned(d) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        return seed;
+    }
+}
+#endif

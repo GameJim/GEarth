@@ -1,0 +1,14 @@
+# pkg-config source file
+
+prefix=D:/code/OpenCode/osg/build/OpenSceneGraph/install
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: openscenegraph-osgVolume
+Description: Volume library for Openscenegraph
+Version: 3.7.0
+Requires: openscenegraph-osgGA openscenegraph-osgDB openscenegraph-osgUtil openscenegraph-osg openthreads
+Conflicts:
+Libs: -L${libdir} -losgVolume
+Cflags: -I${includedir}

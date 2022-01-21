@@ -1,0 +1,67 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2008-2014 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+#ifndef OSGEARTH_FRAME_CLOCK
+#define OSGEARTH_FRAME_CLOCK 1
+
+#include "Common"
+#include <chrono>
+#include <atomic>
+
+namespace osgEarth
+{
+    /**
+     * Frame clock to keep track of time/frames independently of OSG
+     */
+    class OSGEARTH_EXPORT FrameClock
+    {
+    public:
+        //! New frame clock
+        FrameClock();
+
+        //! Seconds since creation of this object
+        double getTime() const;
+
+        //! Current frame number. This will increment each time a
+        //! cull() and update() pair are called in succession.
+        unsigned getFrame() const;
+
+        //! Register a cull traversal.
+        void cull();
+
+        //! Register an update traversal. If cull() was called before
+        //! the last call to update(), this will increment the frame
+        //! number and return true. Otherwise it returns false, which
+        //! means that update() was already called for this frame and
+        //! the frame number was not incremented.
+        //! (i.e., multiple calls to update in one frame will only
+        //! result in the frame number incrementing once.)
+        bool update();
+
+    private:
+        using Time = std::chrono::time_point<std::chrono::steady_clock>;
+        Time _zero;
+        Time _tick;
+        unsigned _frame;
+        std::atomic_bool _newframe;
+    };
+
+} // namespace osgEarth
+
+
+#endif // OSGEARTH_FRAME_CLOCK

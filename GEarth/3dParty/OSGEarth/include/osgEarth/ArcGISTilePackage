@@ -1,0 +1,264 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_ARCGIS_TILEPACKAGE_H
+#define OSGEARTH_ARCGIS_TILEPACKAGE_H
+
+#include <osgEarth/ImageLayer>
+#include <osgEarth/ElevationLayer>
+#include <osgEarth/URI>
+#include <osgEarth/Feature>
+#include <osgEarth/FeatureSource>
+#include <vector>
+
+/**
+ * Layers that access an ArcGIS Tile Package file (.tpk)
+ * http://pro.arcgis.com/en/pro-app/help/sharing/overview/tile-package.htm
+ */
+namespace osgEarth { namespace ArcGIS
+{
+    enum StorageFormat
+    {
+        STORAGE_FORMAT_COMPACT,
+        STORAGE_FORMAT_COMPACTV2
+    };
+
+
+    // esriMapCacheStorageModeCompact bundle reader
+    class OSGEARTH_EXPORT BundleReader
+    {
+    public:
+        BundleReader(const std::string& bundleFile, unsigned int bundleSize);
+
+        void init();
+
+        void readIndex(const std::string& filename, std::vector<int>& index);
+
+        osg::Image* readImage(const TileKey& key, const osgDB::ReaderWriter* rw);
+        osg::Image* readImage(unsigned int index, const osgDB::ReaderWriter* rw);
+
+        void readFeatures(const TileKey& key, FeatureList& features);
+
+    protected:
+        std::string _bundleFile;
+        std::string _indexFile;
+        unsigned int _bundleSize;
+
+        std::ifstream _in;
+
+        std::vector< int > _index;
+
+        unsigned int _lod;
+        unsigned int _rowOffset;
+        unsigned int _colOffset;
+    };
+
+    // https://github.com/Esri/raster-tiles-compactcache/blob/master/CompactCacheV2.md
+    // esriMapCacheStorageModeCompactV2 bundle reader
+    class OSGEARTH_EXPORT BundleReader2
+    {
+    public:
+        BundleReader2(const std::string& bundleFile, unsigned int bundleSize);
+
+        void init();
+
+        void readIndex(std::vector<unsigned long long>& index);
+
+        osg::Image* readImage(const TileKey& key, const osgDB::ReaderWriter* rw);
+
+        osg::Image* readImage(unsigned int index, const osgDB::ReaderWriter* rw);
+
+        void readFeatures(const TileKey& key, FeatureList& features);
+
+
+    protected:
+        std::string _bundleFile;
+        unsigned int _bundleSize;
+
+        std::ifstream _in;
+
+        std::vector< unsigned long long > _index;
+
+        unsigned int _lod;
+        unsigned int _rowOffset;
+        unsigned int _colOffset;
+    };
+} }
+
+
+namespace osgEarth
+{
+    /**
+     * Image layer connected to an ESRI ArcGIS Tile Package file
+     */
+    class OSGEARTH_EXPORT ArcGISTilePackageImageLayer : public ImageLayer
+    {
+    public: // serialization
+        class OSGEARTH_EXPORT Options : public ImageLayer::Options
+        {
+        public:
+            META_LayerOptions(osgEarth, Options, ImageLayer::Options);
+            OE_OPTION(URI, url);
+            virtual Config getConfig() const;
+        private:
+            void fromConfig(const Config& conf);
+        };
+
+    public:
+        META_Layer(osgEarth, ArcGISTilePackageImageLayer, Options, ImageLayer, ArcGISTilePackageImage);
+
+    public:
+        //! URL of the map service endpoint
+        void setURL(const URI& value);
+        const URI& getURL() const;
+
+    public: // Layer
+
+        //! Establishes a connection to the service
+        virtual Status openImplementation();
+
+        //! Creates a raster image for the given tile key
+        virtual GeoImage createImageImplementation(const TileKey& key, ProgressCallback* progress) const;
+
+    protected: // Layer
+
+        //! Called by constructors
+        virtual void init();
+
+    protected:
+
+        //! Destructor
+        virtual ~ArcGISTilePackageImageLayer();
+
+    private:
+        optional<ProfileOptions> _profileConf;
+        unsigned _bundleSize;
+        osg::ref_ptr<osgDB::ReaderWriter> _rw;
+        ArcGIS::StorageFormat _storageFormat;
+
+        void readConf();
+    };
+
+    /**
+     * Elevation layer connected to an ESRI ArcGIS Tile Package file
+     */
+    class OSGEARTH_EXPORT ArcGISTilePackageElevationLayer : public ElevationLayer
+    {
+    public: // serialization
+        class OSGEARTH_EXPORT Options : public ElevationLayer::Options
+        {
+        public:
+            META_LayerOptions(osgEarth, Options, ElevationLayer::Options);
+            OE_OPTION(URI, url);
+            virtual Config getConfig() const;
+        private:
+            void fromConfig(const Config& conf);
+        };
+
+    public:
+        META_Layer(osgEarth, ArcGISTilePackageElevationLayer, Options, ElevationLayer, ArcGISTilePackageElevation);
+
+    public:
+        //! URL of the map service endpoint
+        void setURL(const URI& value);
+        const URI& getURL() const;
+
+    public: // Layer
+
+        //! Establishes a connection to the service
+        virtual Status openImplementation();
+
+        //! Creates a heightfield for the given tile key
+        virtual GeoHeightField createHeightFieldImplementation(const TileKey& key, ProgressCallback* progress) const;
+
+    protected: // Layer
+
+        //! Called by constructors
+        virtual void init();
+
+    protected:
+
+        //! Destructor
+        virtual ~ArcGISTilePackageElevationLayer();
+
+    private:
+        optional<ProfileOptions> _profileConf;
+        unsigned _bundleSize;
+        osg::ref_ptr<osgDB::ReaderWriter> _rw;
+        ArcGIS::StorageFormat _storageFormat;
+
+        void readConf();
+    };
+
+
+    /**
+    * Feature Layer that accesses ESRI VTPK layers.  This format is not very well documented.
+    * https://github.com/syncpoint/openvtpk is a good starting point to understand it.
+    */
+    class OSGEARTH_EXPORT VTPKFeatureSource : public FeatureSource
+    {
+    public: // serialization
+
+        class OSGEARTH_EXPORT Options : public FeatureSource::Options
+        {
+        public:
+            META_LayerOptions(osgEarth, Options, FeatureSource::Options);
+            OE_OPTION(URI, url);
+            virtual Config getConfig() const;
+        private:
+            void fromConfig(const Config& conf);
+        };
+
+    public:
+        META_Layer(osgEarth, VTPKFeatureSource, Options, FeatureSource, VTPKFeatures);
+
+        //! Location of the resource
+        void setURL(const URI& value);
+        const URI& getURL() const;
+
+    public: // Layer
+
+        virtual Status openImplementation();
+
+    protected:
+
+        virtual void init();
+
+    public: // FeatureSource
+
+        virtual FeatureCursor* createFeatureCursorImplementation(const Query& query, ProgressCallback* progress);
+
+    protected:
+
+        virtual ~VTPKFeatureSource() { }
+
+        void computeMinMaxLevel(unsigned int &min, unsigned int &max);
+
+    private:
+        unsigned _bundleSize;
+        ArcGIS::StorageFormat _storageFormat;
+    };
+
+} // namespace osgEarth
+
+OSGEARTH_SPECIALIZE_CONFIG(osgEarth::ArcGISTilePackageImageLayer::Options);
+OSGEARTH_SPECIALIZE_CONFIG(osgEarth::ArcGISTilePackageElevationLayer::Options);
+OSGEARTH_SPECIALIZE_CONFIG(osgEarth::VTPKFeatureSource::Options);
+
+#endif // OSGEARTH_ARCGIS_TILEPACKAGE_H

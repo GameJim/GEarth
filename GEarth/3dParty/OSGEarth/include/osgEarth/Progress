@@ -1,0 +1,170 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_PROGRESS_H
+#define OSGEARTH_PROGRESS_H 1
+
+#include <osgEarth/Common>
+#include <osgEarth/Threading>
+#include <osg/observer_ptr>
+
+namespace osgEarth
+{
+    /**
+    * ProgressCallback is a general purpose interface for functions that need to report progress
+    * or handle cancelation of a task.
+    */
+    class OSGEARTH_EXPORT ProgressCallback : 
+        public osg::Referenced, 
+        public Threading::Cancelable
+    {
+    public:
+        //! Creates a new ProgressCallback
+        ProgressCallback();
+
+        //! Creates a new ProgressCallback that proxies an existing Cancelable
+        ProgressCallback(Cancelable* c);
+
+        //! Creates a new ProgressCallback that proxies an existing Cancelable
+        //! and adds a new predicate
+        ProgressCallback(Cancelable* c, std::function<bool()> shouldCancel);
+
+        /**
+         * Report an error and set the canceled flag to true.
+         */
+        virtual void reportError(const std::string& msg);
+
+        /**
+        * Callback function that will be called.
+        * @param current
+        *        The amount of work done in the current stage
+        * @param total
+        *        The total amount of work to be done in the current stage
+        * @param stage
+        *        Stage of the operation we're currently in
+        * @param totalStages
+        *        Total number of stages in the operation
+        * @param msg
+        *        Description of what is being done. Useful when total is unknown.
+        * @param returns
+        *        Returns true if the current task should be cancelled, false otherwise.
+        */
+        virtual bool reportProgress(
+            double             current, 
+            double             total, 
+            unsigned           currentStage,
+            unsigned           totalStages,
+            const std::string& msg );
+
+        /**
+         * Convenience functions
+         */
+        bool reportProgress( double current, double total, const std::string& msg ) {
+            return reportProgress(current, total, 0, 1, msg );
+        }
+        bool reportProgress( double current, double total ) {
+            return reportProgress(current, total, 0, 1, "" );
+        }
+
+        /**
+         * called when the process starts
+         */
+        virtual void onStarted() { }
+
+        /**
+         * called when the process completed 
+         */
+        virtual void onCompleted() { }
+
+        /**
+         * Sets the cancelation flag
+         */
+        void cancel();
+
+        /**
+         * Whether the associated task was canceled for some reason.
+         * Cancelation is NOT an error condition. It means that either
+         * the results of the task are no longer required, or that a
+         * recoverable problem occurred and the task is eligible to be
+         * tried again later (e.g., HTTP timeout)
+         */
+        bool isCanceled() const override;
+
+        //! Resets the cancelation flag
+        void reset();
+
+        //! Read or write a status message
+        std::string& message() { return _message; }
+        const std::string& message() const { return _message; }
+
+        //! Sets a retry delay in the event of cancelation
+        void setRetryDelay(float value_seconds) { _retryDelay_s = value_seconds; }
+        float getRetryDelay() const { return _retryDelay_s; }
+
+    protected:
+        virtual ~ProgressCallback() { }
+
+        Cancelable* _cancelable;
+        std::string _message;
+        mutable bool _canceled;
+        mutable float _retryDelay_s;
+        mutable std::function<bool()> _cancelPredicate;
+
+        //! Override this to tell the Progress to cancel.
+        virtual bool shouldCancel() const { return false; }
+    };
+
+    /**
+    * Progress callback that automatically sets the canceled state
+    * if the current thread is an osgDB::DatabasePager thread that
+    * has been canceled.
+    */
+    class OSGEARTH_EXPORT DatabasePagerProgressCallback : public ProgressCallback
+    {
+    public:
+        void* _pagerThread;
+
+        DatabasePagerProgressCallback();
+
+    protected:
+        virtual bool shouldCancel() const override;
+    };
+
+    /**
+     * Progress callback that will invoke cancelation if
+     * a referenced object gets destructed.
+     */
+    class OSGEARTH_EXPORT ObserverProgressCallback : public ProgressCallback
+    {
+    public:
+        ObserverProgressCallback(osg::Referenced* host) :
+            _host(host) { }
+
+    protected:
+        bool shouldCancel() const override {
+            return _host.valid() == false;
+        }
+
+    private:
+        osg::observer_ptr<osg::Referenced> _host;
+    };
+
+}
+
+#endif

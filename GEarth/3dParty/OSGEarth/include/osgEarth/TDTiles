@@ -1,0 +1,361 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+#ifndef OSGEARTH_TDTILES_H
+#define OSGEARTH_TDTILES_H
+
+#include <osgEarth/Common>
+#include <osgEarth/Config>
+#include <osgEarth/SceneGraphCallback>
+#include <osgEarth/URI>
+#include <osgEarth/JsonUtils>
+#include <osgEarth/GeoData>
+#include <osgEarth/VirtualProgram>
+#include <osg/Group>
+#include <osg/MatrixTransform>
+#include <osgDB/Options>
+#include <osgUtil/CullVisitor>
+#include <osgEarth/LoadableNode>
+
+
+/**
+ * 3D Tiles
+ * https://github.com/AnalyticalGraphicsInc/3d-tiles
+ * EXPERIMENTAL
+ */
+namespace osgEarth { namespace Contrib { namespace ThreeDTiles
+{
+    using namespace osgEarth;
+
+    struct LoadContext
+    {
+        URIContext _uc;
+    };
+
+    class OSGEARTH_EXPORT Asset
+    {
+        OE_OPTION(std::string, version);
+        OE_OPTION(std::string, tilesetVersion);
+        OE_OPTION(std::string, gltfUpAxis);
+
+        Asset() { }
+        Asset(const Json::Value& value) { fromJSON(value); }
+        void fromJSON(const Json::Value&);
+        Json::Value getJSON() const;
+    };
+
+    class OSGEARTH_EXPORT BoundingVolume
+    {
+        OE_OPTION(osg::BoundingBoxd, box);
+        OE_OPTION(osg::BoundingBoxd, region);
+        OE_OPTION(osg::BoundingSphere, sphere);
+
+        BoundingVolume() { }
+        BoundingVolume(const Json::Value& value) { fromJSON(value); }
+        void fromJSON(const Json::Value&);
+        Json::Value getJSON() const;
+
+        osg::BoundingSphere asBoundingSphere() const;
+    };
+
+    class OSGEARTH_EXPORT TileContent
+    {
+        OE_OPTION(BoundingVolume, boundingVolume);
+        OE_OPTION(URI, uri);
+
+        TileContent() { }
+        TileContent(const Json::Value& value, LoadContext& uc) { fromJSON(value, uc); }
+        void fromJSON(const Json::Value&, LoadContext&);
+        Json::Value getJSON() const;
+    };
+
+    class OSGEARTH_EXPORT Tile : public osg::Referenced
+    {
+    public:
+        OE_OPTION(BoundingVolume, boundingVolume);
+        OE_OPTION(BoundingVolume, viewerRequestVolume);
+        OE_OPTION(double, geometricError);
+        OE_OPTION(RefinePolicy, refine);
+        OE_OPTION(osg::Matrix, transform);
+        OE_OPTION(TileContent, content);
+        OE_OPTION_VECTOR(osg::ref_ptr<Tile>, children);
+
+        Tile() : _refine(REFINE_ADD) { }
+        Tile(const Json::Value& value, LoadContext& uc) { fromJSON(value, uc); }
+        void fromJSON(const Json::Value&, LoadContext& uc);
+        Json::Value getJSON() const;
+
+        osg::BoundingSphere getBoundingSphere();
+    };
+
+    class OSGEARTH_EXPORT Tileset : public osg::Referenced
+    {
+    public:
+        OE_OPTION(Asset, asset);
+        OE_OPTION(BoundingVolume, boundingVolume);
+        OE_OPTION(double, geometricError);
+        OE_OPTION_REFPTR(Tile, root);
+
+        Tileset() { }
+        Tileset(const Json::Value& value, LoadContext& uc) { fromJSON(value, uc); }
+        void fromJSON(const Json::Value&, LoadContext& uc);
+        Json::Value getJSON() const;
+
+        static Tileset* create(const std::string& tilesetJSON, const URIContext& uc);
+    };
+
+    class ThreeDTilesetNode;
+    class ThreeDTileNode;
+
+    /**
+     * Node that renders a 3D-Tiles content record
+     */
+    class OSGEARTH_EXPORT ThreeDTilesetContentNode : public osg::Group
+    {
+    public:
+        ThreeDTilesetContentNode(ThreeDTilesetNode* tilesetNode, Tileset* tileset, osgDB::Options* options);
+
+        ThreeDTileNode* getTileNode();
+
+    private:
+        ThreeDTileNode* _tileNode;
+        ThreeDTilesetNode* _tilesetNode;
+        osg::ref_ptr< Tileset > _tileset;
+        osg::ref_ptr< osgDB::Options > _options;
+    };
+
+    /**
+     * Node that renders a 3D-Tiles Tile
+     */
+    class OSGEARTH_EXPORT ThreeDTileNode : public osg::MatrixTransform, public LoadableNode
+    {
+    public:
+        ThreeDTileNode(ThreeDTilesetNode* tileset, Tile* tile, bool immediateLoad, osgDB::Options* options);
+        osg::BoundingSphere computeBound() const;
+
+        bool hasContent();
+
+        osg::Node* getContent();
+
+        bool isContentReady();
+
+        void resolveContent();
+
+        void updateTracking(osgUtil::CullVisitor* cv);
+
+        void requestContent(osgUtil::IncrementalCompileOperation* ico);
+
+        double getDistanceToTile(osgUtil::CullVisitor* cv);
+
+        double computeScreenSpaceError(osgUtil::CullVisitor* cv);
+
+        void traverse(osg::NodeVisitor& nv);
+
+        bool unloadContent();
+
+        const Tile* getTile() const { return _tile.get(); }
+
+        RefinePolicy getRefinePolicy() const { return _refine; }
+
+        unsigned int getLastCulledFrameNumber() const;
+        float getLastCulledFrameTime() const;
+
+        virtual void resizeGLObjectBuffers(unsigned int maxSize);
+
+        virtual void releaseGLObjects(osg::State* state) const;
+
+        typedef std::list< osg::ref_ptr < ThreeDTileNode > > TileTracker;
+
+        TileTracker::iterator _trackerItr;
+        bool _trackerItrValid;
+
+        void setParentTile(ThreeDTileNode* parentTile);
+
+    public: // LoadableNode
+        void load()
+        {
+            requestContent(nullptr);
+            resolveContent();
+        }
+
+        void unload()
+        {
+            unloadContent();
+        }
+
+        bool isHighestResolution() const
+        {
+            return getNumChildren() == 0;
+        }
+
+        virtual bool isLoaded() const
+        {
+            auto t = const_cast<ThreeDTileNode*>(this);
+            if (!t->hasContent())
+            {
+                return true;
+            }
+            return t->isContentReady();
+        }
+
+        virtual bool getAutoUnload() const
+        {
+            return _autoUnload;
+        }
+
+        virtual void setAutoUnload(bool value)
+        {
+            _autoUnload = value;
+        }
+
+
+    private:
+
+        void createDebugBounds();
+
+        void computeBoundingVolume();
+
+        osg::ref_ptr< Tile > _tile;
+
+        osg::ref_ptr< osg::Node > _content;
+        osg::ref_ptr< osg::Group > _children;
+
+        osg::ref_ptr< osg::Node > _boundsDebug;
+        ThreeDTilesetNode* _tileset;
+
+        Threading::Future< osg::ref_ptr<osg::Node> > _contentFuture;
+        bool _requestedContent;
+
+        bool _immediateLoad;
+
+        bool _firstVisit;
+
+        osg::BoundingBoxd _boundingBox;
+        osg::Matrixd _boundingBoxLocalToWorld;
+
+        osg::BoundingSphere _localBoundingSphere;
+
+        osg::ref_ptr< osgDB::Options > _options;
+
+        osg::Vec4 _debugColor;
+
+        unsigned int _lastCulledFrameNumber;
+        float _lastCulledFrameTime;
+
+        bool _autoUnload = true;
+
+        RefinePolicy _refine;
+
+        osg::observer_ptr< ThreeDTileNode > _parentTile;
+    };
+
+    /**
+    * Node representing a 3D-Tiles Tileset.
+    */
+    class OSGEARTH_EXPORT ThreeDTilesetNode : public osg::Group
+    {
+    public:
+        ThreeDTilesetNode(Tileset* tileset, const std::string& authorizationHeader, SceneGraphCallbacks* sceneGraphCallbacks, osgDB::Options* options);
+
+        float getMaximumScreenSpaceError() const;
+        void setMaximumScreenSpaceError(float maximumScreenSpaceError);
+
+        double getSSEDenominator() const;
+
+        void touchTile(ThreeDTileNode* node);
+
+        void traverse(osg::NodeVisitor& nv);
+
+        const Tileset* getTileset() const { return _tileset.get(); }
+
+        const osgDB::Options* getOptions() const { return _options.get(); }
+
+        const std::string& getAuthorizationHeader() const { return _authorizationHeader; }
+        void setAuthorizationHeader(const std::string& authorizationHeader) { _authorizationHeader = authorizationHeader; }
+
+        //! Get the scene graph callback host
+        SceneGraphCallbacks* getSceneGraphCallbacks(SceneGraphCallbacks* callbacks);
+
+        //! Set the scene graph callback host
+        void setSceneGraphCallbacks(SceneGraphCallbacks* callbacks);
+
+        void runPreMergeOperations(osg::Node* node);
+        void runPostMergeOperations(osg::Node* node);
+
+        /**
+         * Gets/sets the maximum number of tiles to keep in memory before expiring them.
+         */
+        unsigned int getMaxTiles() const;
+        void setMaxTiles(unsigned int maxTiles);
+
+        /**
+         * Gets/sets the max age of tiles before they are considered for expiration.
+         */
+        float getMaxAge() const;
+        void setMaxAge(float maxAge);
+
+        /**
+         * Turns on/off bounding volume visualization.
+         */
+        bool getShowBoundingVolumes() const;
+        void setShowBoundingVolumes(bool showBoundingVolumes);
+
+        /**
+         * Turns on/off rendering a debug color per tile.
+         */
+        bool getColorPerTile() const;
+        void setColorPerTile(bool colorPerTile);
+
+        const std::string& getOwnerName() const;
+        void setOwnerName(const std::string& name);
+
+    private:
+        void expireTiles(const osg::NodeVisitor& nv);
+
+        osg::ref_ptr<Tileset> _tileset;
+        osg::ref_ptr<osgDB::Options> _options;
+        float _maximumScreenSpaceError;
+
+        mutable Threading::Mutex _mutex;
+        ThreeDTileNode::TileTracker _tracker;
+        ThreeDTileNode::TileTracker::iterator _sentryItr;
+
+        unsigned int _maxTiles;
+        float _maxAge;
+
+        bool _showBoundingVolumes;
+        bool _showColorPerTile;
+
+        osg::ref_ptr< VirtualProgram> _debugVP;
+
+        unsigned int _lastExpiredFrame;
+
+        double _sseDenominator;
+
+        std::string _authorizationHeader;
+
+        osg::ref_ptr<SceneGraphCallbacks> _sgCallbacks;
+
+        std::string _ownerName;
+    };
+
+} } }
+
+
+#endif // OSGEARTH_TDTILES_H

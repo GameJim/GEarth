@@ -1,0 +1,76 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2020 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+#ifndef OSGEARTH_DRIVER_CACHE_FILESYSTEM
+#define OSGEARTH_DRIVER_CACHE_FILESYSTEM 1
+
+#include <osgEarth/Common>
+#include <osgEarth/Cache>
+
+namespace osgEarth { namespace Drivers
+{
+    using namespace osgEarth;
+    
+    /**
+     * Serializable options for the FileSystemCache.
+     */
+    class FileSystemCacheOptions : public CacheOptions
+    {
+    public:
+        FileSystemCacheOptions( const ConfigOptions& options =ConfigOptions() )
+            : CacheOptions( options )
+        {
+            setDriver( "filesystem" );
+            fromConfig( _conf ); 
+        }
+
+        /** dtor */
+        virtual ~FileSystemCacheOptions() { }
+
+    public:
+        OE_OPTION(std::string, rootPath);
+        OE_OPTION(unsigned, threads);
+        OE_OPTION(std::string, format);
+
+    public:
+        virtual Config getConfig() const {
+            Config conf = ConfigOptions::getConfig();
+            conf.set("path", rootPath() );
+            conf.set("threads", threads() );
+            conf.set("image_format", format());
+            return conf;
+        }
+        virtual void mergeConfig( const Config& conf ) {
+            ConfigOptions::mergeConfig( conf );
+            fromConfig( conf );
+        }
+
+    private:
+        void fromConfig( const Config& conf ) {
+            threads().setDefault(1u);
+            format().setDefault("osgb");
+            conf.get("path", rootPath() );
+            conf.get("threads", threads() );
+            conf.get("image_format", format());
+        }
+    };
+
+} } // namespace osgEarth::Drivers
+
+#endif // OSGEARTH_DRIVER_CACHE_FILESYSTEM
+
