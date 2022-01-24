@@ -1,6 +1,5 @@
 ﻿#include "common/font_library.h"
 #include "common/type_size.h"
-#include "freetype/freetype.h"
 #include "common/font_factory.h"
 namespace COMMON_NAMESPACE
 {

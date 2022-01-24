@@ -3,10 +3,10 @@ project(ui)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add sub directories
-# add_subdirectory(symboldesigner)
-# set_property(TARGET SymbolDesigner PROPERTY FOLDER ui)
+add_subdirectory(symboldesigner)
+set_property(TARGET SymbolDesigner PROPERTY FOLDER ui)
 
-add_subdirectory(GEarth)
-set_property(TARGET GEarth PROPERTY FOLDER ui)
+add_subdirectory(EarthViewer)
+set_property(TARGET EarthViewer PROPERTY FOLDER ui)
 
 
