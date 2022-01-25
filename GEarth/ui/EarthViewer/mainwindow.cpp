@@ -1,7 +1,147 @@
 ﻿#include "mainwindow.hpp"
+#include "mdiSubWindow.h"
 #include "EarthCore/map.h"
 
-#include <QFileDialog>
+#include <osgEarth/MapNode>
+#include <osgEarth/GDAL>
+#include <osgEarth/ExampleResources>
+#include <osgEarth/EarthManipulator>
+
+#include <osgEarth/Style>
+#include <osgEarth/OGRFeatureSource>
+#include <osgEarth/FeatureModelLayer>
+#include <osgEarth/FeatureImageLayer>
+
+using namespace osgEarth;
+
+void AddVector(osg::ref_ptr<osgEarth::Map> map)
+{
+    //
+    GDALImageLayer* basemap = new GDALImageLayer();
+    basemap->setURL("D:/data/osgEarth/data/world.tif");
+    map->addLayer(basemap);
+
+    // Next we add a layer to provide the feature data.
+    OGRFeatureSource* features = new OGRFeatureSource();
+    features->setName("vector-data");
+
+    //if (useMem)
+    //{
+    //    // the --mem options tells us to just make an in-memory geometry:
+    //    Ring* line = new Ring();
+    //    line->push_back(osg::Vec3d(-60, 20, 0));
+    //    line->push_back(osg::Vec3d(-120, 20, 0));
+    //    line->push_back(osg::Vec3d(-120, 60, 0));
+    //    line->push_back(osg::Vec3d(-60, 60, 0));
+    //    features->setGeometry(line);
+    //}
+  //  else
+    {
+        features->setURL("D:/data/osgEarth/data/world.shp");
+    }
+    map->addLayer(features);
+
+    // Define a style for the feature data. Since we are going to render the
+    // vectors as lines, configure the line symbolizer:
+    Style style;
+
+    LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
+    ls->stroke()->color() = Color::Yellow;
+    ls->stroke()->width() = 2.0f;
+    ls->tessellationSize()->set(100, Units::KILOMETERS);
+
+    //if (useDraping)
+    {
+        AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
+        alt->clamping() = alt->CLAMP_TO_TERRAIN;
+        alt->technique() = alt->TECHNIQUE_DRAPE;
+    }
+
+    //else if (useClamping)
+    //{
+    //    AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
+    //    alt->clamping() = alt->CLAMP_TO_TERRAIN;
+    //    alt->technique() = alt->TECHNIQUE_GPU;
+
+    //    ls->tessellationSize()->set(100, Units::KILOMETERS);
+
+    //    RenderSymbol* render = style.getOrCreate<RenderSymbol>();
+    //    render->depthOffset()->enabled() = true;
+    //}
+
+   // if (useRaster)
+    {
+        FeatureImageLayer* layer = new FeatureImageLayer();
+        layer->setFeatureSource(features);
+        StyleSheet* sheet = new StyleSheet();
+        sheet->addStyle(style);
+        layer->setStyleSheet(sheet);
+        map->addLayer(layer);
+    }
+
+   /* else
+    {
+        FeatureModelLayer* layer = new FeatureModelLayer();
+        layer->setFeatureSource(features);
+
+        StyleSheet* styleSheet = new StyleSheet();
+
+        if (useScript)
+        {
+            styleSheet->addStylesFromCSS(styles_css);
+            styleSheet->setScript(new StyleSheet::ScriptDef(script_source));
+            styleSheet->addSelector(StyleSelector("default", StringExpression("getStyleClass()")));
+        }
+        else
+        {
+            styleSheet->addStyle(style);
+        }
+
+        layer->setStyleSheet(styleSheet);
+        map->addLayer(layer);
+    }
+*/
+    //if (useLabels && !useRaster)
+    {
+        // set up symbology for drawing labels. We're pulling the label
+        // text from the name attribute, and its draw priority from the
+        // population attribute.
+        Style labelStyle;
+
+        TextSymbol* text = labelStyle.getOrCreateSymbol<TextSymbol>();
+        text->content() = StringExpression("[name]");
+        text->priority() = NumericExpression("[pop]");
+        text->size() = 16.0f;
+        text->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
+        text->fill()->color() = Color::White;
+        text->halo()->color() = Color::DarkGray;
+
+        StyleSheet* sheet = new StyleSheet();
+        sheet->addStyle(labelStyle);
+
+        // and configure a model layer:
+        FeatureModelLayer* fml = new FeatureModelLayer();
+        fml->setName("Labels");
+        fml->setFeatureSource(features);
+        fml->setStyleSheet(sheet);
+        map->addLayer(fml);
+    }
+
+    LayerVector layers;
+    map->getLayers(layers);
+    for (LayerVector::const_iterator i = layers.begin(); i != layers.end(); ++i)
+    {
+        Layer* layer = i->get();
+        if (layer->getStatus().isError() &&
+            layer->getEnabled())
+        {
+            OE_WARN << layer->getName() << " : " << layer->getStatus().toString() << std::endl;
+        }
+    }
+}
+
+
+
 CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 	RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
 	CreateOptions();
@@ -12,6 +152,10 @@ CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 
 	RibbonPage* pWindows = ribbonBar()->addPage(tr("Windows"));
 	CreateWindowsPage(pWindows);
+
+
+    RibbonPage* pDeomPage = ribbonBar()->addPage(tr("Demo"));
+    CreateDEMOPage(pDeomPage);
 
 	ribbonBar()->setTitleBarVisible(false);
 
@@ -27,13 +171,55 @@ CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 	m_pRightDockWidget->hide();
 
 	m_pMidArea = new CMdiArea();
+   /* m_pMidArea->setViewMode(QMdiArea::TabbedView);
+
+    m_pMidArea->setTabsClosable(true);
+    m_pMidArea->setTabsMovable(true);*/
+
 	this->setCentralWidget(m_pMidArea);
+
+    //临时创建一个地图
+    earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
+    AddVector(pMap);
+    m_Maps.push_back(pMap);
 }
 
 CMainWindow::~CMainWindow() {
 	
 }
 
+
+void CMainWindow::CreateDEMOPage(RibbonPage* pPage)
+{
+    RibbonGroup* group = pPage->addGroup(tr("Create Windows"));
+
+    RibbonToolBarControl* toolBar = new RibbonToolBarControl();
+    //打开，绑定事件
+    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("New Window"), Qt::ToolButtonTextUnderIcon);
+    connect(pAction, SIGNAL(triggered()), this, SLOT(CreateMapWindow()));
+
+    group->addControl(toolBar);
+}
+
+void CMainWindow::CreateMapWindow()
+{
+    auto pMap = m_Maps[0];
+    {
+        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
+        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
+        m_pMidArea->addMapWindows(pSubWindow);
+        pSubWindow->show();
+    }
+    
+   /* {
+        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
+        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
+        m_pMidArea->addMapWindows(pSubWindow);
+        m_pMidArea->show();
+    }*/
+   
+   
+}
 
 void CMainWindow::CreateSymbolLibraryPage(RibbonPage* pPage)
 {
@@ -72,12 +258,12 @@ void CMainWindow::CreateWindowsPage(RibbonPage* pPage)
 
 void CMainWindow::CreateOptions()
 {
-
+   
 }
 
 void CMainWindow::CreateSymbolLibary()
 {
-    earth::CMap* pMap = new earth::CMap();
+    
 }
 
 void CMainWindow::OpenSymbolLibary()

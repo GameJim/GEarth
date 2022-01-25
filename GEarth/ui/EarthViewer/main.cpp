@@ -8,11 +8,10 @@
 #include <iostream>
 
 #include "EarthCore/map.h"
+
 int main(int argc, char *argv[])
 {
-
-    earth::CMap* pMap = new earth::CMap(argc, argv);
-
+    //earth::CMap* pMap = new earth::CMap(argc, argv);
 
     QApplication a(argc, argv);
 	a.setStyle(new RibbonStyle());

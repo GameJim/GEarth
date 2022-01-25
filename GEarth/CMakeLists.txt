@@ -7,7 +7,7 @@ set(CMAKE_USE_RELATIVE_PATHS true)         #开启相对路径
 set(GEARTH_DIR ${PROJECT_SOURCE_DIR})  # 父路径
 set(GEARTH_INCLUDE ${PROJECT_SOURCE_DIR}/include)  # 包含目录
 set(GEARTH_LIB ${PROJECT_SOURCE_DIR}/lib)  # 库目录
-cmake_policy(SET CMP0079 NEW)
+
 
 #第三方库目录
 IF (WIN32)
@@ -52,11 +52,11 @@ IF (WIN32)
 		else()
 		   string(CONCAT LIB_DEBUG ${NAME}_ "LIB_DEBUG")
 		   find_file(${LIB_DEBUG} ${LIB_NAME_DEBUG}.lib ${THIRDPATH}/${NAME}/lib)
-		   target_link_libraries(${PROJECT_NAME} optimized ${LIB_DEBUG})
+		   target_link_libraries(${PROJECT_NAME} debug ${${LIB_DEBUG}})
 		   
 		   string(CONCAT LIB_RELEASE ${NAME}_ "LIB_RELEASE")
 		   find_file(${LIB_RELEASE} ${LIB_NAME}.lib  ${THIRDPATH}/${NAME}/lib)
-		   target_link_libraries(${PROJECT_NAME} optimized ${LIB_RELEASE})
+		   target_link_libraries(${PROJECT_NAME} optimized ${${LIB_RELEASE}})
 		endif()
 		
 		
@@ -75,6 +75,26 @@ IF (WIN32)
 					$<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
 		endforeach()
 	endfunction()
+	
+	
+	function(LINK_THIRDPARTY_SUB NAME LIB_NAME LIB_NAME_DEBUG)
+		string(TOUPPER ${NAME} NAME) 
+		string(TOUPPER ${LIB_NAME} LIB_NAME_TOP) 
+		if(LIB_NAME_DEBUG MATCHES "NONE")
+			string(CONCAT LIB_RELEASE ${NAME}_ ${LIB_NAME_TOP} "LIB_RELEASE")
+			find_file(${LIB_RELEASE} ${LIB_NAME}.lib ${THIRDPATH}/${NAME}/lib)
+			target_link_libraries(${PROJECT_NAME} ${${LIB_RELEASE}})
+		else()
+		   string(CONCAT LIB_DEBUG ${NAME}_ ${LIB_NAME_TOP} "LIB_DEBUG")
+		   find_file(${LIB_DEBUG} ${LIB_NAME_DEBUG}.lib ${THIRDPATH}/${NAME}/lib)
+		   target_link_libraries(${PROJECT_NAME} debug ${${LIB_DEBUG}})
+		   
+		   string(CONCAT LIB_RELEASE ${NAME}_ ${LIB_NAME_TOP} "LIB_RELEASE")
+		   find_file(${LIB_RELEASE} ${LIB_NAME}.lib  ${THIRDPATH}/${NAME}/lib)
+		   target_link_libraries(${PROJECT_NAME} optimized ${${LIB_RELEASE}})
+		endif()
+	endfunction()
+
 
 	function(LINK_THIRDPARTYS NAME )
 		string(TOUPPER ${NAME} NAME) 

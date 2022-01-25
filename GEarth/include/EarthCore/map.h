@@ -5,11 +5,12 @@
 */
 #pragma once
 #include "common/apiDescription.h"
+#include "osgEarth/Map"
 
 namespace earth
 {
    
-   class CORE_PUBLIC CMap
+   class CORE_PUBLIC CMap : public osgEarth::Map
    {
    public:
        CMap();
@@ -24,7 +25,7 @@ namespace earth
        bool IsEnable();
        bool m_IsEnable;
 
-
+      
    };
 }
 

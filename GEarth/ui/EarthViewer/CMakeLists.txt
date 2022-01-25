@@ -51,6 +51,8 @@ endif()
 #设置库目录
 link_directories(${GEARTH_DIR}/lib)
 INCLUDE_THIRDPARTY(freetype)
+INCLUDE_THIRDPARTY(osg)
+INCLUDE_THIRDPARTY(OSGEarth)
 
 
 
