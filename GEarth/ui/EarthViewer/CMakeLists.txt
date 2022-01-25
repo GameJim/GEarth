@@ -53,6 +53,7 @@ link_directories(${GEARTH_DIR}/lib)
 INCLUDE_THIRDPARTY(freetype)
 
 
+
 if(QT_UI)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOURCE_FILES})
 LINK_QT()

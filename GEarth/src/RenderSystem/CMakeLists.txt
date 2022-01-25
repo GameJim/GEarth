@@ -40,3 +40,4 @@ add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SRC_FILES} ${FORMS} ${RESOU
 #链接本地库
 LINK_SRC_LIB(common)
 
+INSTALLSELF()

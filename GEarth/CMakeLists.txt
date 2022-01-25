@@ -7,6 +7,7 @@ set(CMAKE_USE_RELATIVE_PATHS true)         #开启相对路径
 set(GEARTH_DIR ${PROJECT_SOURCE_DIR})  # 父路径
 set(GEARTH_INCLUDE ${PROJECT_SOURCE_DIR}/include)  # 包含目录
 set(GEARTH_LIB ${PROJECT_SOURCE_DIR}/lib)  # 库目录
+cmake_policy(SET CMP0079 NEW)
 
 #第三方库目录
 IF (WIN32)
@@ -228,7 +229,14 @@ ENDIF ()
 
 
 
-
+function(INSTALLSELF)
+install(TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}Targets
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin)	
+install(FILES ${EXTERN_HEADER_FILES} DESTINATION  include/${PROJECT_NAME} COMPONENT devel) 
+endfunction()
 
 
 # 子文件

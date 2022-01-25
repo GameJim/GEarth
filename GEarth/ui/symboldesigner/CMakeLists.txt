@@ -38,10 +38,7 @@ if (QT_UI)
 	FILE(GLOB_RECURSE FORMS *.ui)
 	FILE(GLOB_RECURSE RESOURCE_FILES *.qrc *.rc)
 	
-	#将ui文件和生成文件整理在一个文件夹中
-	SOURCE_GROUP("Form Files" FILES ${FORMS})
-	#将qrc资源文件整理在一个文件夹中
-	SOURCE_GROUP("Resource Files" FILES ${RESOURCE_FILES})
+	
 		
 	INCLUDE_QT()
 	set(CMAKE_AUTOMOC ON)  #打开全局moc,设置自动生成moc文件
