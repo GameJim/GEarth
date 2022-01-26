@@ -205,7 +205,7 @@ void CMainWindow::CreateMapWindow()
 {
     auto pMap = m_Maps[0];
     {
-        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
+        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap,m_pMidArea->GetViewer());
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
         m_pMidArea->addMapWindows(pSubWindow);
         pSubWindow->show();

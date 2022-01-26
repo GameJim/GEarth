@@ -21,7 +21,7 @@ namespace earth
     using CReferenced = osg::Referenced;
     using CDisplaySettings = osg::DisplaySettings;
 
-    using CEarthManipulator = osgEarth::Util::EarthManipulator;
+
     using CMapNode = osgEarth::Util::MapNode;
     using CMapNodeHelper = osgEarth::Util::MapNodeHelper;
 

@@ -1,18 +1,19 @@
-﻿#include "EarthCore/viewer.h"
+﻿#include "EarthCore/View.h"
 #if WIN32
 #include "osgViewer/api/Win32/GraphicsWindowWin32"
 #endif
 #include "EarthCore/camera.h"
 #include "EarthCore/graphicsContext.h"
+#include "EarthCore/EarthManipulator.h"
 namespace earth
 {
    
-    CViewer::CViewer()
+    CView::CView()
     {
 
     }
 
-    CViewer::CViewer(void* hwnd)
+    CView::CView(void* hwnd)
     {
 #if WIN32
         RECT rect;
@@ -35,7 +36,7 @@ namespace earth
         traits->stencil = ds->getMinimumNumStencilBits();
         traits->sampleBuffers = ds->getMultiSamples();
         traits->samples = ds->getNumMultiSamples();
-        traits->vsync = false;
+        traits->vsync = true;
 
         CGraphicsContext* gc = CGraphicsContext::createGraphicsContext(traits);
 
@@ -43,12 +44,9 @@ namespace earth
         camera->setGraphicsContext(gc);
         camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
        
-
+       
         //设置相机
         this->setCamera(camera);
-
-        //设置操作
-        this->setCameraManipulator(new CEarthManipulator());
 #endif
       
     }

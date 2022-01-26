@@ -5,17 +5,17 @@
 */
 #pragma once
 #include "common/apiDescription.h"
-#include "osgViewer/Viewer"
+#include "osgViewer/View"
 namespace earth
 {
-    class CORE_PUBLIC CViewer : public osgViewer::Viewer
+    class CORE_PUBLIC CView : public osgViewer::View
     {
     public:
         //创建空白数据
-        CViewer();
+        CView();
 
         //利用窗口句柄创建
-        CViewer(void* hwnd);
+        CView(void* hwnd);
     };
 }
 

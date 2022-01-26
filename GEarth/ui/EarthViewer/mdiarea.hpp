@@ -11,6 +11,7 @@ public:
 
     void addMapWindows(QWidget *widget, Qt::WindowFlags flags = Qt::WindowFlags());
 
+    earth::CRefPtr<earth::CCompositeViewer> GetViewer();
 public:
 public slots:
     void frame();

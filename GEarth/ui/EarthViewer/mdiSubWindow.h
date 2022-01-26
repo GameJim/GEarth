@@ -7,7 +7,7 @@
 #include "QtWidgets/qmdisubwindow"
 
 #include "EarthCore/map.h"
-#include "EarthCore/viewer.h"
+#include "EarthCore/View.h"
 #include "EarthCore/type.h"
 
 
@@ -21,20 +21,22 @@ class CMdiSubWindow : public QMdiSubWindow {
 public:
 
 
+    CMdiSubWindow(earth::CRefPtr<earth::CMap> map, earth::CRefPtr<earth::CCompositeViewer> pViewers,QWidget * parent = Q_NULLPTR);
+    ~CMdiSubWindow();
 
-    CMdiSubWindow(earth::CRefPtr<earth::CMap> map,QWidget * parent = Q_NULLPTR);
-    ~CMdiSubWindow() = default;
+    earth::CRefPtr<earth::CView> GetViewer();
 
-    earth::CRefPtr<earth::CViewer> GetViewer();
-
-
+    void PrintInfo();
 protected:
     
-    public slots:
-   
+    public slots :
+     
+
 private:
     earth::CRefPtr<earth::CMap> m_map;
-    earth::CRefPtr<earth::CViewer> m_viewer;
+    earth::CRefPtr<earth::CView> m_viewer;
+
+    earth::CRefPtr<earth::CCompositeViewer> m_pViewers;
 };
 
 
