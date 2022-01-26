@@ -19,10 +19,19 @@ class CMdiSubWindow : public QMdiSubWindow {
     Q_OBJECT
 
 public:
+
+
+
     CMdiSubWindow(earth::CRefPtr<earth::CMap> map,QWidget * parent = Q_NULLPTR);
     ~CMdiSubWindow() = default;
 
     earth::CRefPtr<earth::CViewer> GetViewer();
+
+
+protected:
+    
+    public slots:
+   
 private:
     earth::CRefPtr<earth::CMap> m_map;
     earth::CRefPtr<earth::CViewer> m_viewer;

@@ -14,12 +14,13 @@ CMdiArea::~CMdiArea() {
 
 void CMdiArea::addMapWindows(QWidget *widget, Qt::WindowFlags flags /*= Qt::WindowFlags()*/)
 {
-    int temp = (Qt::WindowState::WindowMinimized | Qt::WindowState::WindowMaximized);
-    flags = (Qt::WindowFlags)temp;
+    flags = flags | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint;
     this->addSubWindow(widget, flags);
     CMdiSubWindow* pSubWindow = (CMdiSubWindow*)widget;
 
     viewer->addView(pSubWindow->GetViewer());
+
+    //viewer->frame();
 }
 
 void CMdiArea::frame()

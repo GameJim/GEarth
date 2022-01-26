@@ -6,7 +6,7 @@
 #include "EarthCore/graphicsContext.h"
 namespace earth
 {
-
+   
     CViewer::CViewer()
     {
 
@@ -27,6 +27,7 @@ namespace earth
         traits->windowDecoration = false;
         traits->doubleBuffer = true;
         traits->sharedContext = 0;
+        traits->inheritedWindowData = windata;
 
         //显示设置
         CDisplaySettings* ds = CDisplaySettings::instance().get();
@@ -40,7 +41,7 @@ namespace earth
 
         CRefPtr<CCamera> camera = new CCamera();
         camera->setGraphicsContext(gc);
-        camera->setViewport(new osg::Viewport(rect.left, rect.top, traits->width, traits->height));
+        camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
        
 
         //设置相机
@@ -48,9 +49,6 @@ namespace earth
 
         //设置操作
         this->setCameraManipulator(new CEarthManipulator());
-
-       
-       
 #endif
       
     }

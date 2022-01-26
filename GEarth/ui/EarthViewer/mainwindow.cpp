@@ -171,10 +171,10 @@ CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 	m_pRightDockWidget->hide();
 
 	m_pMidArea = new CMdiArea();
-   /* m_pMidArea->setViewMode(QMdiArea::TabbedView);
+    //m_pMidArea->setViewMode(QMdiArea::TabbedView);
 
-    m_pMidArea->setTabsClosable(true);
-    m_pMidArea->setTabsMovable(true);*/
+    //m_pMidArea->setTabsClosable(true);
+    m_pMidArea->setTabsMovable(true);
 
 	this->setCentralWidget(m_pMidArea);
 
