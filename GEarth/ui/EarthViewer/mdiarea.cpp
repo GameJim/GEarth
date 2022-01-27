@@ -34,7 +34,7 @@ void CMdiArea::frame()
 {
     if (viewer->getNumViews() != 0)
     {
-        std::cout << "" << viewer->getFrameStamp()->getFrameNumber() << std::endl;
+        //std::cout << "" << viewer->getFrameStamp()->getFrameNumber() << std::endl;
         auto& SubWindows = this->subWindowList();
         for (auto widget : SubWindows)
         {
@@ -44,6 +44,7 @@ void CMdiArea::frame()
 
        
         viewer->frame();
+        //viewer->run();
     }
     
 }

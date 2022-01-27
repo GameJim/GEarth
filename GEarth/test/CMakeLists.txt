@@ -3,9 +3,8 @@ project(test)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add sub directories
-# add_subdirectory(common)
-
-# set_property(TARGET common PROPERTY FOLDER test)
+add_subdirectory(QtOsg)
+set_property(TARGET QtOsg PROPERTY FOLDER test)
 
 
 
