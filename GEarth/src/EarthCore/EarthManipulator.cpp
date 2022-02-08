@@ -4,7 +4,7 @@
 namespace earth
 {
     earth::CEarthManipulator::CEarthManipulator()
-        :osgGA::CameraManipulator()
+        :osgEarth::EarthManipulator()
     {
 
     }
@@ -14,7 +14,7 @@ namespace earth
 
     }
 
-    osg::Matrixd CEarthManipulator::getMatrix() const
+ /*   osg::Matrixd CEarthManipulator::getMatrix() const
     {
         osg::Matrixd matrix;
         return matrix;
@@ -35,5 +35,5 @@ namespace earth
     {
 
     }
-
+*/
 }

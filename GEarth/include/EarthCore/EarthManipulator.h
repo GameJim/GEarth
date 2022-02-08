@@ -10,22 +10,22 @@
 
 #include "common/apiDescription.h"
 #include "osgGA/CameraManipulator"
-
+#include "osgEarth/EarthManipulator"
 namespace earth
 {
 
-    class CORE_PUBLIC CEarthManipulator : public osgGA::CameraManipulator
+    class CORE_PUBLIC CEarthManipulator : public osgEarth::EarthManipulator
     {
     public:
         CEarthManipulator();
         virtual ~CEarthManipulator();
 
-        virtual osg::Matrixd getMatrix() const;
+        /*  virtual osg::Matrixd getMatrix() const;
 
-        virtual osg::Matrixd getInverseMatrix() const;
+          virtual osg::Matrixd getInverseMatrix() const;
 
-        virtual void setByMatrix(const osg::Matrixd& matrix) ;
+          virtual void setByMatrix(const osg::Matrixd& matrix) ;
 
-        virtual void setByInverseMatrix(const osg::Matrixd& matrix);
+          virtual void setByInverseMatrix(const osg::Matrixd& matrix);*/
     };
 }

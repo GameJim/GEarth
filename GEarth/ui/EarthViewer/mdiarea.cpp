@@ -1,50 +1,46 @@
 ﻿#include "mdiarea.hpp"
 #include "mdiSubWindow.h"
-CMdiArea::CMdiArea(QWidget * parent) : QMdiArea(parent) {
-    viewer = new earth::CCompositeViewer();
-    //viewer->realize();
+CMdiArea::CMdiArea(QWidget * parent) 
+    : QMdiArea(parent)
+    ,earth::CCompositeViewer() 
+{
     timer = new QTimer();
     timer->start(10);
-    connect(timer, SIGNAL(timeout()), this, SLOT(frame()));
-    //viewer->setStartTick(10);
+    connect(timer, SIGNAL(timeout()), this, SLOT(Frame()));
+  
 }
 
 CMdiArea::~CMdiArea() {
-	
+
 }
 
-void CMdiArea::addMapWindows(QWidget *widget, Qt::WindowFlags flags /*= Qt::WindowFlags()*/)
+CMdiSubWindow* CMdiArea::CreateMapWindow(earth::CRefPtr<earth::CMap> pMap)
 {
+    //flags = flags | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint;
+    //this->addSubWindow(widget, flags);
+    //CMdiSubWindow* pSubWindow = (CMdiSubWindow*)widget;
+
+    //viewer->addView(pSubWindow->GetViewer());
+    Qt::WindowFlags flags;
     flags = flags | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint;
-    this->addSubWindow(widget, flags);
-    CMdiSubWindow* pSubWindow = (CMdiSubWindow*)widget;
+    CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
 
-    viewer->addView(pSubWindow->GetViewer());
+    this->addSubWindow(pSubWindow,flags);
+    this->addView(pSubWindow->AsView());
 
-    //
-
+    return pSubWindow;
 }
 
-earth::CRefPtr<earth::CCompositeViewer> CMdiArea::GetViewer()
+earth::CRefPtr<earth::CCompositeViewer> CMdiArea::asViewer()
 {
-    return viewer;
+    return this;
 }
 
-void CMdiArea::frame()
+void CMdiArea::Frame()
 {
-    if (viewer->getNumViews() != 0)
+    if (this->getNumViews()>0)
     {
-        //std::cout << "" << viewer->getFrameStamp()->getFrameNumber() << std::endl;
-        auto& SubWindows = this->subWindowList();
-        for (auto widget : SubWindows)
-        {
-            CMdiSubWindow* pSubWindow = (CMdiSubWindow*)widget;
-            pSubWindow->PrintInfo();
-        }
-
-       
-        viewer->frame();
-        //viewer->run();
+        this->frame();
     }
-    
+   
 }

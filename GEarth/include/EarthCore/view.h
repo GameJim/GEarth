@@ -16,6 +16,8 @@ namespace earth
 
         //利用窗口句柄创建
         CView(void* hwnd);
+
+        void InitWindow(void* hwnd);
     };
 }
 

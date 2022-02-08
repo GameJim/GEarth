@@ -15,27 +15,29 @@ public:
 	~CMainWindow();
 
 protected:
-    //用于测试的案例
-    void CreateDEMOPage(RibbonPage* pPage);
+	void CreateFilePage(RibbonPage* pPage);
+	void CreateViewPage(RibbonPage* pPage);
     
 
-	void CreateSymbolLibraryPage(RibbonPage* pPage);
-	void CreateWindowsPage(RibbonPage* pPage);
-    
+    //用于测试的案例
+    void CreateTestPage(RibbonPage* pPage);
+    void CreateDemoPage(RibbonPage* pPage);
 
 	void CreateOptions();
 
 	protected slots:
 	//新建符号库
-	void CreateSymbolLibary();
+	void CreateScence();
 	//打开符号库
-	void OpenSymbolLibary();
+	void OpenScence();
 
-
-
+    void CreateEmptyPage(RibbonPage* pPage);
 
     //demo
     void CreateMapWindow();
+
+protected slots:
+    void TestMulitView();
 private:
 
 	Qtitan::RibbonStyle* m_pRibbonStyle;

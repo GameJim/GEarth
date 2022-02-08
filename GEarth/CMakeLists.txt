@@ -170,7 +170,7 @@ IF (WIN32)
 		IF(FORMS)
 			QT5_WRAP_UI(FORMS_UIC ${FORMS})
 		ENDIF()
-
+	
 
 		#将包含Q_OBJECT的头文件编译成moc_*.cpp文件
 		QT5_WRAP_CPP(MOC_FILES ${HEADER_FILES})

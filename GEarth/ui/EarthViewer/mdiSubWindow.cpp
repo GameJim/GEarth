@@ -8,9 +8,7 @@
 #include <QStyle>
 #include <QEvent>
 
-
-#include <osgViewer/ViewerEventHandlers>
-#include <osgGA/TrackballManipulator>
+#include "EarthCore/EarthManipulator.h"
 
 
 class PrintName :public osgGA::GUIEventHandler
@@ -30,46 +28,36 @@ public:
     int id;
 };
 
-CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMap> map, earth::CRefPtr<earth::CCompositeViewer> pViewers, QWidget * parent /*= Q_NULLPTR*/)
-    :QMdiSubWindow(parent),m_map(map),m_pViewers(pViewers)
+CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMap> map, QWidget * parent /*= Q_NULLPTR*/)
+    :QMdiSubWindow(parent),earth::CView()
+    ,m_map(map)
+
 {
     this->setWindowModality(Qt::WindowModality::NonModal);
     this->resize(400, 400);
 
-   
+  
     //子窗口
     QWidget* pWidget = new QWidget();
     this->setWidget(pWidget);
+    this->InitWindow((void*)widget()->winId());
   
-    m_viewer = new earth::CView((void*)pWidget->winId());
-
-    //m_viewer->setCameraManipulator(new osgEarth::EarthManipulator());
-    m_viewer->addEventHandler(new osgViewer::StatsHandler);
-    m_viewer->setCameraManipulator(new osgEarth::EarthManipulator());
-   
-
-    //设置handle
-   
-
-    // make the map scene graph:
+    //设置数据
     earth::CMapNode* node = new earth::CMapNode(map);
-    m_viewer->setSceneData(node);
-
+    this->setSceneData(node);
    
-    //
-    m_viewer->getEventQueue()->keyPress('s');
-    m_viewer->getEventQueue()->keyPress('s');
-    m_viewer->getEventQueue()->keyPress('s');
+    //设置操作器
+    this->setCameraManipulator(new earth::CEarthManipulator());
 }
 
 CMdiSubWindow::~CMdiSubWindow()
 {
-    m_pViewers->removeView(m_viewer);
+    ((CMdiArea*)this->mdiArea())->asViewer()->removeView(this);
 }
 
-earth::CRefPtr<earth::CView> CMdiSubWindow::GetViewer()
+earth::CRefPtr<earth::CView> CMdiSubWindow::AsView()
 {
-    return m_viewer;
+    return this;
 }
 
 void CMdiSubWindow::PrintInfo()

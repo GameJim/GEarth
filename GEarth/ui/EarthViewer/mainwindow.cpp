@@ -1,4 +1,5 @@
-﻿#include "mainwindow.hpp"
+﻿#pragma execution_character_set("utf-8") 
+#include "mainwindow.hpp"
 #include "mdiSubWindow.h"
 #include "EarthCore/map.h"
 
@@ -142,20 +143,36 @@ void AddVector(osg::ref_ptr<osgEarth::Map> map)
 
 
 
-CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
+CMainWindow::CMainWindow(QWidget * parent)
+    : RibbonMainWindow(parent)
+{
 	RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
 	CreateOptions();
-	
-	RibbonPage* page = ribbonBar()->addPage(tr("&Home"));
+
+	RibbonPage* page = ribbonBar()->addPage(tr("文件"));
 	page->setContextColor(QTITAN_NAMESPACE::RibbonPage::ContextColorOrange);
-	CreateSymbolLibraryPage(page);
+	CreateFilePage(page);
 
-	RibbonPage* pWindows = ribbonBar()->addPage(tr("Windows"));
-	CreateWindowsPage(pWindows);
+    RibbonPage* pEditsPage = ribbonBar()->addPage(tr("编辑"));
+    CreateEmptyPage(pEditsPage);
 
+	RibbonPage* pViews = ribbonBar()->addPage(tr("视图"));
+	CreateViewPage(pViews);
 
-    RibbonPage* pDeomPage = ribbonBar()->addPage(tr("Demo"));
-    CreateDEMOPage(pDeomPage);
+    //包含空间工具：测量、分析以及其他
+    RibbonPage* pTools = ribbonBar()->addPage(tr("工具"));
+    CreateEmptyPage(pTools);
+
+    RibbonPage* pTestPage = ribbonBar()->addPage(tr("测试"));
+    CreateTestPage(pTestPage);
+
+    RibbonPage* pDeomPage = ribbonBar()->addPage(tr("案例"));
+    CreateDemoPage(pDeomPage);
+   
+    RibbonPage* pExpandPage = ribbonBar()->addPage(tr("拓展"));
+    CreateEmptyPage(pExpandPage);
+
+   
 
 	ribbonBar()->setTitleBarVisible(false);
 
@@ -185,88 +202,157 @@ CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 }
 
 CMainWindow::~CMainWindow() {
-	
+    m_pMidArea = nullptr;
 }
 
-
-void CMainWindow::CreateDEMOPage(RibbonPage* pPage)
+void CMainWindow::CreateDemoPage(RibbonPage* pPage)
 {
-    RibbonGroup* group = pPage->addGroup(tr("Create Windows"));
+    RibbonGroup* group = pPage->addGroup(tr("网络地图"));
+
+    RibbonToolBarControl* toolBar = new RibbonToolBarControl();
+    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("百度地图"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
+    group->addControl(toolBar);
+
+
+    RibbonGroup* pMyDemoGroup = pPage->addGroup(tr("案例地图"));
+    RibbonToolBarControl* MyDemotoolBar = new RibbonToolBarControl();
+    pAction = MyDemotoolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("交通地图"), Qt::ToolButtonTextUnderIcon);
+    pAction = MyDemotoolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
+
+    pMyDemoGroup->addControl(MyDemotoolBar);
+}
+
+void CMainWindow::CreateTestPage(RibbonPage* pPage)
+{
+    RibbonGroup* group = pPage->addGroup(tr(""));
 
     RibbonToolBarControl* toolBar = new RibbonToolBarControl();
     //打开，绑定事件
-    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("New Window"), Qt::ToolButtonTextUnderIcon);
-    connect(pAction, SIGNAL(triggered()), this, SLOT(CreateMapWindow()));
+    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("多视窗"), Qt::ToolButtonTextUnderIcon);
+    connect(pAction, SIGNAL(triggered()), this, SLOT(TestMulitView()));
 
     group->addControl(toolBar);
 }
 
 void CMainWindow::CreateMapWindow()
 {
+   
+    
+}
+
+void CMainWindow::TestMulitView()
+{
     auto pMap = m_Maps[0];
     {
-        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap,m_pMidArea->GetViewer());
+        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
-        m_pMidArea->addMapWindows(pSubWindow);
         pSubWindow->show();
     }
-    
-   /* {
-        CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
+    {
+        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
-        m_pMidArea->addMapWindows(pSubWindow);
-        m_pMidArea->show();
-    }*/
-   
-   
+        pSubWindow->show();
+    }
 }
 
-void CMainWindow::CreateSymbolLibraryPage(RibbonPage* pPage)
+void CMainWindow::CreateFilePage(RibbonPage* pPage)
 {
-	RibbonGroup* group = pPage->addGroup(tr("Windows States"));
-
+	RibbonGroup* group = pPage->addGroup(tr("新建"));
 	RibbonToolBarControl* toolBar = new RibbonToolBarControl();
 	//打开，绑定事件
-	QAction* pAction =toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("New"), Qt::ToolButtonTextUnderIcon);
-	connect(pAction, SIGNAL(triggered()), this, SLOT(CreateSymbolLibary()));
+	QAction* pAction =toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("项目"), Qt::ToolButtonTextUnderIcon);
+	connect(pAction, SIGNAL(triggered()), this, SLOT(CreateScence()));
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("场景"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("数据"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("标注"), Qt::ToolButtonTextUnderIcon);
+    group->addControl(toolBar);
 
 
-	pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("Open"), Qt::ToolButtonTextUnderIcon);
-	connect(pAction, SIGNAL(triggered()), this, SLOT(OpenSymbolLibary()));
+    group = pPage->addGroup(tr("打开"));
+    toolBar = new RibbonToolBarControl();
+    //打开，绑定事件
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("项目"), Qt::ToolButtonTextUnderIcon);
+    connect(pAction, SIGNAL(triggered()), this, SLOT(OpenScence()));
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("场景"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("数据"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("标注"), Qt::ToolButtonTextUnderIcon);
+    group->addControl(toolBar);
 
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Save.png")), tr("Save"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addSeparator();
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
-	group->addControl(toolBar);
+	
+    group = pPage->addGroup(tr("保存"));
+    toolBar = new RibbonToolBarControl();
+    //打开，绑定事件
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Save.png")), tr("本地"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Save.png")), tr("发布"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    group->addControl(toolBar);
+
+	
+    group = pPage->addGroup(tr("打印"));
+    toolBar = new RibbonToolBarControl();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Save.png")), tr("打印"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Save.png")), tr("打印预览"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    group->addControl(toolBar);
+  
+
+    group = pPage->addGroup(tr("打印"));
+    toolBar = new RibbonToolBarControl();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("显示"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("缓存"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("配置文件"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    group->addControl(toolBar);
+
 }
 
-void CMainWindow::CreateWindowsPage(RibbonPage* pPage)
+void CMainWindow::CreateViewPage(RibbonPage* pPage)
 {
-	RibbonGroup* group = pPage->addGroup(tr("Symobl Library"));
+	RibbonGroup* group = pPage->addGroup(tr("视图"));
 
 	RibbonToolBarControl* toolBar = new RibbonToolBarControl();
-	/*toolBar->addAction(QIcon(QStringLiteral("./res/NewFile.png")), tr("New"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/OpenFile.png")), tr("Open"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/Save.png")), tr("Save"), Qt::ToolButtonTextUnderIcon);*/
-
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Share.png")), tr("Share"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("Setiting"), Qt::ToolButtonTextUnderIcon);
-	toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("Setiting2"), Qt::ToolButtonTextUnderIcon);
+    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Share.png")), tr("场景视图"), Qt::ToolButtonTextUnderIcon);  //图层结构
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Share.png")), tr("对象视图"), Qt::ToolButtonTextUnderIcon);  //以每个渲染对象来
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Share.png")), tr("工具视图"), Qt::ToolButtonTextUnderIcon);  //分析的工具
 	group->addControl(toolBar);
+
+    group = pPage->addGroup(tr("场景视图"));
+    toolBar = new RibbonToolBarControl();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("新建三维视图"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("新建二维视图"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("显示所有视图"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("隐藏所有视图"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("关闭所有视图"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    pAction = pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("平铺"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("列表"), Qt::ToolButtonTextUnderIcon);
+    toolBar->addSeparator();
+    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("分割"), Qt::ToolButtonTextUnderIcon);
+    group->addControl(toolBar);
 }
+
 
 void CMainWindow::CreateOptions()
 {
    
 }
 
-void CMainWindow::CreateSymbolLibary()
+void CMainWindow::CreateScence()
 {
     
 }
 
-void CMainWindow::OpenSymbolLibary()
+void CMainWindow::OpenScence()
 {
    
+}
+
+
+void CMainWindow::CreateEmptyPage(RibbonPage* pPage)
+{
+
 }

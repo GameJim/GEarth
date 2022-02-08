@@ -8,17 +8,20 @@
 namespace earth
 {
    
-    CView::CView()
-    {
-
-    }
+    CView::CView() {};
+   
 
     CView::CView(void* hwnd)
+    {
+        InitWindow(hwnd);
+    };
+
+    void CView::InitWindow(void* hwnd)
     {
 #if WIN32
         RECT rect;
         ::GetWindowRect((HWND)hwnd, &rect);
-     
+
         CRefPtr<CReferenced> windata = new osgViewer::GraphicsWindowWin32::WindowData((HWND)hwnd);
         CRefPtr<CGraphicsContext::CTraits> traits = new CGraphicsContext::CTraits();
         traits->x = rect.left;
@@ -43,12 +46,11 @@ namespace earth
         CRefPtr<CCamera> camera = new CCamera();
         camera->setGraphicsContext(gc);
         camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
-       
-       
+
+
         //设置相机
         this->setCamera(camera);
 #endif
-      
     }
 
 }

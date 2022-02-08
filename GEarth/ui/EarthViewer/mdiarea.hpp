@@ -1,22 +1,23 @@
 ﻿#pragma once
 #include <QMdiArea>
 #include "EarthCore/type.h"
+#include "EarthCore/map.h"
+#include "mdiSubWindow.h"
 #include "QTimer"
-class CMdiArea : public QMdiArea {
+class CMdiArea : public QMdiArea,public earth::CCompositeViewer {
 	Q_OBJECT
 
 public:
 	CMdiArea(QWidget * parent = Q_NULLPTR);
 	~CMdiArea();
 
-    void addMapWindows(QWidget *widget, Qt::WindowFlags flags = Qt::WindowFlags());
+    CMdiSubWindow* CreateMapWindow(earth::CRefPtr<earth::CMap> map);
 
-    earth::CRefPtr<earth::CCompositeViewer> GetViewer();
+    earth::CRefPtr<earth::CCompositeViewer> asViewer();
 public:
 public slots:
-    void frame();
+    void Frame();
 private:
-	
+    //计时器
     QTimer* timer;
-    earth::CRefPtr<earth::CCompositeViewer> viewer;
 };
