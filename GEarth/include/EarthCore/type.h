@@ -13,6 +13,7 @@
 #include "common/apiDescription.h"
 
 #include "osgViewer/CompositeViewer"
+#include "osgViewer/ViewerEventHandlers"
 namespace earth
 {
    //using 
@@ -26,6 +27,8 @@ namespace earth
     using CMapNodeHelper = osgEarth::Util::MapNodeHelper;
 
     using  CCompositeViewer = osgViewer::CompositeViewer;
+
+    using CStatsHandler = osgViewer::StatsHandler;
 }
 
 

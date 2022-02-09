@@ -99,10 +99,10 @@ namespace earth
 
 
     CMap::CMap()
-        :m_IsEnable(false)
+        :osgEarth::Map(),m_IsEnable(false)
 
     {
-      
+        this->setMapName("GEarthMap");
     };
 
 

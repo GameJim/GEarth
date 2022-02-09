@@ -18,6 +18,8 @@ namespace earth
         CView(void* hwnd);
 
         void InitWindow(void* hwnd);
+    protected:
+        virtual ~CView();
     };
 }
 

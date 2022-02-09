@@ -29,35 +29,38 @@ public:
 };
 
 CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMap> map, QWidget * parent /*= Q_NULLPTR*/)
-    :QMdiSubWindow(parent),earth::CView()
+    :QMdiSubWindow(parent)
     ,m_map(map)
 
 {
     this->setWindowModality(Qt::WindowModality::NonModal);
     this->resize(400, 400);
-
+    //不绘制背景
+    this->setAutoFillBackground(false);
+   
   
     //子窗口
     QWidget* pWidget = new QWidget();
     this->setWidget(pWidget);
-    this->InitWindow((void*)widget()->winId());
+    m_pView = new earth::CView((void*)widget()->winId());
+    
   
     //设置数据
     earth::CMapNode* node = new earth::CMapNode(map);
-    this->setSceneData(node);
+    m_pView->setSceneData(node);
    
     //设置操作器
-    this->setCameraManipulator(new earth::CEarthManipulator());
+    m_pView->setCameraManipulator(new earth::CEarthManipulator());
 }
 
 CMdiSubWindow::~CMdiSubWindow()
 {
-    ((CMdiArea*)this->mdiArea())->asViewer()->removeView(this);
+
 }
 
-earth::CRefPtr<earth::CView> CMdiSubWindow::AsView()
+earth::CRefPtr<earth::CView> CMdiSubWindow::GetView()
 {
-    return this;
+    return m_pView;
 }
 
 void CMdiSubWindow::PrintInfo()
@@ -68,5 +71,11 @@ void CMdiSubWindow::PrintInfo()
     auto handlers = m_viewer->getEventHandlers();
     std::cout << "EventHandlers:" << handlers.size() << std::endl;
     std::cout << "Key:" << (((osgViewer::StatsHandler*)(handlers.front().get()))->getKeyEventTogglesOnScreenStats());*/
+}
+
+void CMdiSubWindow::closeEvent(QCloseEvent *closeEvent)
+{
+    //移除渲染
+    ((CMdiArea*)this->mdiArea())->asViewer()->removeView(m_pView);
 }
 

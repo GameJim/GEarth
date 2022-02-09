@@ -15,6 +15,8 @@ public:
 	~CMainWindow();
 
 protected:
+    CDockWidget* GetOrCreateDockWidget(const QString& sName);
+
 	void CreateFilePage(RibbonPage* pPage);
 	void CreateViewPage(RibbonPage* pPage);
     
@@ -41,8 +43,9 @@ protected slots:
 private:
 
 	Qtitan::RibbonStyle* m_pRibbonStyle;
-	CDockWidget* m_pLeftDockWidget;// 左侧停靠窗口
-	CDockWidget* m_pRightDockWidget;// 右侧停靠窗口
+
+    std::map<QString, CDockWidget*>  m_pDockWidget;
+	
 	CMdiArea* m_pMidArea;         //所有符号
 	
     std::vector <earth::CRefPtr<earth::CMap>> m_Maps;

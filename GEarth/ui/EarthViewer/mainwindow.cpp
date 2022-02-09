@@ -1,6 +1,8 @@
 ﻿#pragma execution_character_set("utf-8") 
 #include "mainwindow.hpp"
 #include "mdiSubWindow.h"
+#include "DataTreeWidget.h"
+
 #include "EarthCore/map.h"
 
 #include <osgEarth/MapNode>
@@ -172,24 +174,16 @@ CMainWindow::CMainWindow(QWidget * parent)
     RibbonPage* pExpandPage = ribbonBar()->addPage(tr("拓展"));
     CreateEmptyPage(pExpandPage);
 
-   
-
+  
 	ribbonBar()->setTitleBarVisible(false);
 
-	//添加菜单
-	m_pLeftDockWidget = new CDockWidget(this);
-	this->addDockWidget(Qt::LeftDockWidgetArea, m_pLeftDockWidget);
-	m_pLeftDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea);//设置可停靠区域为主窗口左边和右边
-	m_pLeftDockWidget->hide();
 
-	m_pRightDockWidget = new CDockWidget(this);
-	this->addDockWidget(Qt::RightDockWidgetArea, m_pRightDockWidget);
-	m_pRightDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea);//设置可停靠区域为主窗口左边和右边
-	m_pRightDockWidget->hide();
+	//添加停靠窗口
+    GetOrCreateDockWidget("DataView");
+    GetOrCreateDockWidget("DirView");
 
-	m_pMidArea = new CMdiArea();
-    //m_pMidArea->setViewMode(QMdiArea::TabbedView);
-
+    //多视窗
+    m_pMidArea = new CMdiArea();
     //m_pMidArea->setTabsClosable(true);
     m_pMidArea->setTabsMovable(true);
 
@@ -197,7 +191,7 @@ CMainWindow::CMainWindow(QWidget * parent)
 
     //临时创建一个地图
     earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
-    AddVector(pMap);
+    //AddVector(pMap);
     m_Maps.push_back(pMap);
 }
 
@@ -246,13 +240,50 @@ void CMainWindow::TestMulitView()
     auto pMap = m_Maps[0];
     {
         CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
-        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
+        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
         pSubWindow->show();
     }
     {
         CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
-        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getName()));
+        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
         pSubWindow->show();
+    }
+
+    auto pView =  m_pMidArea->asViewer()->getView(0);
+    if(pView->getEventHandlers().size() == 0)
+    {
+        pView->addEventHandler(new earth::CStatsHandler());//实现状态信息统计
+
+        pView->getEventQueue()->keyPress('s');
+        pView->getEventQueue()->keyPress('s');
+        pView->getEventQueue()->keyPress('s');
+    }
+   
+}
+
+CDockWidget* CMainWindow::GetOrCreateDockWidget(const QString& sName)
+{
+    auto itr = m_pDockWidget.find(sName);
+    if (m_pDockWidget.find(sName) != m_pDockWidget.end())
+    {
+        return itr->second;
+    }
+    else
+    {
+       CDockWidget* pDockWidget = nullptr;
+       if (sName == "DataView")
+       {
+           pDockWidget = new CDockWidget(tr("数据视图"), new CDataTreeWidget(), Qt::LeftDockWidgetArea, this, true);
+           pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea| Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
+       }
+       else if (sName == "DirView")
+       {
+           pDockWidget = new CDockWidget(tr("目录视图"), new CDirTreeWidget(), Qt::LeftDockWidgetArea, this, true);
+           pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
+       }
+
+       m_pDockWidget.insert({ sName,pDockWidget });
+       return pDockWidget;
     }
 }
 
@@ -299,7 +330,7 @@ void CMainWindow::CreateFilePage(RibbonPage* pPage)
     group->addControl(toolBar);
   
 
-    group = pPage->addGroup(tr("打印"));
+    group = pPage->addGroup(tr("配置"));
     toolBar = new RibbonToolBarControl();
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("显示"), Qt::ToolButtonTextUnderIcon);
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/Setting.png")), tr("缓存"), Qt::ToolButtonTextUnderIcon);

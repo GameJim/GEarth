@@ -9,7 +9,9 @@ namespace earth
 {
    
     CView::CView() {};
-   
+    CView::~CView() {
+
+    }
 
     CView::CView(void* hwnd)
     {

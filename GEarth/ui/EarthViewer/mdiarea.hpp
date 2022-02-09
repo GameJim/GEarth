@@ -13,7 +13,7 @@ public:
 
     CMdiSubWindow* CreateMapWindow(earth::CRefPtr<earth::CMap> map);
 
-    earth::CRefPtr<earth::CCompositeViewer> asViewer();
+    earth::CCompositeViewer* asViewer();
 public:
 public slots:
     void Frame();
