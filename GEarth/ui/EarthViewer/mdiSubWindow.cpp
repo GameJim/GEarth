@@ -28,13 +28,11 @@ public:
     int id;
 };
 
-CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMap> map, QWidget * parent /*= Q_NULLPTR*/)
+CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMapNode> pMapNode, QWidget * parent /*= Q_NULLPTR*/)
     :QMdiSubWindow(parent)
-    ,m_map(map)
-
 {
     this->setWindowModality(Qt::WindowModality::NonModal);
-    this->resize(400, 400);
+    //this->resize(400, 400);
     //不绘制背景
     this->setAutoFillBackground(false);
    
@@ -44,10 +42,7 @@ CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMap> map, QWidget * parent /
     this->setWidget(pWidget);
     m_pView = new earth::CView((void*)widget()->winId());
     
-  
-    //设置数据
-    earth::CMapNode* node = new earth::CMapNode(map);
-    m_pView->setSceneData(node);
+    m_pView->setSceneData(pMapNode);
    
     //设置操作器
     m_pView->setCameraManipulator(new earth::CEarthManipulator());

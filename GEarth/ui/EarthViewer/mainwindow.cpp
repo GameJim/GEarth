@@ -17,11 +17,13 @@
 
 using namespace osgEarth;
 
-void AddVector(osg::ref_ptr<osgEarth::Map> map)
+void CMainWindow::AddVector(osg::ref_ptr<osgEarth::Map> map)
 {
     //
     GDALImageLayer* basemap = new GDALImageLayer();
     basemap->setURL("D:/data/osgEarth/data/world.tif");
+    QString sName = tr("文件");
+    basemap->setName(sName.toStdString());
     map->addLayer(basemap);
 
     // Next we add a layer to provide the feature data.
@@ -79,6 +81,9 @@ void AddVector(osg::ref_ptr<osgEarth::Map> map)
         StyleSheet* sheet = new StyleSheet();
         sheet->addStyle(style);
         layer->setStyleSheet(sheet);
+
+        sName = tr("图片");
+        layer->setName(sName.toStdString());
         map->addLayer(layer);
     }
 
@@ -146,8 +151,18 @@ void AddVector(osg::ref_ptr<osgEarth::Map> map)
 
 
 CMainWindow::CMainWindow(QWidget * parent)
-    : RibbonMainWindow(parent)
+    : RibbonMainWindow(parent),m_pData(new earth::CGroupNode())
 {
+
+   /* earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
+    AddVector(pMap);
+    earth::CMapNode* node = new earth::CMapNode(pMap);
+    
+    m_pData->addChild(node);*/
+
+    TestMulitView();
+
+
 	RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
 	CreateOptions();
 
@@ -189,10 +204,6 @@ CMainWindow::CMainWindow(QWidget * parent)
 
 	this->setCentralWidget(m_pMidArea);
 
-    //临时创建一个地图
-    earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
-    //AddVector(pMap);
-    m_Maps.push_back(pMap);
 }
 
 CMainWindow::~CMainWindow() {
@@ -204,15 +215,15 @@ void CMainWindow::CreateDemoPage(RibbonPage* pPage)
     RibbonGroup* group = pPage->addGroup(tr("网络地图"));
 
     RibbonToolBarControl* toolBar = new RibbonToolBarControl();
-    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("百度地图"), Qt::ToolButtonTextUnderIcon);
-    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
+    QAction* pAction = toolBar->addAction(QIcon("./res/ui/EarthViewer/NewFile.png"), tr("百度地图"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon("./res/ui/EarthViewer/NewFile.png"), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
     group->addControl(toolBar);
 
 
     RibbonGroup* pMyDemoGroup = pPage->addGroup(tr("案例地图"));
     RibbonToolBarControl* MyDemotoolBar = new RibbonToolBarControl();
-    pAction = MyDemotoolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("交通地图"), Qt::ToolButtonTextUnderIcon);
-    pAction = MyDemotoolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
+    pAction = MyDemotoolBar->addAction(QIcon("./res/ui/EarthViewer/NewFile.png"), tr("交通地图"), Qt::ToolButtonTextUnderIcon);
+    pAction = MyDemotoolBar->addAction(QIcon("./res/ui/EarthViewer/NewFile.png"), tr("高德地图"), Qt::ToolButtonTextUnderIcon);
 
     pMyDemoGroup->addControl(MyDemotoolBar);
 }
@@ -223,7 +234,7 @@ void CMainWindow::CreateTestPage(RibbonPage* pPage)
 
     RibbonToolBarControl* toolBar = new RibbonToolBarControl();
     //打开，绑定事件
-    QAction* pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("多视窗"), Qt::ToolButtonTextUnderIcon);
+    QAction* pAction = toolBar->addAction(QIcon("./res/ui/EarthViewer/NewFile.png"), tr("多视窗"), Qt::ToolButtonTextUnderIcon);
     connect(pAction, SIGNAL(triggered()), this, SLOT(TestMulitView()));
 
     group->addControl(toolBar);
@@ -237,14 +248,19 @@ void CMainWindow::CreateMapWindow()
 
 void CMainWindow::TestMulitView()
 {
-    auto pMap = m_Maps[0];
+    
+    //临时创建一个地图
+    earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
+    AddVector(pMap);
+    earth::CMapNode* node = new earth::CMapNode(pMap);
+    m_pData->addChild(node);
     {
-        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
+        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
         pSubWindow->show();
     }
     {
-        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(pMap);
+        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
         pSubWindow->show();
     }
@@ -273,12 +289,12 @@ CDockWidget* CMainWindow::GetOrCreateDockWidget(const QString& sName)
        CDockWidget* pDockWidget = nullptr;
        if (sName == "DataView")
        {
-           pDockWidget = new CDockWidget(tr("数据视图"), new CDataTreeWidget(), Qt::LeftDockWidgetArea, this, true);
+           pDockWidget = new CDockWidget(tr("数据视图"), new CDataTreeWidget(m_pData), Qt::RightDockWidgetArea, this, true);
            pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea| Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
        }
        else if (sName == "DirView")
        {
-           pDockWidget = new CDockWidget(tr("目录视图"), new CDirTreeWidget(), Qt::LeftDockWidgetArea, this, true);
+           pDockWidget = new CDockWidget(tr("目录视图"), new CDirTreeWidget(), Qt::RightDockWidgetArea, this, true);
            pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
        }
 
@@ -293,8 +309,9 @@ void CMainWindow::CreateFilePage(RibbonPage* pPage)
 	RibbonToolBarControl* toolBar = new RibbonToolBarControl();
 	//打开，绑定事件
 	QAction* pAction =toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("项目"), Qt::ToolButtonTextUnderIcon);
-	connect(pAction, SIGNAL(triggered()), this, SLOT(CreateScence()));
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("场景"), Qt::ToolButtonTextUnderIcon);
+    connect(pAction, SIGNAL(triggered()), this, SLOT(CreateScence()));
+
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("数据"), Qt::ToolButtonTextUnderIcon);
     toolBar->addSeparator();
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("标注"), Qt::ToolButtonTextUnderIcon);
@@ -304,7 +321,7 @@ void CMainWindow::CreateFilePage(RibbonPage* pPage)
     group = pPage->addGroup(tr("打开"));
     toolBar = new RibbonToolBarControl();
     //打开，绑定事件
-    pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("项目"), Qt::ToolButtonTextUnderIcon);
+    pAction = toolBar->addAction(QIcon("./res/ui/EarthViewer/OpenFile.png"), tr("项目"), Qt::ToolButtonTextUnderIcon);
     connect(pAction, SIGNAL(triggered()), this, SLOT(OpenScence()));
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("场景"), Qt::ToolButtonTextUnderIcon);
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/OpenFile.png")), tr("数据"), Qt::ToolButtonTextUnderIcon);
@@ -374,7 +391,18 @@ void CMainWindow::CreateOptions()
 
 void CMainWindow::CreateScence()
 {
-    
+    //临时创建一个地图
+    /*earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
+    AddVector(pMap);
+    earth::CMapNode* node = new earth::CMapNode(pMap);
+    m_pData->addChild(node);
+    {
+        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
+        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
+        pSubWindow->show();
+    }*/
+
+   
 }
 
 void CMainWindow::OpenScence()

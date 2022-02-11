@@ -11,7 +11,7 @@ public:
 	CMdiArea(QWidget * parent = Q_NULLPTR);
 	~CMdiArea();
 
-    CMdiSubWindow* CreateMapWindow(earth::CRefPtr<earth::CMap> map);
+    CMdiSubWindow* CreateMapWindow(earth::CRefPtr<earth::CMapNode> pMapNode);
 
     earth::CCompositeViewer* asViewer();
 public:

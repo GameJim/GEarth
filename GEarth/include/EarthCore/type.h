@@ -14,6 +14,9 @@
 
 #include "osgViewer/CompositeViewer"
 #include "osgViewer/ViewerEventHandlers"
+
+
+
 namespace earth
 {
    //using 
@@ -25,10 +28,16 @@ namespace earth
 
     using CMapNode = osgEarth::Util::MapNode;
     using CMapNodeHelper = osgEarth::Util::MapNodeHelper;
+    using CLayer = osgEarth::Layer;
+
 
     using  CCompositeViewer = osgViewer::CompositeViewer;
-
     using CStatsHandler = osgViewer::StatsHandler;
+
+    using CNodeVisitor = osg::NodeVisitor;
+    using CGroupNode = osg::Group;
+    using CNode = osg::Node;
+    using CObject = osg::Object;
 }
 
 

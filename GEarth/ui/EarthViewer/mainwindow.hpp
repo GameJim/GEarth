@@ -11,7 +11,8 @@ class CMainWindow : public RibbonMainWindow {
 	Q_OBJECT
 
 public:
-	CMainWindow(QWidget * parent = Q_NULLPTR);
+    void AddVector(osg::ref_ptr<osgEarth::Map> map);
+    CMainWindow(QWidget * parent = Q_NULLPTR);
 	~CMainWindow();
 
 protected:
@@ -48,6 +49,5 @@ private:
 	
 	CMdiArea* m_pMidArea;         //所有符号
 	
-    std::vector <earth::CRefPtr<earth::CMap>> m_Maps;
-
+    earth::CRefPtr<earth::CGroupNode> m_pData;           //所有数据
 };

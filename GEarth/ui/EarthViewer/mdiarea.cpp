@@ -14,12 +14,12 @@ CMdiArea::~CMdiArea() {
 
 }
 
-CMdiSubWindow* CMdiArea::CreateMapWindow(earth::CRefPtr<earth::CMap> pMap)
+CMdiSubWindow* CMdiArea::CreateMapWindow(earth::CRefPtr<earth::CMapNode> pMapNode)
 {
     
     Qt::WindowFlags flags;
     flags = flags | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint;
-    CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMap);
+    CMdiSubWindow* pSubWindow = new CMdiSubWindow(pMapNode);
 
     this->addSubWindow(pSubWindow,flags);
     this->addView(pSubWindow->GetView());

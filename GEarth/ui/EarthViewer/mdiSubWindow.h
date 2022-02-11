@@ -15,7 +15,7 @@ class CMdiSubWindow : public QMdiSubWindow{
     Q_OBJECT
 
 public:
-    CMdiSubWindow(earth::CRefPtr<earth::CMap> map, QWidget* parent = Q_NULLPTR);
+    CMdiSubWindow(earth::CRefPtr<earth::CMapNode> pMapNode, QWidget* parent = Q_NULLPTR);
     ~CMdiSubWindow();
 
     earth::CRefPtr<earth::CView> GetView();
@@ -24,13 +24,11 @@ public:
 protected slots:
     void closeEvent(QCloseEvent *closeEvent) Q_DECL_OVERRIDE;
    
-     
-
 private:
     //数据资源
     earth::CRefPtr<earth::CView> m_pView;
-    earth::CRefPtr<earth::CMap> m_map;
 
+    //当前活动的地图
 };
 
 
