@@ -10,7 +10,7 @@
 #include <QStackedWidget>
 #include <QAbstractItemModel>
 
-#include "EarthCore/type.h"
+#include "EarthCore/mapManager.h"
 
 
 //文件目录类
@@ -44,10 +44,15 @@ public:
         return nullptr;
         ; 
     };
-    virtual void addChild(std::shared_ptr<AbstractTreeItem> child) {m_pChildren.push_back(child);};
+    virtual void addChild(std::shared_ptr<AbstractTreeItem> child) {
+        m_pChildren.push_back(child);
+        child->m_pParent = this;
+    };
     virtual int columnCount() { return 1; };
     virtual int rowCount() { return m_pChildren.size(); };
-  
+    virtual void removeChild(const unsigned & index) { m_pChildren.erase(m_pChildren.begin() + index); }
+
+
     virtual QVariant data(const unsigned& index) = 0;
     virtual bool setData(const QVariant &value, int role /*= Qt::EditRole*/) { return true; };
 
@@ -68,17 +73,19 @@ public:
         OBJECT_TYPE_LAYER
     };
 
-    static std::shared_ptr<AbstractTreeItem> CreateRoot(earth::CGroupNode* pGroupNode);
+    static std::shared_ptr<AbstractTreeItem> CreateRoot(earth::CMapManager*  pMapManager);
+    static std::shared_ptr<AbstractTreeItem> CreateItem(earth::CMap*  pMapManager);
 
-
-    MapTreeItem(const EnObjectType& enType, earth::CObject* pObject, AbstractTreeItem* pParent = nullptr);
+    MapTreeItem(const EnObjectType& enType, void* pObject, AbstractTreeItem* pParent = nullptr);
     virtual ~MapTreeItem() = default;
   
     virtual QVariant data(const unsigned& index);
     virtual bool setData(const QVariant &value, int role /*= Qt::EditRole*/);
+    void* GetObject() { return m_pObject; };
+
 protected:
     EnObjectType m_enObjectType;      //数据类型
-    earth::CObject* m_pObject;   //数据对象
+    void* m_pObject;   //数据对象
 };
 
 
@@ -87,7 +94,8 @@ class MapTreeModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    MapTreeModel(earth::CRefPtr<earth::CGroupNode> pGroup);
+    MapTreeModel(earth::CMapManager& pMapManager);
+    virtual ~MapTreeModel();
     QVariant data(const QModelIndex& index, int role) const Q_DECL_OVERRIDE;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
 
@@ -98,8 +106,11 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex())  const Q_DECL_OVERRIDE;
     int columnCount(const QModelIndex &parent = QModelIndex())  const Q_DECL_OVERRIDE;
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+
+    void dataChanged();
 protected:
     std::shared_ptr<AbstractTreeItem> m_pRoot;
+    earth::CRefPtr<earth::CMapManagerCallback> m_pCallBack; //回调函数
 };
 
 
@@ -107,10 +118,12 @@ class CDataTreeWidget : public QWidget {
     Q_OBJECT
 
 public:
-    CDataTreeWidget(earth::CRefPtr<earth::CGroupNode>,QWidget * parent = Q_NULLPTR);
+    CDataTreeWidget(earth::CMapManager& pMapManager,QWidget * parent = Q_NULLPTR);
     ~CDataTreeWidget();
 private:
-    earth::CRefPtr<earth::CGroupNode>  m_pGroupNode;   //所有数据的根节点
+   
+
+    earth::CMapManager& m_pMapManager;   //所有数据的根节点
     QStackedWidget* m_pViewArea;   //用于显示的区域
 };
 

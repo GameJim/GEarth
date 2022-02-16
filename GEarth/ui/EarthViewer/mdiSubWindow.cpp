@@ -31,12 +31,11 @@ public:
 CMdiSubWindow::CMdiSubWindow(earth::CRefPtr<earth::CMapNode> pMapNode, QWidget * parent /*= Q_NULLPTR*/)
     :QMdiSubWindow(parent)
 {
-    this->setWindowModality(Qt::WindowModality::NonModal);
-    //this->resize(400, 400);
+    /* this->setWindowModality(Qt::WindowModality::NonModal);*/
+     this->resize(400, 400);
     //不绘制背景
     this->setAutoFillBackground(false);
-   
-  
+
     //子窗口
     QWidget* pWidget = new QWidget();
     this->setWidget(pWidget);

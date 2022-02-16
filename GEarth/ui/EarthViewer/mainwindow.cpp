@@ -15,6 +15,9 @@
 #include <osgEarth/FeatureModelLayer>
 #include <osgEarth/FeatureImageLayer>
 
+
+#include "EarthCore/mapManager.h"
+#include "EarthCore/map.h"
 using namespace osgEarth;
 
 void CMainWindow::AddVector(osg::ref_ptr<osgEarth::Map> map)
@@ -23,146 +26,102 @@ void CMainWindow::AddVector(osg::ref_ptr<osgEarth::Map> map)
     GDALImageLayer* basemap = new GDALImageLayer();
     basemap->setURL("D:/data/osgEarth/data/world.tif");
     QString sName = tr("文件");
-    basemap->setName(sName.toStdString());
+    basemap->setName(std::string(sName.toLocal8Bit()));
     map->addLayer(basemap);
 
     // Next we add a layer to provide the feature data.
-    OGRFeatureSource* features = new OGRFeatureSource();
-    features->setName("vector-data");
+  //  OGRFeatureSource* features = new OGRFeatureSource();
+  //  features->setName("vector-data");
 
-    //if (useMem)
-    //{
-    //    // the --mem options tells us to just make an in-memory geometry:
-    //    Ring* line = new Ring();
-    //    line->push_back(osg::Vec3d(-60, 20, 0));
-    //    line->push_back(osg::Vec3d(-120, 20, 0));
-    //    line->push_back(osg::Vec3d(-120, 60, 0));
-    //    line->push_back(osg::Vec3d(-60, 60, 0));
-    //    features->setGeometry(line);
-    //}
-  //  else
-    {
-        features->setURL("D:/data/osgEarth/data/world.shp");
-    }
-    map->addLayer(features);
+  //  //if (useMem)
+  //  //{
+  //  //    // the --mem options tells us to just make an in-memory geometry:
+  //  //    Ring* line = new Ring();
+  //  //    line->push_back(osg::Vec3d(-60, 20, 0));
+  //  //    line->push_back(osg::Vec3d(-120, 20, 0));
+  //  //    line->push_back(osg::Vec3d(-120, 60, 0));
+  //  //    line->push_back(osg::Vec3d(-60, 60, 0));
+  //  //    features->setGeometry(line);
+  //  //}
+  ////  else
+  //  {
+  //      features->setURL("D:/data/osgEarth/data/world.shp");
+  //  }
+  //  map->addLayer(features);
 
-    // Define a style for the feature data. Since we are going to render the
-    // vectors as lines, configure the line symbolizer:
-    Style style;
+  //  // Define a style for the feature data. Since we are going to render the
+  //  // vectors as lines, configure the line symbolizer:
+  //  Style style;
 
-    LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
-    ls->stroke()->color() = Color::Yellow;
-    ls->stroke()->width() = 2.0f;
-    ls->tessellationSize()->set(100, Units::KILOMETERS);
+  //  LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
+  //  ls->stroke()->color() = Color::Yellow;
+  //  ls->stroke()->width() = 2.0f;
+  //  ls->tessellationSize()->set(100, Units::KILOMETERS);
 
-    //if (useDraping)
-    {
-        AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
-        alt->clamping() = alt->CLAMP_TO_TERRAIN;
-        alt->technique() = alt->TECHNIQUE_DRAPE;
-    }
+  //  //if (useDraping)
+  //  {
+  //      AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
+  //      alt->clamping() = alt->CLAMP_TO_TERRAIN;
+  //      alt->technique() = alt->TECHNIQUE_DRAPE;
+  //  }
 
-    //else if (useClamping)
-    //{
-    //    AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
-    //    alt->clamping() = alt->CLAMP_TO_TERRAIN;
-    //    alt->technique() = alt->TECHNIQUE_GPU;
+  //
+  //  {
+  //      FeatureImageLayer* layer = new FeatureImageLayer();
+  //      layer->setFeatureSource(features);
+  //      StyleSheet* sheet = new StyleSheet();
+  //      sheet->addStyle(style);
+  //      layer->setStyleSheet(sheet);
 
-    //    ls->tessellationSize()->set(100, Units::KILOMETERS);
+  //      sName = tr("图片");
+  //      layer->setName(sName.toStdString());
+  //      map->addLayer(layer);
+  //  }
 
-    //    RenderSymbol* render = style.getOrCreate<RenderSymbol>();
-    //    render->depthOffset()->enabled() = true;
-    //}
+  //  //if (useLabels && !useRaster)
+  //  {
+  //      // set up symbology for drawing labels. We're pulling the label
+  //      // text from the name attribute, and its draw priority from the
+  //      // population attribute.
+  //      Style labelStyle;
 
-   // if (useRaster)
-    {
-        FeatureImageLayer* layer = new FeatureImageLayer();
-        layer->setFeatureSource(features);
-        StyleSheet* sheet = new StyleSheet();
-        sheet->addStyle(style);
-        layer->setStyleSheet(sheet);
+  //      TextSymbol* text = labelStyle.getOrCreateSymbol<TextSymbol>();
+  //      text->content() = StringExpression("[name]");
+  //      text->priority() = NumericExpression("[pop]");
+  //      text->size() = 16.0f;
+  //      text->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
+  //      text->fill()->color() = Color::White;
+  //      text->halo()->color() = Color::DarkGray;
 
-        sName = tr("图片");
-        layer->setName(sName.toStdString());
-        map->addLayer(layer);
-    }
+  //      StyleSheet* sheet = new StyleSheet();
+  //      sheet->addStyle(labelStyle);
 
-   /* else
-    {
-        FeatureModelLayer* layer = new FeatureModelLayer();
-        layer->setFeatureSource(features);
+  //      // and configure a model layer:
+  //      FeatureModelLayer* fml = new FeatureModelLayer();
+  //      fml->setName("Labels");
+  //      fml->setFeatureSource(features);
+  //      fml->setStyleSheet(sheet);
+  //      map->addLayer(fml);
+  //  }
 
-        StyleSheet* styleSheet = new StyleSheet();
-
-        if (useScript)
-        {
-            styleSheet->addStylesFromCSS(styles_css);
-            styleSheet->setScript(new StyleSheet::ScriptDef(script_source));
-            styleSheet->addSelector(StyleSelector("default", StringExpression("getStyleClass()")));
-        }
-        else
-        {
-            styleSheet->addStyle(style);
-        }
-
-        layer->setStyleSheet(styleSheet);
-        map->addLayer(layer);
-    }
-*/
-    //if (useLabels && !useRaster)
-    {
-        // set up symbology for drawing labels. We're pulling the label
-        // text from the name attribute, and its draw priority from the
-        // population attribute.
-        Style labelStyle;
-
-        TextSymbol* text = labelStyle.getOrCreateSymbol<TextSymbol>();
-        text->content() = StringExpression("[name]");
-        text->priority() = NumericExpression("[pop]");
-        text->size() = 16.0f;
-        text->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
-        text->fill()->color() = Color::White;
-        text->halo()->color() = Color::DarkGray;
-
-        StyleSheet* sheet = new StyleSheet();
-        sheet->addStyle(labelStyle);
-
-        // and configure a model layer:
-        FeatureModelLayer* fml = new FeatureModelLayer();
-        fml->setName("Labels");
-        fml->setFeatureSource(features);
-        fml->setStyleSheet(sheet);
-        map->addLayer(fml);
-    }
-
-    LayerVector layers;
-    map->getLayers(layers);
-    for (LayerVector::const_iterator i = layers.begin(); i != layers.end(); ++i)
-    {
-        Layer* layer = i->get();
-        if (layer->getStatus().isError() &&
-            layer->getEnabled())
-        {
-            OE_WARN << layer->getName() << " : " << layer->getStatus().toString() << std::endl;
-        }
-    }
+  //  LayerVector layers;
+  //  map->getLayers(layers);
+  //  for (LayerVector::const_iterator i = layers.begin(); i != layers.end(); ++i)
+  //  {
+  //      Layer* layer = i->get();
+  //      if (layer->getStatus().isError() &&
+  //          layer->getEnabled())
+  //      {
+  //          OE_WARN << layer->getName() << " : " << layer->getStatus().toString() << std::endl;
+  //      }
+  //  }
 }
 
 
 
 CMainWindow::CMainWindow(QWidget * parent)
-    : RibbonMainWindow(parent),m_pData(new earth::CGroupNode())
+    : RibbonMainWindow(parent)
 {
-
-   /* earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
-    AddVector(pMap);
-    earth::CMapNode* node = new earth::CMapNode(pMap);
-    
-    m_pData->addChild(node);*/
-
-    TestMulitView();
-
-
 	RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
 	CreateOptions();
 
@@ -192,18 +151,15 @@ CMainWindow::CMainWindow(QWidget * parent)
   
 	ribbonBar()->setTitleBarVisible(false);
 
+    //多视窗
+    m_pMidArea = new CMdiArea();
+    m_pMidArea->setTabsMovable(true);
+    this->setCentralWidget(m_pMidArea);
+
 
 	//添加停靠窗口
     GetOrCreateDockWidget("DataView");
     GetOrCreateDockWidget("DirView");
-
-    //多视窗
-    m_pMidArea = new CMdiArea();
-    //m_pMidArea->setTabsClosable(true);
-    m_pMidArea->setTabsMovable(true);
-
-	this->setCentralWidget(m_pMidArea);
-
 }
 
 CMainWindow::~CMainWindow() {
@@ -243,7 +199,6 @@ void CMainWindow::CreateTestPage(RibbonPage* pPage)
 void CMainWindow::CreateMapWindow()
 {
    
-    
 }
 
 void CMainWindow::TestMulitView()
@@ -251,9 +206,10 @@ void CMainWindow::TestMulitView()
     
     //临时创建一个地图
     earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
+    earth::CMapManager::GetInstance().AddMap(pMap);
     AddVector(pMap);
     earth::CMapNode* node = new earth::CMapNode(pMap);
-    m_pData->addChild(node);
+   // m_pData->addChild(node);
     {
         CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
         pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
@@ -289,12 +245,12 @@ CDockWidget* CMainWindow::GetOrCreateDockWidget(const QString& sName)
        CDockWidget* pDockWidget = nullptr;
        if (sName == "DataView")
        {
-           pDockWidget = new CDockWidget(tr("数据视图"), new CDataTreeWidget(m_pData), Qt::RightDockWidgetArea, this, true);
+           pDockWidget = new CDockWidget(tr("数据视图"), new CDataTreeWidget(earth::CMapManager::GetInstance()), Qt::LeftDockWidgetArea, this, true);
            pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea| Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
        }
        else if (sName == "DirView")
        {
-           pDockWidget = new CDockWidget(tr("目录视图"), new CDirTreeWidget(), Qt::RightDockWidgetArea, this, true);
+           pDockWidget = new CDockWidget(tr("目录视图"), new CDirTreeWidget(), Qt::LeftDockWidgetArea, this, true);
            pDockWidget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);//设置可停靠区域为主窗口左边和右边
        }
 

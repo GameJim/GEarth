@@ -6,6 +6,8 @@
 using namespace Qtitan;
 
 #include "EarthCore/map.h"
+#include "EarthCore/mapManager.h"
+#include "EarthCore/map.h"
 #include "EarthCore/type.h"
 class CMainWindow : public RibbonMainWindow {
 	Q_OBJECT
@@ -46,8 +48,5 @@ private:
 	Qtitan::RibbonStyle* m_pRibbonStyle;
 
     std::map<QString, CDockWidget*>  m_pDockWidget;
-	
-	CMdiArea* m_pMidArea;         //所有符号
-	
-    earth::CRefPtr<earth::CGroupNode> m_pData;           //所有数据
+	CMdiArea* m_pMidArea;                                //所有场景区域
 };

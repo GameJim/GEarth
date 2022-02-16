@@ -13,9 +13,11 @@
 #include "EarthCore/map.h"
 
 
-CDataTreeWidget::CDataTreeWidget(earth::CRefPtr<earth::CGroupNode> pGroup, QWidget * parent /*= Q_NULLPTR*/)
-    :QWidget(parent), m_pGroupNode(pGroup)
+CDataTreeWidget::CDataTreeWidget(earth::CMapManager& pMapManager, QWidget * parent /*= Q_NULLPTR*/)
+    :QWidget(parent), m_pMapManager(pMapManager)
 {
+    
+
     QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal);
     QPushButton* diskButton = buttonBox->addButton(
         tr("折叠"), QDialogButtonBox::ActionRole);
@@ -39,7 +41,7 @@ CDataTreeWidget::CDataTreeWidget(earth::CRefPtr<earth::CGroupNode> pGroup, QWidg
         m_pViewArea->addWidget(pWidget);
         mainLayout->addWidget(treeView);
 
-        MapTreeModel* model = new MapTreeModel(pGroup);
+        MapTreeModel* model = new MapTreeModel(m_pMapManager);
         treeView->setModel(model);
         treeView->resizeColumnToContents(0);
         treeView->setStyle(QStyleFactory::create("windows"));
@@ -112,8 +114,6 @@ CDirTreeWidget::CDirTreeWidget(QWidget * parent /*= Q_NULLPTR*/)
         mainLayout->addWidget(treeView);
         pWidget->setLayout(mainLayout);
 
-        
-
         m_pViewArea->addWidget(pWidget);
     }
 
@@ -146,12 +146,56 @@ void CDirTreeWidget::ShowDBTree()
     m_pViewArea->setCurrentIndex(1);
 }
 
-
-MapTreeModel::MapTreeModel(earth::CRefPtr<earth::CGroupNode> pGroup)
+class DataTreeMapChanged : public earth::CMapManagerCallback
 {
-    m_pRoot = MapTreeItem::CreateRoot(pGroup.get());
+public:
+    virtual void Callback(const earth::CMapManagerCallback::EnCallbackType& eType, earth::CRefPtr<earth::CMap> pMap, const unsigned& index) override
+    {
+        switch (eType)
+        {
+        case earth::CMapManagerCallback::EnCallbackType::MAP_ADDED:
+        {
+            m_pRoot->addChild(MapTreeItem::CreateItem(pMap));
+        }
+        break;
+        case earth::CMapManagerCallback::EnCallbackType::MAP_REMOVE:
+        {
+            m_pRoot->removeChild(index);
+        }
+        default:
+            break;
+        }
+
+        m_pModel->dataChanged();
+    };
+
+    DataTreeMapChanged(std::shared_ptr<AbstractTreeItem> pItme, MapTreeModel* pModel) :m_pRoot(pItme), m_pModel(pModel){};
+public:
+    std::shared_ptr<AbstractTreeItem> m_pRoot;
+    MapTreeModel* m_pModel;
+};
+
+
+
+MapTreeModel::MapTreeModel(earth::CMapManager& pMapManager)
+{
+    m_pRoot = MapTreeItem::CreateRoot(&pMapManager);
    
+
+   
+    m_pCallBack = new DataTreeMapChanged(m_pRoot,this);
+    pMapManager.AddCallBack(m_pCallBack);
 }
+
+MapTreeModel::~MapTreeModel()
+{
+    MapTreeItem* pMapTreeItem = dynamic_cast<MapTreeItem*>(m_pRoot.get());
+    if (pMapTreeItem)
+    {
+        static_cast<earth::CMapManager*>(pMapTreeItem->GetObject())->RemoveCallBack(m_pCallBack);
+    }
+}
+
 
 QVariant MapTreeModel::data(const QModelIndex& index, int role) const
 {
@@ -243,19 +287,23 @@ Qt::ItemFlags MapTreeModel::flags(const QModelIndex &index) const
     return theFlags;
 }
 
-std::shared_ptr<AbstractTreeItem> MapTreeItem::CreateRoot(earth::CGroupNode* pGroupNode)
+void MapTreeModel::dataChanged()
+{
+    //emit updateCount(QModelIndex());
+}
+
+std::shared_ptr<AbstractTreeItem> MapTreeItem::CreateRoot(earth::CMapManager* pGroupNode)
 {
     std::shared_ptr<AbstractTreeItem> pRootItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_ROOT_NODE, pGroupNode);
-    unsigned nMap = pGroupNode->getNumChildren();
+    unsigned nMap = pGroupNode->GetMapNum();
     for (unsigned i = 0;i < nMap;++i)
     {
-        earth::CMapNode* pMapNode = dynamic_cast<earth::CMapNode*>(pGroupNode->getChild(i));
-        std::shared_ptr<AbstractTreeItem> pMapItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_MAP_NODE, pMapNode, pRootItem.get());
+        earth::CMap* pMap = dynamic_cast<earth::CMap*>(pGroupNode->GetMap(i).get());
+        std::shared_ptr<AbstractTreeItem> pMapItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_MAP_NODE, pMap, pRootItem.get());
         pRootItem->addChild(pMapItem);
 
-        earth::CMap* pMap = dynamic_cast<earth::CMap*>(pMapNode->getMap());
+    
         unsigned nLayer = pMap->getNumLayers();
-       
         for (unsigned j = 0; j < nLayer; ++j)
         {
             std::shared_ptr<AbstractTreeItem> pLayerItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_LAYER, pMap->getLayerAt(j), pMapItem.get());
@@ -267,7 +315,21 @@ std::shared_ptr<AbstractTreeItem> MapTreeItem::CreateRoot(earth::CGroupNode* pGr
     return pRootItem;
 }
 
-MapTreeItem::MapTreeItem(const EnObjectType& enType, earth::CObject* pObject, AbstractTreeItem* pParent)
+std::shared_ptr<AbstractTreeItem> MapTreeItem::CreateItem(earth::CMap* pMap)
+{
+    std::shared_ptr<AbstractTreeItem> pMapItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_MAP_NODE, pMap, nullptr);
+
+    unsigned nLayer = pMap->getNumLayers();
+    for (unsigned j = 0; j < nLayer; ++j)
+    {
+        std::shared_ptr<AbstractTreeItem> pLayerItem = std::make_shared<MapTreeItem>(OBJECT_TYPE_LAYER, pMap->getLayerAt(j), pMapItem.get());
+        pMapItem->addChild(pLayerItem);
+    }
+
+    return pMapItem;
+}
+
+MapTreeItem::MapTreeItem(const EnObjectType& enType, void* pObject, AbstractTreeItem* pParent)
     :AbstractTreeItem(pParent),m_pObject(pObject),m_enObjectType(enType)
 {
   
@@ -307,13 +369,13 @@ QVariant MapTreeItem::data(const unsigned& role)
         break;
         case MapTreeItem::OBJECT_TYPE_MAP_NODE:
         {
-            earth::CMapNode* pNode = dynamic_cast<earth::CMapNode*>(m_pObject);
-            return QString::fromStdString(pNode->getMap()->getMapName());
+            earth::CMap* pMap = static_cast<earth::CMap*>(m_pObject);
+            return QString::fromStdString(pMap->getMapName());
         }
         break;
         case MapTreeItem::OBJECT_TYPE_LAYER:
         {
-            earth::CLayer* pLayer = dynamic_cast<earth::CLayer*>(m_pObject);
+            earth::CLayer* pLayer = static_cast<earth::CLayer*>(m_pObject);
             return QString::fromStdString(pLayer->getName());
         }
         break;
@@ -339,7 +401,7 @@ QVariant MapTreeItem::data(const unsigned& role)
         break;
         case MapTreeItem::OBJECT_TYPE_LAYER:
         {
-            earth::CLayer* pLayer = dynamic_cast<earth::CLayer*>(m_pObject);
+            earth::CLayer* pLayer = static_cast<earth::CLayer*>(m_pObject);
             return pLayer->getEnabled();
         }
         break;
@@ -373,13 +435,13 @@ bool MapTreeItem::setData(const QVariant &value, int role /*= Qt::EditRole*/)
         break;
         case MapTreeItem::OBJECT_TYPE_MAP_NODE:
         {
-            earth::CMapNode* pNode = dynamic_cast<earth::CMapNode*>(m_pObject);
-            pNode->getMap()->setMapName(value.toString().toStdString());
+            earth::CMap* pMap = static_cast<earth::CMap*>(m_pObject);
+            pMap->setMapName(value.toString().toStdString());
         }
         break;
         case MapTreeItem::OBJECT_TYPE_LAYER:
         {
-            earth::CLayer* pLayer = dynamic_cast<earth::CLayer*>(m_pObject);
+            earth::CLayer* pLayer = static_cast<earth::CLayer*>(m_pObject);
             pLayer->setName(value.toString().toStdString());
         }
         break;
@@ -407,7 +469,8 @@ bool MapTreeItem::setData(const QVariant &value, int role /*= Qt::EditRole*/)
         break;
         case MapTreeItem::OBJECT_TYPE_LAYER:
         {
-            earth::CLayer* pLayer = dynamic_cast<earth::CLayer*>(m_pObject);
+            earth::CLayer* pLayer = static_cast<earth::CLayer*>(m_pObject);
+            bool isEnable = !pLayer->getEnabled();
             pLayer->setEnabled(!pLayer->getEnabled());
         }
         break;

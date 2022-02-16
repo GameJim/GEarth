@@ -24,9 +24,8 @@ namespace earth
    public:
        bool IsEnable();
        bool m_IsEnable;
-
-      
    };
+
 }
 
 
