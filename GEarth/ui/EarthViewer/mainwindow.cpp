@@ -18,7 +18,16 @@
 
 #include "EarthCore/mapManager.h"
 #include "EarthCore/map.h"
+#include "QFileDialog"
+#include "QMessageBox"
 using namespace osgEarth;
+
+
+
+earth::CRefPtr<earth::CMap>  CActiveData::m_pActiveMap = nullptr;
+earth::CRefPtr<earth::CMap> CActiveData::m_pActiveLayer = nullptr;
+
+const QString _sWaring = QObject::tr("警告");
 
 void CMainWindow::AddVector(osg::ref_ptr<osgEarth::Map> map)
 {
@@ -30,91 +39,92 @@ void CMainWindow::AddVector(osg::ref_ptr<osgEarth::Map> map)
     map->addLayer(basemap);
 
     // Next we add a layer to provide the feature data.
-  //  OGRFeatureSource* features = new OGRFeatureSource();
-  //  features->setName("vector-data");
+    OGRFeatureSource* features = new OGRFeatureSource();
+    features->setName("vector-data");
+ 
+    //if (useMem)
+    //{
+    //    // the --mem options tells us to just make an in-memory geometry:
+    Ring* line = new Ring();
+    line->push_back(osg::Vec3d(-60, 20, 0));
+    line->push_back(osg::Vec3d(-120, 20, 0));
+    line->push_back(osg::Vec3d(-120, 60, 0));
+    line->push_back(osg::Vec3d(-60, 60, 0));
+    features->setGeometry(line);
+    //}
+  //  else
+    {
+        //features->setURL("D:/data/osgEarth/data/world.shp");
+   
+    }
+    map->addLayer(features);
 
-  //  //if (useMem)
-  //  //{
-  //  //    // the --mem options tells us to just make an in-memory geometry:
-  //  //    Ring* line = new Ring();
-  //  //    line->push_back(osg::Vec3d(-60, 20, 0));
-  //  //    line->push_back(osg::Vec3d(-120, 20, 0));
-  //  //    line->push_back(osg::Vec3d(-120, 60, 0));
-  //  //    line->push_back(osg::Vec3d(-60, 60, 0));
-  //  //    features->setGeometry(line);
-  //  //}
-  ////  else
-  //  {
-  //      features->setURL("D:/data/osgEarth/data/world.shp");
-  //  }
-  //  map->addLayer(features);
+    // Define a style for the feature data. Since we are going to render the
+    // vectors as lines, configure the line symbolizer:
+    Style style;
 
-  //  // Define a style for the feature data. Since we are going to render the
-  //  // vectors as lines, configure the line symbolizer:
-  //  Style style;
+    LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
+    ls->stroke()->color() = Color::Yellow;
+    ls->stroke()->width() = 2.0f;
+    ls->tessellationSize()->set(100, Units::KILOMETERS);
 
-  //  LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
-  //  ls->stroke()->color() = Color::Yellow;
-  //  ls->stroke()->width() = 2.0f;
-  //  ls->tessellationSize()->set(100, Units::KILOMETERS);
+    //if (useDraping)
+    {
+        AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
+        alt->clamping() = alt->CLAMP_TO_TERRAIN;
+        alt->technique() = alt->TECHNIQUE_DRAPE;
+    }
 
-  //  //if (useDraping)
-  //  {
-  //      AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
-  //      alt->clamping() = alt->CLAMP_TO_TERRAIN;
-  //      alt->technique() = alt->TECHNIQUE_DRAPE;
-  //  }
+  
+    {
+        FeatureImageLayer* layer = new FeatureImageLayer();
+        layer->setFeatureSource(features);
+        StyleSheet* sheet = new StyleSheet();
+        sheet->addStyle(style);
+        layer->setStyleSheet(sheet);
 
-  //
-  //  {
-  //      FeatureImageLayer* layer = new FeatureImageLayer();
-  //      layer->setFeatureSource(features);
-  //      StyleSheet* sheet = new StyleSheet();
-  //      sheet->addStyle(style);
-  //      layer->setStyleSheet(sheet);
+        sName = tr("图片");
+        layer->setName(sName.toStdString());
+        //map->addLayer(layer);
+    }
 
-  //      sName = tr("图片");
-  //      layer->setName(sName.toStdString());
-  //      map->addLayer(layer);
-  //  }
+    //if (useLabels && !useRaster)
+    {
+        // set up symbology for drawing labels. We're pulling the label
+        // text from the name attribute, and its draw priority from the
+        // population attribute.
+        Style labelStyle;
 
-  //  //if (useLabels && !useRaster)
-  //  {
-  //      // set up symbology for drawing labels. We're pulling the label
-  //      // text from the name attribute, and its draw priority from the
-  //      // population attribute.
-  //      Style labelStyle;
+        TextSymbol* text = labelStyle.getOrCreateSymbol<TextSymbol>();
+        text->content() = StringExpression("[name]");
+        text->priority() = NumericExpression("[pop]");
+        text->size() = 16.0f;
+        text->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
+        text->fill()->color() = Color::White;
+        text->halo()->color() = Color::DarkGray;
 
-  //      TextSymbol* text = labelStyle.getOrCreateSymbol<TextSymbol>();
-  //      text->content() = StringExpression("[name]");
-  //      text->priority() = NumericExpression("[pop]");
-  //      text->size() = 16.0f;
-  //      text->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
-  //      text->fill()->color() = Color::White;
-  //      text->halo()->color() = Color::DarkGray;
+        StyleSheet* sheet = new StyleSheet();
+        sheet->addStyle(labelStyle);
 
-  //      StyleSheet* sheet = new StyleSheet();
-  //      sheet->addStyle(labelStyle);
+        // and configure a model layer:
+        FeatureModelLayer* fml = new FeatureModelLayer();
+        fml->setName("Labels");
+        fml->setFeatureSource(features);
+        fml->setStyleSheet(sheet);
+        map->addLayer(fml);
+    }
 
-  //      // and configure a model layer:
-  //      FeatureModelLayer* fml = new FeatureModelLayer();
-  //      fml->setName("Labels");
-  //      fml->setFeatureSource(features);
-  //      fml->setStyleSheet(sheet);
-  //      map->addLayer(fml);
-  //  }
-
-  //  LayerVector layers;
-  //  map->getLayers(layers);
-  //  for (LayerVector::const_iterator i = layers.begin(); i != layers.end(); ++i)
-  //  {
-  //      Layer* layer = i->get();
-  //      if (layer->getStatus().isError() &&
-  //          layer->getEnabled())
-  //      {
-  //          OE_WARN << layer->getName() << " : " << layer->getStatus().toString() << std::endl;
-  //      }
-  //  }
+    //LayerVector layers;
+    //map->getLayers(layers);
+    //for (LayerVector::const_iterator i = layers.begin(); i != layers.end(); ++i)
+    //{
+    //    Layer* layer = i->get();
+    //    if (layer->getStatus().isError() &&
+    //        layer->getEnabled())
+    //    {
+    //        OE_WARN << layer->getName() << " : " << layer->getStatus().toString() << std::endl;
+    //    }
+    //}
 }
 
 
@@ -206,8 +216,9 @@ void CMainWindow::TestMulitView()
     
     //临时创建一个地图
     earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
-    earth::CMapManager::GetInstance().AddMap(pMap);
     AddVector(pMap);
+    earth::CMapManager::GetInstance().AddMap(pMap);
+    
     earth::CMapNode* node = new earth::CMapNode(pMap);
    // m_pData->addChild(node);
     {
@@ -269,6 +280,7 @@ void CMainWindow::CreateFilePage(RibbonPage* pPage)
     connect(pAction, SIGNAL(triggered()), this, SLOT(CreateScence()));
 
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("数据"), Qt::ToolButtonTextUnderIcon);
+    connect(pAction, SIGNAL(triggered()), this, SLOT(LoadData()));
     toolBar->addSeparator();
     pAction = toolBar->addAction(QIcon(QStringLiteral("./res/ui/EarthViewer/NewFile.png")), tr("标注"), Qt::ToolButtonTextUnderIcon);
     group->addControl(toolBar);
@@ -340,6 +352,15 @@ void CMainWindow::CreateViewPage(RibbonPage* pPage)
 }
 
 
+void CMainWindow::Create3DView()
+{
+    earth::CMapNode* node = new earth::CMapNode(CActiveData::m_pActiveMap);
+
+    CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
+    pSubWindow->setWindowTitle(QString::fromStdString(CActiveData::m_pActiveMap->getMapName()));
+    pSubWindow->show();
+}
+
 void CMainWindow::CreateOptions()
 {
    
@@ -348,17 +369,14 @@ void CMainWindow::CreateOptions()
 void CMainWindow::CreateScence()
 {
     //临时创建一个地图
-    /*earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
-    AddVector(pMap);
-    earth::CMapNode* node = new earth::CMapNode(pMap);
-    m_pData->addChild(node);
-    {
-        CMdiSubWindow* pSubWindow = m_pMidArea->CreateMapWindow(node);
-        pSubWindow->setWindowTitle(QString::fromStdString(pMap->getMapName()));
-        pSubWindow->show();
-    }*/
+    CActiveData::m_pActiveMap =  earth::CMapManager::GetInstance().CreateMap();
+    GDALImageLayer* basemap = new GDALImageLayer();
+    basemap->setURL("D:/data/osgEarth/data/world.tif");
+    QString sName = tr("底图");
+    basemap->setName(std::string(sName.toLocal8Bit()));
+    CActiveData::m_pActiveMap->addLayer(basemap);
 
-   
+    Create3DView();
 }
 
 void CMainWindow::OpenScence()
@@ -367,7 +385,64 @@ void CMainWindow::OpenScence()
 }
 
 
-void CMainWindow::CreateEmptyPage(RibbonPage* pPage)
+void CMainWindow::LoadData()
 {
 
+    if (CActiveData::m_pActiveMap == nullptr)
+    {
+        QMessageBox::information(nullptr, _sWaring, "请选择活动场景！");
+        return;
+    }
+    QFileDialog dlg;
+    dlg.setNameFilter("osg file(*.osg *.osgt);;vector data(*.shp);; Raster Data(*.tiff) ;; ALL File (*.*)");
+    dlg.setWindowTitle(tr("加载数据"));
+    if (dlg.exec() == QFileDialog::Accepted)
+    {
+        QStringList fileList = dlg.selectedFiles();
+
+      if (dlg.selectedNameFilter()== "vector data(*.shp)")
+      { 
+          for (auto file : fileList)
+          {
+              OGRFeatureSource* features = new OGRFeatureSource();
+              features->setURL(std::string(file.toLocal8Bit()));
+              //CActiveData::m_pActiveMap->addLayer(features);
+              QFileInfo fileInfo(file);
+             
+              FeatureImageLayer* layer = new FeatureImageLayer();
+              layer->setName(std::string(fileInfo.baseName().toLocal8Bit()));
+              layer->setFeatureSource(features);
+
+              StyleSheet* sheet = new StyleSheet();
+
+              Style style;
+              //线符号
+              LineSymbol* ls = style.getOrCreateSymbol<LineSymbol>();
+              ls->stroke()->color() = Color::Yellow;
+              ls->stroke()->width() = 3.0f;
+              ls->tessellationSize()->set(100, Units::KILOMETERS);
+              //面符号
+              osgEarth::PolygonSymbol *polygonSymbol = style.getOrCreateSymbol<osgEarth::PolygonSymbol>();
+              polygonSymbol->fill()->color() = osgEarth::Color(152.0f / 255, 251.0f / 255, 152.0f / 255, 0.8f); //238 230 133
+              polygonSymbol->outline() = true;
+             
+              //贴地方式
+              AltitudeSymbol* alt = style.getOrCreate<AltitudeSymbol>();
+              alt->clamping() = alt->CLAMP_TO_TERRAIN;
+              alt->technique() = alt->TECHNIQUE_DRAPE;
+
+              sheet->addStyle(style);
+              layer->setStyleSheet(sheet);
+
+              CActiveData::m_pActiveMap->addLayer(layer);
+          }
+      }
+
+
+       
+    }
+}
+
+void CMainWindow::CreateEmptyPage(RibbonPage* pPage)
+{
 }

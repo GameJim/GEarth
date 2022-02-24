@@ -1,18 +1,28 @@
 ﻿#include "EarthCore/mapManager.h"
+#include <assert.h>
 namespace earth
 {
+    CMapManager::~CMapManager()
+    {
 
-    earth::CRefPtr<earth::CMap> CMapManager::CreateMap()
+    }
+
+   CRefPtr<earth::CMap> CMapManager::CreateMap()
     {
         earth::CRefPtr<earth::CMap> pMap = new earth::CMap();
         m_pMaps.push_back(pMap);
-      
-        NotifyCallback(CMapManagerCallback::EnCallbackType::MAP_ADDED, pMap, m_pMaps.size() - 1);
+
+        for (auto& callback : m_pCallback)
+        {
+            callback->onModelChanged(CMapManagerCallback::CMapManagerModel(CMapManagerCallback::CMapManagerModel::ADD_CHILD, pMap, -1, m_pMaps.size()));
+        }
+       
         return pMap;
     }
 
     void CMapManager::AddCallBack(earth::CRefPtr<CMapManagerCallback> callBack)
     {
+        assert(callBack != nullptr);
         m_pCallback.push_back(callBack);
     }
 
@@ -29,7 +39,6 @@ namespace earth
             {
                 i++;
             }
-            
         }
     }
 
@@ -37,26 +46,16 @@ namespace earth
     {
        m_pMaps.push_back(pMap);
 
-        NotifyCallback(CMapManagerCallback::EnCallbackType::MAP_ADDED, pMap, m_pMaps.size() - 1);
+        for (auto& callback: m_pCallback)
+        {
+            callback->onModelChanged(CMapManagerCallback::CMapManagerModel(CMapManagerCallback::CMapManagerModel::ADD_CHILD, pMap, -1, m_pMaps.size()));
+        }
     }
 
     void CMapManager::RemoveMap(earth::CRefPtr<CMap> pMap)
     {
-        int index = 0;
-        for (auto map : m_pMaps)
-        {
-            if (pMap == map)
-            {
-                NotifyCallback(CMapManagerCallback::EnCallbackType::MAP_REMOVE, pMap, index);
-            }
-            else
-            {
-                index++;
-            }
-           
-        }
-
-       
+        int index = findIndex(pMap);
+        RemoveMap(index);
     }
 
     void CMapManager::RemoveMap(const unsigned& index)
@@ -67,8 +66,23 @@ namespace earth
         auto pMap = m_pMaps[index];
         m_pMaps.erase(m_pMaps.begin() + index);
 
-        NotifyCallback(CMapManagerCallback::EnCallbackType::MAP_REMOVE, pMap, index);
+        for (auto& callback : m_pCallback)
+        {
+            callback->onModelChanged(CMapManagerCallback::CMapManagerModel(CMapManagerCallback::CMapManagerModel::REMOVE_CHILD, pMap, index, -1));
+        }
      
+    }
+
+    int CMapManager::findIndex(earth::CRefPtr<CMap> pMap)
+    {
+        for (int i = 0;i < m_pMaps.size();++i)
+        {
+            if (m_pMaps[i] == pMap)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     unsigned CMapManager::GetMapNum() const
@@ -84,16 +98,6 @@ namespace earth
         return m_pMaps[index];
     }
 
-    void CMapManager::NotifyCallback(const CMapManagerCallback::EnCallbackType& eType, earth::CRefPtr<CMap> pMap, const unsigned& index)
-    {
-        for (auto callback : m_pCallback)
-        {
-            if (callback)
-                callback->Callback(eType, pMap, index);
-            
-        }
-
-    }
 
 }
 

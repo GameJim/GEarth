@@ -7,36 +7,28 @@
 #include "common/factory.h"
 #include "EarthCore/map.h"
 #include "EarthCore/type.h"
+#include "EarthCore/template.h"
 namespace earth
 {
-    //用于记录Map的回调信息
-    class CORE_PUBLIC CMapManagerCallback : public osg::Referenced
+    
+ 
+
+    class CORE_PUBLIC CMapManagerCallback : public CVecCallback<CMap>
     {
     public:
-        enum EnCallbackType
-        {
-            MAP_ADDED = 0,
-            MAP_REMOVE
-        };
-
-        virtual void Callback(const CMapManagerCallback::EnCallbackType& eType, earth::CRefPtr<CMap>, const unsigned& index) {};
+        using CMapManagerModel = CVecModelChange<CMap>;
 
         CMapManagerCallback() = default;
         virtual ~CMapManagerCallback() = default;
-       
-        /*   CMapManagerCallback(const EnCallbackType& eCallback) :m_eCallback(eCallback){};
-           EnCallbackType GetCallbackType(){ return m_eCallback; };
-       protected:
-           EnCallbackType m_eCallback;*/
     };
-
+    
 
     class CORE_PUBLIC CMapManager : public common::CFactory<CMapManager>
     {
     public:
         CMapManager() = default;
        
-        ~CMapManager() = default;
+        ~CMapManager();
         earth::CRefPtr<CMap>  CreateMap();
 
         void AddCallBack(earth::CRefPtr<CMapManagerCallback> callBack);
@@ -46,13 +38,12 @@ namespace earth
         void RemoveMap(earth::CRefPtr<CMap> pMap);
         void RemoveMap(const unsigned& index);
 
+        int findIndex(earth::CRefPtr<CMap> pMap);
         unsigned GetMapNum() const;
         earth::CRefPtr<CMap> GetMap(const unsigned& index);
-    protected:
-        void NotifyCallback(const CMapManagerCallback::EnCallbackType& eType, earth::CRefPtr<CMap>, const unsigned& index);
+
     protected:
         std::vector<earth::CRefPtr<CMap>> m_pMaps;   //地图数据
-
         std::vector<earth::CRefPtr<CMapManagerCallback>>  m_pCallback;
     };
 }

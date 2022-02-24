@@ -9,6 +9,15 @@ using namespace Qtitan;
 #include "EarthCore/mapManager.h"
 #include "EarthCore/map.h"
 #include "EarthCore/type.h"
+
+class CActiveData
+{
+public:
+    static earth::CRefPtr<earth::CMap> m_pActiveMap;
+    static earth::CRefPtr<earth::CMap> m_pActiveLayer;
+};
+
+
 class CMainWindow : public RibbonMainWindow {
 	Q_OBJECT
 
@@ -23,6 +32,7 @@ protected:
 	void CreateFilePage(RibbonPage* pPage);
 	void CreateViewPage(RibbonPage* pPage);
     
+    void Create3DView();
 
     //用于测试的案例
     void CreateTestPage(RibbonPage* pPage);
@@ -31,10 +41,14 @@ protected:
 	void CreateOptions();
 
 	protected slots:
-	//新建符号库
+	//新建场景
 	void CreateScence();
-	//打开符号库
+	//打开一个地图场景
 	void OpenScence();
+
+    //加载某个数据
+    void LoadData();
+
 
     void CreateEmptyPage(RibbonPage* pPage);
 
