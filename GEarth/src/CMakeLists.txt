@@ -1,0 +1,2 @@
+﻿ADD_SUBDIRECTORY(util)
+set_property(TARGET util PROPERTY FOLDER core)

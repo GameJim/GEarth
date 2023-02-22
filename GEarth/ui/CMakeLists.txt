@@ -1,0 +1,2 @@
+﻿ADD_SUBDIRECTORY(GEarth)
+set_property(TARGET GEarth PROPERTY FOLDER ui)
