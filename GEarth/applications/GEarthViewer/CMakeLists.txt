@@ -29,6 +29,8 @@ find_package(Qtitan REQUIRED)
 INCLUDE_DIRECTORIES(${${ROOT_NAME}_SOURCE_DIR}/include
 	${Qt5Widgets_INCLUDE_DIRS}
 	${Qtitan_INCLUDE_DIR}
+	${osgEarth_INCLUDE_DIR}
+	${OSG_INCLUDE_DIR}
 )
 
 

@@ -9,7 +9,7 @@ MACRO(FIND_DEPENDENCY DEPNAME INCLUDEFILE LIBRARY_NAMES_BASE SEARCHPATHLIST DEBU
 
     SET(MY_PATH_INCLUDE )
     SET(MY_PATH_LIB )
-
+	
     FOREACH(MYPATH ${SEARCHPATHLIST})
         SET(MY_PATH_INCLUDE ${MY_PATH_INCLUDE} ${MYPATH}/include)
         SET(MY_PATH_LIB ${MY_PATH_LIB} ${MYPATH}/lib)
@@ -22,6 +22,28 @@ MACRO(FIND_DEPENDENCY DEPNAME INCLUDEFILE LIBRARY_NAMES_BASE SEARCHPATHLIST DEBU
     )
 	
     MARK_AS_ADVANCED("${DEPNAME}_INCLUDE_DIR")
+	
+	message("${DEPNAME}_INCLUDE_DIR")
+	
+	GET_FILENAME_COMPONENT(SECOND_FOLDER_ABSOLUTE ${${DEPNAME}_INCLUDE_DIR} DIRECTORY)
+	SET(${DEPNAME}_BIN_DIR "")
+	IF(EXISTS ${SECOND_FOLDER_ABSOLUTE}/bin)
+		set(${DEPNAME}_BIN_DIR ${SECOND_FOLDER_ABSOLUTE}/bin CACHE PATH "Location of 3rdparty dependencies")
+	ENDIF()
+	MARK_AS_ADVANCED(${DEPNAME}_BIN_DIR)
+
+	
+	# message(${${DEPNAME}_INCLUDE_DIR}/../)
+	# find_path(${DEPNAME}_BIN_DIR bin
+      # ${${DEPNAME}_INCLUDE_DIR}/..
+      # no_default_path
+    # )
+	# IF(${DEPNAME}_BIN_DIR)
+		# MESSAGE(${${DEPNAME}_BIN_DIR})
+		# SET(${DEPNAME}_BIN_DIR ${DEPNAME}_BIN_DIR/lib)
+		# MARK_AS_ADVANCED("${DEPNAME}_BIN_DIR")
+	# ENDIF()
+	
     #MESSAGE( " ${DEPNAME}_INCLUDE_DIR --> ${${DEPNAME}_INCLUDE_DIR}<--")
     SET(LIBRARY_NAMES "")
     FOREACH(LIBNAME ${LIBRARY_NAMES_BASE})
@@ -42,6 +64,7 @@ MACRO(FIND_DEPENDENCY DEPNAME INCLUDEFILE LIBRARY_NAMES_BASE SEARCHPATHLIST DEBU
       NO_DEFAULT_PATH
     )
     MARK_AS_ADVANCED("${DEPNAME}_LIBRARY")
+
     #MESSAGE( " ${DEPNAME}_LIBRARY --> ${${DEPNAME}_LIBRARY}<--")
     SET( ${DEPNAME}_FOUND "NO" )
     IF(${DEPNAME}_INCLUDE_DIR AND ${DEPNAME}_LIBRARY)
@@ -65,44 +88,46 @@ ENDMACRO(FIND_DEPENDENCY DEPNAME INCLUDEFILE LIBRARY_NAMES_BASE SEARCHPATHLIST D
 ################################################################################################
 
 MACRO(SEARCH_3RDPARTY GEARTH_3RDPARTY_BIN)
-        FIND_DEPENDENCY(TIFF tiff.h "libtiff;tiff" ${GEARTH_3RDPARTY_BIN} "D" "")
-        FIND_DEPENDENCY(FREETYPE ft2build.h "freetype;freetype2311MT;freetype234;freetype234MT;freetype235;freetype237;freetype238;freetype244;freetype250;freetype27;freetype271;" ${GEARTH_3RDPARTY_BIN} "d" "")
-        IF(FREETYPE_FOUND)
-            #forcing subsequent FindFreeType stuff to not search for other variables.... kind of a hack
-            SET(FREETYPE_INCLUDE_DIR_ft2build ${FREETYPE_INCLUDE_DIR} CACHE PATH "" FORCE)
-            SET(FREETYPE_INCLUDE_DIR_freetype2 ${FREETYPE_INCLUDE_DIR} CACHE PATH "" FORCE)
-            MARK_AS_ADVANCED(FREETYPE_INCLUDE_DIR_ft2build FREETYPE_INCLUDE_DIR_freetype2)
-            SET(FREETYPE_INCLUDE_DIRS "${FREETYPE_INCLUDE_DIR_ft2build};${FREETYPE_INCLUDE_DIR_freetype2}")
-        ENDIF(FREETYPE_FOUND)
-        FIND_DEPENDENCY(CURL curl/curl.h "libcurl;curllib;libcurl_imp" ${GEARTH_3RDPARTY_BIN} "D" "")
-        FIND_DEPENDENCY(JPEG jpeglib.h "libjpeg;jpeg" ${GEARTH_3RDPARTY_BIN} "D" "")
-        FIND_DEPENDENCY(GDAL gdal.h "gdal;gdal16" ${GEARTH_3RDPARTY_BIN} "d" "_i")
 		FIND_DEPENDENCY(Qtitan QtnRibbonDef.h "qtnribbon4;qtnribbon" ${GEARTH_3RDPARTY_BIN}/Qtitan "d4" "")
 		FIND_DEPENDENCY(osgEarth osgEarth/Version "osgEarth" ${GEARTH_3RDPARTY_BIN}/osgEarth "d" "")
-        FIND_DEPENDENCY(GLUT GL/glut.h glut32 ${GEARTH_3RDPARTY_BIN} "D" "")
-        IF(GLUT_FOUND)
-            #forcing subsequent FindGlut stuff to not search for other variables.... kind of a hack
-            SET(GLUT_glut_LIBRARY ${GLUT_LIBRARY} CACHE FILEPATH "")
-            MARK_AS_ADVANCED(GLUT_glut_LIBRARY)
-        ENDIF(GLUT_FOUND)
-        FIND_DEPENDENCY(GIFLIB gif_lib.h "ungif;libungif;giflib" ${GEARTH_3RDPARTY_BIN} "D" "")
-        FIND_DEPENDENCY(ZLIB zlib.h "z;zlib;zlib1" ${GEARTH_3RDPARTY_BIN} "D" "")
-        IF(ZLIB_FOUND)
-            FIND_DEPENDENCY(PNG png.h "libpng;libpng13;libpng15;libpng16" ${GEARTH_3RDPARTY_BIN} "D" "")
-            IF(PNG_FOUND)
-                #forcing subsequent FindPNG stuff to not search for other variables.... kind of a hack
-                SET(PNG_PNG_INCLUDE_DIR ${PNG_INCLUDE_DIR} CACHE FILEPATH "")
-                MARK_AS_ADVANCED(PNG_PNG_INCLUDE_DIR)
-            ENDIF(PNG_FOUND)
-        ENDIF(ZLIB_FOUND)
+		
+        # FIND_DEPENDENCY(TIFF tiff.h "libtiff;tiff" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # FIND_DEPENDENCY(FREETYPE ft2build.h "freetype;freetype2311MT;freetype234;freetype234MT;freetype235;freetype237;freetype238;freetype244;freetype250;freetype27;freetype271;" ${GEARTH_3RDPARTY_BIN} "d" "")
+        # IF(FREETYPE_FOUND)
+            # #forcing subsequent FindFreeType stuff to not search for other variables.... kind of a hack
+            # SET(FREETYPE_INCLUDE_DIR_ft2build ${FREETYPE_INCLUDE_DIR} CACHE PATH "" FORCE)
+            # SET(FREETYPE_INCLUDE_DIR_freetype2 ${FREETYPE_INCLUDE_DIR} CACHE PATH "" FORCE)
+            # MARK_AS_ADVANCED(FREETYPE_INCLUDE_DIR_ft2build FREETYPE_INCLUDE_DIR_freetype2)
+            # SET(FREETYPE_INCLUDE_DIRS "${FREETYPE_INCLUDE_DIR_ft2build};${FREETYPE_INCLUDE_DIR_freetype2}")
+        # ENDIF(FREETYPE_FOUND)
+        # FIND_DEPENDENCY(CURL curl/curl.h "libcurl;curllib;libcurl_imp" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # FIND_DEPENDENCY(JPEG jpeglib.h "libjpeg;jpeg" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # FIND_DEPENDENCY(GDAL gdal.h "gdal;gdal16" ${GEARTH_3RDPARTY_BIN} "d" "_i")
+		
+        # FIND_DEPENDENCY(GLUT GL/glut.h glut32 ${GEARTH_3RDPARTY_BIN} "D" "")
+        # IF(GLUT_FOUND)
+            # #forcing subsequent FindGlut stuff to not search for other variables.... kind of a hack
+            # SET(GLUT_glut_LIBRARY ${GLUT_LIBRARY} CACHE FILEPATH "")
+            # MARK_AS_ADVANCED(GLUT_glut_LIBRARY)
+        # ENDIF(GLUT_FOUND)
+        # FIND_DEPENDENCY(GIFLIB gif_lib.h "ungif;libungif;giflib" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # FIND_DEPENDENCY(ZLIB zlib.h "z;zlib;zlib1" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # IF(ZLIB_FOUND)
+            # FIND_DEPENDENCY(PNG png.h "libpng;libpng13;libpng15;libpng16" ${GEARTH_3RDPARTY_BIN} "D" "")
+            # IF(PNG_FOUND)
+                # #forcing subsequent FindPNG stuff to not search for other variables.... kind of a hack
+                # SET(PNG_PNG_INCLUDE_DIR ${PNG_INCLUDE_DIR} CACHE FILEPATH "")
+                # MARK_AS_ADVANCED(PNG_PNG_INCLUDE_DIR)
+            # ENDIF(PNG_FOUND)
+        # ENDIF(ZLIB_FOUND)
         
-        # CMakes default module to find libxml2 will not find the in
-        FIND_DEPENDENCY(LIBXML2 libxml/xpath.h "libxml2" ${GEARTH_3RDPARTY_BIN} "D" "")
-        IF(LIBXML2_FOUND)
-            # The CMAKE find libxml module uses LIBXML2_LIBRARIES -> fill it.... kind of a hack
-            SET(LIBXML2_LIBRARIES ${LIBXML2_LIBRARY} CACHE FILEPATH "LibXML2 library for collada" FORCE)
-        #    SET(LIBXML2_XMLLINT_EXECUTABLE ${GEARTH_3RDPARTY_BIN}/bin/xmllint.exe CACHE FILEPATH "Path to xmllint executable" FORCE)
-        ENDIF(LIBXML2_FOUND)
+        # # CMakes default module to find libxml2 will not find the in
+        # FIND_DEPENDENCY(LIBXML2 libxml/xpath.h "libxml2" ${GEARTH_3RDPARTY_BIN} "D" "")
+        # IF(LIBXML2_FOUND)
+            # # The CMAKE find libxml module uses LIBXML2_LIBRARIES -> fill it.... kind of a hack
+            # SET(LIBXML2_LIBRARIES ${LIBXML2_LIBRARY} CACHE FILEPATH "LibXML2 library for collada" FORCE)
+        # #    SET(LIBXML2_XMLLINT_EXECUTABLE ${GEARTH_3RDPARTY_BIN}/bin/xmllint.exe CACHE FILEPATH "Path to xmllint executable" FORCE)
+        # ENDIF(LIBXML2_FOUND)
         #FIND_DEPENDENCY(DEPNAME INCLUDEFILE LIBRARY_NAMES_BASE SEARCHPATHLIST DEBUGSUFFIX EXSUFFIX)
         #FIND_Package(NVTT)
 #luigi#INCLUDE(FindOSGDepends.cmake)

@@ -1,14 +1,15 @@
 ﻿
 #include <QtWidgets/QApplication>
 #include <QStyleFactory>
-#include "GEarth/mainwindow.h"
+#include "GEarth/CMainWindow.h"
 
 #include <iostream>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-	a.setStyle(new RibbonStyle());
-    CMainWindow w;
-    w.show();
+	ui::CMainWindow* pMainWindow = new ui::CMainWindow();
+	a.setStyle(new RibbonStyle(pMainWindow));
+   
+	pMainWindow->show();
     return a.exec();
 }

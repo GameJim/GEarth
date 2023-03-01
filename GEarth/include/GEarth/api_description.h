@@ -1,12 +1,12 @@
 ﻿#pragma once
 
 #ifdef GEarth_EXPORTS
-#ifndef PUBLIC_API
-#define PUBLIC_API __declspec(dllexport)
+#ifndef EARTH_API
+#define EARTH_API __declspec(dllexport)
 #endif
 #else
-#ifndef PUBLIC_API
-#define PUBLIC_API __declspec(dllimport)
+#ifndef EARTH_API
+#define EARTH_API __declspec(dllimport)
 #endif
 #endif
 

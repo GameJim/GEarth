@@ -26,6 +26,11 @@ giflib/5.2.1
 libjpeg/9d
 libgeotiff/1.7.1
 
+libconfig/1.7.2
+libiconv/1.16
+
+pthreads4w/3.0.0
+
 [options]
 gdal:with_geos=True
 
@@ -57,6 +62,8 @@ zlib:shared=True
 
 glib:shared=True
 libbasisu:use_sse4=True
+
+libconfig:shared=True
 [generators]
 visual_studio
 cmake
