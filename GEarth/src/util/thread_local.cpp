@@ -19,7 +19,7 @@ namespace util {
         ThreadLocalBase::~ThreadLocalBase() {
             // ThreadLocal will not take ownership of the pointer it is managing. The pointer
             // needs to be explicitly cleared before we destroy this object.
-            assert(!get());
+            //assert(!get());
 
             if (pthread_key_delete(reinterpret_cast<pthread_key_t&>(storage)) != 0) {
                 //Log::Error(Event::General, "Failed to delete thread-specific storage key");

@@ -39,6 +39,8 @@ namespace util {
 
         static void maybeReceive(const std::weak_ptr<Mailbox>&);
         static std::function<void()> makeClosure(std::weak_ptr<Mailbox>);
+
+		bool hasMessage();
     private:
         std::weak_ptr<Scheduler> weakScheduler;
 

@@ -164,7 +164,7 @@ namespace ui
 		OGRFeatureSource* features = new OGRFeatureSource();
 		features->setName("vector-data");
 
-		bool useRaster = false;
+		bool useRaster = true;
 		bool useMem = false;
 		bool useLabels = false;
 		bool useDraping = false;

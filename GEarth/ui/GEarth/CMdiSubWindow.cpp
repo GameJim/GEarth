@@ -8,6 +8,8 @@
 #include "osgViewer/ViewerEventHandlers"
 #include "osgEarth/EarthManipulator"
 #include "osgEarth/MapNode"
+#include <osgEarth/Ephemeris>
+#include <osgEarth/Sky>
 namespace ui
 {
 
@@ -35,10 +37,11 @@ namespace ui
 		traits->y = rect.top;
 		traits->width = rect.right - rect.left;
 		traits->height = rect.bottom - rect.top;
-		traits->windowDecoration = false;
+		traits->windowDecoration = true;
 		traits->doubleBuffer = true;
 		traits->sharedContext = 0;
 		traits->inheritedWindowData = windata;
+		traits->vsync = false;
 
 		//显示设置
 		osg::DisplaySettings* ds = osg::DisplaySettings::instance().get();
@@ -46,7 +49,7 @@ namespace ui
 		traits->stencil = ds->getMinimumNumStencilBits();
 		traits->sampleBuffers = ds->getMultiSamples();
 		traits->samples = ds->getNumMultiSamples();
-		traits->vsync = true;
+		
 
 		osg::GraphicsContext* gc = osg::GraphicsContext::createGraphicsContext(traits);
 
@@ -59,7 +62,39 @@ namespace ui
 		m_pView->setCamera(camera);
 
 
-		m_pView->setSceneData(pMapNode);
+		{
+			osgEarth::DateTime dateTime(2022, 7, 17, 20);		//格林尼治时间
+
+			osgEarth::Util::Ephemeris* ephemeris = new osgEarth::Util::Ephemeris;
+
+			osgEarth::Util::SkyOptions skyOptions;
+
+			osgEarth::Config conf = skyOptions.getConfig();
+			osgEarth::optional<osgEarth::URI> path;
+			path = "../data/moon_1024x512.jpg";
+			conf.set("moon_image", path);
+			skyOptions.merge(conf);
+			//skyOptions.ambient() = 0.4;//控制黑夜部分明暗程度，数值越小，越黑暗
+			//skyOptions.quality() = osgEarth::Util::SkyOptions::Quality::QUALITY_HIGH;//控制黑夜部分明暗程度，数值越小，越黑暗
+
+			osgEarth::Util::SkyNode* m_pSkyNode = osgEarth::Util::SkyNode::create(skyOptions);
+		
+			/*m_pSkyNode->setStarsVisible(true);
+			m_pSkyNode->setAtmosphereVisible(true);
+			m_pSkyNode->setSunVisible(true);
+			m_pSkyNode->setMoonVisible(true);*/
+
+
+			m_pSkyNode->setName("SkyNode");
+			m_pSkyNode->setEphemeris(ephemeris);
+			m_pSkyNode->setDateTime(dateTime);
+			m_pSkyNode->attach(m_pView,0);
+			m_pSkyNode->setLighting(false);
+			m_pSkyNode->addChild(pMapNode);
+
+			m_pView->setSceneData(m_pSkyNode);
+		}
+		
 
 		//设置操作器
 		m_pView->setCameraManipulator(new osgEarth::EarthManipulator());
@@ -68,7 +103,10 @@ namespace ui
 
 	CMdiSubWindow::~CMdiSubWindow()
 	{
-
+		if (dynamic_cast<CMdiArea*>(mdiArea()))
+		{
+			static_cast<CMdiArea*>(mdiArea())->destoryMdiSubWindow(this);
+		}
 	}
 
 	osg::ref_ptr<osgViewer::View> CMdiSubWindow::getView() const
@@ -106,7 +144,7 @@ namespace ui
 		//立即重新绘制一次
 		if (dynamic_cast<CMdiArea*>(m_pMdiSubWindow->mdiArea()))
 		{
-			static_cast<CMdiArea*>(m_pMdiSubWindow->mdiArea())->immediatelDraw();
+			//static_cast<CMdiArea*>(m_pMdiSubWindow->mdiArea())->immediatelDraw();
 		}
 		
 	}

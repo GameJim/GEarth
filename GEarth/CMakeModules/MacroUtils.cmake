@@ -1,86 +1,4 @@
 #######################################################################################################
-#  macro to detect osg version and setup variables accordingly
-#######################################################################################################
-MACRO(DETECT_OSG_VERSION)
-
-    # Fall back to OSG_DIR if OSG_INCLUDE_DIR is not defined
-    if(OSG_DIR AND NOT OSG_INCLUDE_DIR AND EXISTS "${OSG_DIR}/include/osg/Version")
-        set(OSG_INCLUDE_DIR "${OSG_DIR}/include")
-    endif()
-
-    OPTION(APPEND_OPENSCENEGRAPH_VERSION "Append the OSG version number to the osgPlugins directory" ON)
-
-    # Try to ascertain the version...
-    # (Taken from CMake's FindOpenSceneGraph.cmake)
-    if(OSG_INCLUDE_DIR)
-        if(OpenSceneGraph_DEBUG)
-            message(STATUS "[ FindOpenSceneGraph.cmake:${CMAKE_CURRENT_LIST_LINE} ] "
-                "Detected OSG_INCLUDE_DIR = ${OSG_INCLUDE_DIR}")
-        endif()
-
-        set(_osg_Version_file "${OSG_INCLUDE_DIR}/osg/Version")
-        if("${OSG_INCLUDE_DIR}" MATCHES "\\.framework$" AND NOT EXISTS "${_osg_Version_file}")
-            set(_osg_Version_file "${OSG_INCLUDE_DIR}/Headers/Version")
-        endif()
-
-        if(EXISTS "${_osg_Version_file}")
-          file(STRINGS "${_osg_Version_file}" _osg_Version_contents
-               REGEX "#define (OSG_VERSION_[A-Z]+|OPENSCENEGRAPH_[A-Z]+_VERSION)[ \t]+[0-9]+")
-        else()
-          set(_osg_Version_contents "unknown")
-        endif()
-
-        string(REGEX MATCH ".*#define OSG_VERSION_MAJOR[ \t]+[0-9]+.*"
-            _osg_old_defines "${_osg_Version_contents}")
-        string(REGEX MATCH ".*#define OPENSCENEGRAPH_MAJOR_VERSION[ \t]+[0-9]+.*"
-            _osg_new_defines "${_osg_Version_contents}")
-        if(_osg_old_defines)
-            string(REGEX REPLACE ".*#define OSG_VERSION_MAJOR[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_MAJOR ${_osg_Version_contents})
-            string(REGEX REPLACE ".*#define OSG_VERSION_MINOR[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_MINOR ${_osg_Version_contents})
-            string(REGEX REPLACE ".*#define OSG_VERSION_PATCH[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_PATCH ${_osg_Version_contents})
-        elseif(_osg_new_defines)
-            string(REGEX REPLACE ".*#define OPENSCENEGRAPH_MAJOR_VERSION[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_MAJOR ${_osg_Version_contents})
-            string(REGEX REPLACE ".*#define OPENSCENEGRAPH_MINOR_VERSION[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_MINOR ${_osg_Version_contents})
-            string(REGEX REPLACE ".*#define OPENSCENEGRAPH_PATCH_VERSION[ \t]+([0-9]+).*"
-                "\\1" _osg_VERSION_PATCH ${_osg_Version_contents})
-        else()
-            message(WARNING "[ FindOpenSceneGraph.cmake:${CMAKE_CURRENT_LIST_LINE} ] "
-                "Failed to parse version number, please report this as a bug")
-        endif()
-        unset(_osg_Version_contents)
-
-        set(OPENSCENEGRAPH_VERSION "${_osg_VERSION_MAJOR}.${_osg_VERSION_MINOR}.${_osg_VERSION_PATCH}"
-                                    CACHE INTERNAL "The version of OSG which was detected")
-        if(OpenSceneGraph_DEBUG)
-            message(STATUS "[ FindOpenSceneGraph.cmake:${CMAKE_CURRENT_LIST_LINE} ] "
-                "Detected version ${OPENSCENEGRAPH_VERSION}")
-        endif()
-    endif()
-
-	MARK_AS_ADVANCED(OPENSCENEGRAPH_VERSION)
-
-
-    IF (APPEND_OPENSCENEGRAPH_VERSION AND OPENSCENEGRAPH_VERSION)
-        SET(OSG_PLUGINS "osgPlugins-${OPENSCENEGRAPH_VERSION}"  CACHE STRING "" FORCE)
-        #MESSAGE(STATUS "Plugins will be installed under osgPlugins-${OPENSCENEGRAPH_VERSION} directory.")
-	else (APPEND_OPENSCENEGRAPH_VERSION AND OPENSCENEGRAPH_VERSION)
-		SET(OSG_PLUGINS  CACHE STRING "" FORCE)
-    ENDIF(APPEND_OPENSCENEGRAPH_VERSION AND OPENSCENEGRAPH_VERSION)
-
-	MARK_AS_ADVANCED(OSG_PLUGINS)
-
-	#MESSAGE("OSG_PLUGINS=${OSG_PLUGINS}")
-
-ENDMACRO(DETECT_OSG_VERSION)
-
-
-
-#######################################################################################################
 #  macro for linking libraries that come from Findxxxx commands, so there is a variable that contains the
 #  full path of the library name. in order to differentiate release and debug, this macro get the
 #  NAME of the variables, so the macro gets as arguments the target name and the following list of parameters
@@ -178,10 +96,103 @@ MACRO(SETUP_LINK_LIBRARIES)
     ENDFOREACH(LINKLIB)
 ENDMACRO(SETUP_LINK_LIBRARIES)
 
+
+
+
+
+MACRO(SETUP_LIBRARY LIB_NAME)
+    IF(GLCORE_FOUND)
+        INCLUDE_DIRECTORIES( ${GLCORE_INCLUDE_DIR} )
+    ENDIF()
+
+        SET(TARGET_NAME ${LIB_NAME} )
+        SET(TARGET_TARGETNAME ${LIB_NAME} )
+        ADD_LIBRARY(${LIB_NAME}
+            ${${ROOT_NAME}_DYNAMIC_OR_STATIC}
+            ${TARGET_H}
+            ${TARGET_H_NO_MODULE_INSTALL}
+            ${TARGET_SRC}
+        )
+        SET_TARGET_PROPERTIES(${LIB_NAME} PROPERTIES FOLDER "OSG Core")
+        IF(APPLE)
+            IF(OSG_BUILD_PLATFORM_IPHONE)
+                SET_TARGET_PROPERTIES(${LIB_NAME} PROPERTIES XCODE_ATTRIBUTE_ENABLE_BITCODE ${IPHONE_ENABLE_BITCODE})
+            ENDIF()
+            SET_TARGET_PROPERTIES(${LIB_NAME} PROPERTIES XCODE_ATTRIBUTE_WARNING_CFLAGS "")
+        ENDIF()
+        IF(TARGET_LABEL)
+            SET_TARGET_PROPERTIES(${TARGET_TARGETNAME} PROPERTIES PROJECT_LABEL "${TARGET_LABEL}")
+        ENDIF(TARGET_LABEL)
+
+        IF(TARGET_LIBRARIES)
+            LINK_INTERNAL(${LIB_NAME} ${TARGET_LIBRARIES})
+        ENDIF()
+        IF(TARGET_EXTERNAL_LIBRARIES)
+            LINK_EXTERNAL(${LIB_NAME} ${TARGET_EXTERNAL_LIBRARIES})
+        ENDIF()
+        IF(TARGET_LIBRARIES_VARS)
+            LINK_WITH_VARIABLES(${LIB_NAME} ${TARGET_LIBRARIES_VARS})
+        ENDIF(TARGET_LIBRARIES_VARS)
+        LINK_CORELIB_DEFAULT(${LIB_NAME})
+
+    INCLUDE(ModuleInstall OPTIONAL)
+ENDMACRO(SETUP_LIBRARY LIB_NAME)
+
+
+MACRO(SETUP_UI_LIBRARY LIB_NAME)
+   
+        SET(TARGET_NAME ${LIB_NAME} )
+        SET(TARGET_TARGETNAME ${LIB_NAME} )
+		
+
+		#设置QT相关操作
+		set(CMAKE_AUTOMOC ON)
+		set(CMAKE_AUTOUIC ON)
+		set(CMAKE_AUTORCC ON)
+		QT5_WRAP_UI(FORMS_UIC ${TARGET_UI})
+		QT5_ADD_RESOURCES(RES_FILES RESOURCE_FILES)
+
+		#将ui文件和生成文件整理在一个文件夹中
+		SOURCE_GROUP("Form Files" FILES ${TARGET_UI})
+		#将qrc资源文件整理在一个文件夹中
+		SOURCE_GROUP("Resource Files" FILES ${TARGET_RESOURCE})
+
+		source_group("moc" FILES ${MOC_SRC})
+		
+        ADD_LIBRARY(${LIB_NAME}
+            ${${ROOT_NAME}_DYNAMIC_OR_STATIC}
+            ${TARGET_H}
+            ${TARGET_H_NO_MODULE_INSTALL}
+            ${TARGET_SRC}
+        )
+        SET_TARGET_PROPERTIES(${LIB_NAME} PROPERTIES FOLDER "ui")
+       
+        IF(TARGET_LABEL)
+            SET_TARGET_PROPERTIES(${TARGET_TARGETNAME} PROPERTIES PROJECT_LABEL "${TARGET_LABEL}")
+        ENDIF(TARGET_LABEL)
+
+        IF(TARGET_LIBRARIES)
+            LINK_INTERNAL(${LIB_NAME} ${TARGET_LIBRARIES})
+        ENDIF()
+		
+        IF(TARGET_EXTERNAL_LIBRARIES)
+            LINK_EXTERNAL(${LIB_NAME} ${TARGET_EXTERNAL_LIBRARIES})
+        ENDIF()
+        IF(TARGET_LIBRARIES_VARS)
+            LINK_WITH_VARIABLES(${LIB_NAME} ${TARGET_LIBRARIES_VARS})
+        ENDIF(TARGET_LIBRARIES_VARS)
+        LINK_CORELIB_DEFAULT(${LIB_NAME})
+
+    INCLUDE(ModuleInstall OPTIONAL)
+ENDMACRO(SETUP_UI_LIBRARY LIB_NAME)
+
+
+
+
 ############################################################################################
 # this is the common set of command for all the plugins
 
-
+#必须为dll 其是内核有定义，外部选择dll加载
 MACRO(SETUP_PLUGIN PLUGIN_NAME)
 
     SET(TARGET_NAME ${PLUGIN_NAME} )
@@ -189,10 +200,16 @@ MACRO(SETUP_PLUGIN PLUGIN_NAME)
     #MESSAGE("in -->SETUP_PLUGIN<-- ${TARGET_NAME}-->${TARGET_SRC} <--> ${TARGET_H}<--")
 
     SOURCE_GROUP( "Header Files"   FILES ${TARGET_H} )
-    SOURCE_GROUP( "Shader Files"   FILES ${TARGET_GLSL} )
+    SOURCE_GROUP( "Res Files"   FILES ${TARGET_RES} )
     SOURCe_GROUP( "Template Files" FILES ${TARGET_IN} )
 
     ## we have set up the target label and targetname by taking into account global prfix (osgdb_)
+	IF(NOT MSVC_IDE)
+		SET_TARGET_PROPERTIES(${TARGET_TARGETNAME} PROPERTIES PREFIX "../bin/${OSG_PLUGINS}/")
+	ELSE(NOT MSVC_IDE)
+		SET_TARGET_PROPERTIES(${TARGET_TARGETNAME} PROPERTIES PREFIX "../../bin/${OSG_PLUGINS}/" IMPORT_PREFIX "../")
+	ENDIF(NOT MSVC_IDE) 
+  
 
     IF(NOT TARGET_TARGETNAME)
             SET(TARGET_TARGETNAME "${TARGET_DEFAULT_PREFIX}${TARGET_NAME}")
@@ -201,13 +218,9 @@ MACRO(SETUP_PLUGIN PLUGIN_NAME)
             SET(TARGET_LABEL "${TARGET_DEFAULT_LABEL_PREFIX} ${TARGET_NAME}")
     ENDIF(NOT TARGET_LABEL)
 
-# here we use the command to generate the library
+	# here we use the command to generate the library
 
-    IF   (OSGEARTH_BUILD_SHARED_LIBS)
-        ADD_LIBRARY(${TARGET_TARGETNAME} MODULE ${TARGET_SRC} ${TARGET_H} ${TARGET_GLSL} ${TARGET_IN})
-    ELSE (OSGEARTH_BUILD_SHARED_LIBS)
-        ADD_LIBRARY(${TARGET_TARGETNAME} STATIC ${TARGET_SRC} ${TARGET_H} ${TARGET_GLSL} ${TARGET_IN})
-    ENDIF(OSGEARTH_BUILD_SHARED_LIBS)
+    ADD_LIBRARY(${TARGET_TARGETNAME} MODULE ${TARGET_SRC} ${TARGET_H} ${TARGET_GLSL} ${TARGET_IN})
 
     SET_TARGET_PROPERTIES(${TARGET_TARGETNAME} PROPERTIES PROJECT_LABEL "${TARGET_LABEL}")
 
@@ -220,9 +233,9 @@ MACRO(SETUP_PLUGIN PLUGIN_NAME)
 
 #the installation path are differentiated for win32 that install in bib versus other architecture that install in lib${LIB_POSTFIX}/${VPB_PLUGINS}
     IF(WIN32)
-        INSTALL(TARGETS ${TARGET_TARGETNAME} RUNTIME DESTINATION bin ARCHIVE DESTINATION lib/${OSG_PLUGINS} LIBRARY DESTINATION bin/${OSG_PLUGINS} )
+        INSTALL(TARGETS ${TARGET_TARGETNAME} RUNTIME DESTINATION bin ARCHIVE DESTINATION lib/${PLUGINS} LIBRARY DESTINATION bin/${PLUGINS} )
     ELSE(WIN32)
-        INSTALL(TARGETS ${TARGET_TARGETNAME} RUNTIME DESTINATION bin ARCHIVE DESTINATION lib${LIB_POSTFIX}/${OSG_PLUGINS} LIBRARY DESTINATION lib${LIB_POSTFIX}/${OSG_PLUGINS} )
+        INSTALL(TARGETS ${TARGET_TARGETNAME} RUNTIME DESTINATION bin ARCHIVE DESTINATION lib${LIB_POSTFIX}/${PLUGINS} LIBRARY DESTINATION lib${LIB_POSTFIX}/${PLUGINS} )
     ENDIF(WIN32)
 
     IF(OSG_BUILD_PLATFORM_IPHONE)
@@ -230,11 +243,11 @@ MACRO(SETUP_PLUGIN PLUGIN_NAME)
     ENDIF()
 
     # install the shader source files
-    if(OSGEARTH_INSTALL_SHADERS)
+    if(INSTALL_RES)
         INSTALL(
-            FILES ${TARGET_GLSL}
-            DESTINATION resources/shaders )
-    endif(OSGEARTH_INSTALL_SHADERS)
+            FILES ${TARGET_RES}
+            DESTINATION resources/res )
+    endif(INSTALL_RES)
 
 #finally, set up the solution folder -gw
     SET_PROPERTY(TARGET ${TARGET_TARGETNAME} PROPERTY FOLDER "Plugins")
@@ -411,7 +424,7 @@ MACRO(SETUP_APPLICATION APPLICATION_NAME)
 	ENDIF(OSGEARTH_INSTALL_TO_OSG_DIR AND OSG_DIR)
 
 	IF(NOT APPLICATION_FOLDER)
-	    SET(APPLICATION_FOLDER "Examples")
+	    SET(APPLICATION_FOLDER "applications")
 	ENDIF(NOT APPLICATION_FOLDER)
 
 	SET_PROPERTY(TARGET ${TARGET_TARGETNAME} PROPERTY FOLDER ${APPLICATION_FOLDER})

@@ -56,11 +56,9 @@ SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "add a MinSizeRel postfix, usually
 
 
 INCLUDE(Find3rdPartyDependencies)
+INCLUDE(UtilityMacros)
+INCLUDE(MacroUtils)
 
-INCLUDE(OsGEarthMacroUtils)
-INCLUDE(ModuleInstall)
-INCLUDE(OsgMacroUtils)
-INCLUDE(OsgMacroUtils)
 
 INCLUDE(conanbuildinfo)
 
@@ -81,6 +79,14 @@ SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} CACHE STRING "Add additional search
 SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} CACHE STRING "Add additional search paths here. Use ; to separate multiple paths.")
 SET(CMAKE_PREFIX_PATH  ${CMAKE_PREFIX_PATH}  CACHE STRING "Add additional search paths here. Use ; to separate multiple paths.")
 
+SET(PLUGIN_PREFIX "")
+SET(PLUGINS plugins)
+
+#插件输出路径
+IF(MSVC AND NOT MSVC_IDE)
+    MAKE_DIRECTORY(${OUTPUT_BINDIR}/${OSG_PLUGINS})
+ENDIF(MSVC AND NOT MSVC_IDE)
+
 if(CMAKE_CL_64)
 	set(CMAKE_PREFIX_PATH $ENV{QTDIR_X64})
 else()
@@ -94,10 +100,14 @@ IF(${ROOT_NAME}_BUILD_SHARED_LIBS)
 ELSE()
     SET(${ROOT_NAME}_DYNAMIC_OR_STATIC "STATIC")
 ENDIF()
-
-
+OPTION(BUILD_WITH_BOOST "ON to build with boost; OFF to build with boost." ON)
+IF(BUILD_WITH_BOOST)
+    find_package(boost 1.79.0 REQUIRED)
+ELSE()
+    SET(${ROOT_NAME}_DYNAMIC_OR_STATIC "STATIC")
+ENDIF()
 
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(ui)
-#ADD_SUBDIRECTORY(plugins)
+ADD_SUBDIRECTORY(plugins)
 ADD_SUBDIRECTORY(applications)

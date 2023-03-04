@@ -11,6 +11,7 @@ namespace ui
 
 	EarthCfg::EarthCfg()
 	{
+		return;
 		libconfig::Config cfg;
 		try
 		{

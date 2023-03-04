@@ -108,6 +108,13 @@ namespace util {
         return[mailbox = std::move(mailbox)]() { maybeReceive(mailbox); };
     }
 
+
+	bool Mailbox::hasMessage() 
+	{
+		std::lock_guard<std::mutex> queueLock(queueMutex);
+		return  !queue.empty();
+	}
+
 } // namespace mbgl
 
 
