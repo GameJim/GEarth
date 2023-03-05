@@ -10,6 +10,10 @@ namespace util
 
 	}
 
+	void SingletonPluginManager::destoryInstance()
+	{
+		instance()._plugins.clear();
+	}
 	bool SingletonPluginManager::addPlugin(SingletonPlugin* plugin)
 	{
 		if (!plugin) return false;

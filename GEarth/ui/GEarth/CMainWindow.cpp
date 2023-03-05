@@ -20,6 +20,11 @@
 #include <osgEarth/FeatureImageLayer>
 
 #include "GEarth/earth_cfg.h"
+#include "const.h"
+
+#include "util/file_system.h"
+#include "util/log_system.h"
+#include "util/dynamic_library.h"
 using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Util;
@@ -65,12 +70,8 @@ namespace ui
 
 
 	CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
-		//读取配置
-		EarthCfg* pEarthCfg = new EarthCfg();
-
-		//初始化Earth 环境，读取配置信息等
-		osgEarth::initialize();
-
+		
+		this->InitEarth();
 		
 		//设置相关布局
 		RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
@@ -98,6 +99,35 @@ namespace ui
 
 	}
 
+
+	void CMainWindow::InitEarth()
+	{
+		//读取配置
+		EarthCfg* pEarthCfg = new EarthCfg();
+
+		//初始化Earth 环境，读取配置信息等
+		osgEarth::initialize();
+
+		//获取系统路径
+		g_sModulePath = util::FileSystem::GetModulePath();
+		std::string suffix = "";
+#ifdef CMAKE_INTDIR="RelWithDebInfo"
+		suffix = "rd";
+#endif // DEBUG
+	
+		auto registerDynamicLibrary = [&](const std::string& sName, const std::string& sDllName)
+		{
+			util::DynamicLibraryManager().instance().registerDynamicLibrary(sName, g_sModulePath + "/plugins/" + sDllName + suffix + ".dll");
+			util::DynamicLibraryManager().instance().activeDynamicLibrary(sName);
+		};
+
+		//接入插件
+		registerDynamicLibrary("filesystem", "util_FileSystem");
+		registerDynamicLibrary("log", "util_LogSystem");
+
+		LOG_INFO << "环境初始化完成";
+		
+	}
 
 	void CMainWindow::createPages()
 	{
@@ -157,7 +187,7 @@ namespace ui
 		// Start with a basemap imagery layer; we'll be using the GDAL driver
 		// to load a local GeoTIFF file:
 		GDALImageLayer* basemap = new GDALImageLayer();
-		basemap->setURL("../data/world.tif");
+		basemap->setURL(g_sModulePath + "/../data/world.tif");
 		map->addLayer(basemap);
 
 		// Next we add a layer to provide the feature data.
@@ -183,7 +213,7 @@ namespace ui
 		}
 		else
 		{
-			features->setURL("../data/world.shp");
+			features->setURL(g_sModulePath + "/../data/world.shp");
 		}
 		map->addLayer(features);
 

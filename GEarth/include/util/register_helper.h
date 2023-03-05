@@ -11,19 +11,19 @@ namespace util
 		RegisterSingletonPluginProxy()
 		{
 			_plugin = std::make_unique<T>();
-			SingletonPluginManager::Instance().addPlugin(_plugin.get());
+			SingletonPluginManager::instance().addPlugin(_plugin.get());
 			//同时激活当前
 			BaseName::setCurrent(dynamic_cast<BaseName*>(_plugin.get()));
 		}
 
 		~RegisterSingletonPluginProxy()
 		{
-			if (BaseName::Instance() == _plugin.get())
+			if (BaseName::instance() == _plugin.get())
 			{
 				//启动切换久的插件，此处暂不考虑
 				BaseName::setCurrent(nullptr);
 			}
-			SingletonPluginManager::Instance().removePlugin(_plugin.get());
+			SingletonPluginManager::instance().removePlugin(_plugin.get());
 		}
 
 		T* get() { return _plugin.get(); }

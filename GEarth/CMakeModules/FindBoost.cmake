@@ -32,6 +32,34 @@ FIND_PATH(BOOST_INCLUDE_DIR boost
 )
 
 
+FIND_PATH(BOOST_LIB_DIRS libboost_atomic.lib
+	PATHS
+        ${BOOST_DIR}
+		${CONAN_BOOST_ROOT}
+        $ENV{BOOST_SOURCE_DIR}
+        $ENV{BOOST_ROOT}
+		$ENV{Boost_DIR}
+        $ENV{BOOST_DIR}
+        /usr/local/
+        /usr/
+        /sw/ # Fink
+        /opt/local/ # DarwinPorts
+        /opt/csw/ # Blastwave
+        /opt/
+        [HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session\ Manager\\Environment;BOOST_ROOT]/
+        ~/Library/Frameworks
+        /Library/Frameworks
+    PATH_SUFFIXES
+        /lib/
+        /lib64/
+        /build/lib/
+        /build/lib64/
+        /Build/lib/
+        /Build/lib64/
+		/debug/lib/
+		/release/lib
+)
+
 ###### libraries ######
 
 MACRO( FIND_BOOST_LIBRARY MYLIBRARY MYLIBRARYNAME )
@@ -116,17 +144,38 @@ ENDMACRO(FIND_BOOST_LIBRARY LIBRARY LIBRARYNAME)
 
 
 #目前仅罗列出常用的库
+FIND_BOOST_LIBRARY( BOOST_ATOMIC_LIBRARY atomic)
+FIND_BOOST_LIBRARY( BOOST_ATOMIC_LIBRARY_DEBUG atomicd)
+
 FIND_BOOST_LIBRARY( BOOST_LOG_LIBRARY log)
 FIND_BOOST_LIBRARY( BOOST_LOG_LIBRARY_DEBUG logd)
 
+FIND_BOOST_LIBRARY( BOOST_LOG_SETUP_LIBRARY log_setup)
+FIND_BOOST_LIBRARY( BOOST_LOG_SETUP_LIBRARY_DEBUG log_setupd)
+
+FIND_BOOST_LIBRARY( BOOST_DATE_TIME_LIBRARY date_time )
+FIND_BOOST_LIBRARY( BOOST_FDATE_TIME_LIBRARY_DEBUG date_timed)
+
+FIND_BOOST_LIBRARY( BOOST_THREAD_LIBRARY thread )
+FIND_BOOST_LIBRARY( BOOST_THREAD_LIBRARY_DEBUG threadd)
+
+FIND_BOOST_LIBRARY( BOOST_SYSTEM_LIBRARY system )
+FIND_BOOST_LIBRARY( BOOST_SYSTEM_LIBRARY_DEBUG systemd)
+
 FIND_BOOST_LIBRARY( BOOST_FILESYSTEM_LIBRARY filesystem )
-FIND_BOOST_LIBRARY( BOOST_FILESYSTEM_LIBRARY_DEBUG ofilesystemd)
+FIND_BOOST_LIBRARY( BOOST_FILESYSTEM_LIBRARY_DEBUG filesystemd)
+
+FIND_BOOST_LIBRARY( BOOST_CHRONO_LIBRARY chrono )
+FIND_BOOST_LIBRARY( BOOST_CHRONO_LIBRARY_DEBUG systemd)
 
 FIND_BOOST_LIBRARY( BOOST_REGEX_LIBRARY regex )
 FIND_BOOST_LIBRARY( BOOST_REGEX_LIBRARY_DEBUG regexd)
 
 FIND_BOOST_LIBRARY( BOOST_TIMER_LIBRARY timer )
 FIND_BOOST_LIBRARY( BOOST_TIMER_LIBRARY_DEBUG timerd)
+
+
+#log_setup date_time system filesystem thread regex chrono
 
 SET( BOOST_FOUND "NO" )
 IF( BOOST_LOG_LIBRARY AND BOOST_INCLUDE_DIR )

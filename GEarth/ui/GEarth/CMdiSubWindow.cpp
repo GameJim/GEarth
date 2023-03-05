@@ -10,6 +10,7 @@
 #include "osgEarth/MapNode"
 #include <osgEarth/Ephemeris>
 #include <osgEarth/Sky>
+#include "const.h"
 namespace ui
 {
 
@@ -71,7 +72,7 @@ namespace ui
 
 			osgEarth::Config conf = skyOptions.getConfig();
 			osgEarth::optional<osgEarth::URI> path;
-			path = "../data/moon_1024x512.jpg";
+			path = g_sModulePath + "/../data/moon_1024x512.jpg";
 			conf.set("moon_image", path);
 			skyOptions.merge(conf);
 			//skyOptions.ambient() = 0.4;//控制黑夜部分明暗程度，数值越小，越黑暗

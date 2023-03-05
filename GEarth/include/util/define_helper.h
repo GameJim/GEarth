@@ -54,10 +54,11 @@
 
 #define DEFINE_SINGLETON(TYPE) \
 public:                        \
-static TYPE& Instance() {      \
-	static TYPE instance;      \
-	return instance;           \
-};
+static TYPE& instance() {      \
+	static TYPE s_instance;    \
+	return s_instance;          \
+};                             \
+static void destoryInstance();
 
 
 #define DEFINE_SINGLETON_PLUGIN(TYPE)           \
@@ -65,7 +66,7 @@ protected:                                     	\
 	TYPE();										\
 public:  										\
 	virtual ~TYPE() = default;					\
-static TYPE* Instance() {     					\
+static TYPE* instance() {     					\
 	return m_pInstance;           				\
 };												\
 static void setCurrent(TYPE* pInstance) {		\

@@ -23,9 +23,10 @@ namespace util
 		DEFINE_SINGLETON(SingletonPluginManager)
 		DEFINE_OPTION_VECTOR(SingletonPlugin*,plugins)
 	public:
+		SingletonPluginManager() = default;
+		~SingletonPluginManager() = default;
 		bool addPlugin(SingletonPlugin* plugin);
 		bool removePlugin(SingletonPlugin* plugin);
-
 	protected:
 		std::mutex m_Mutex;
 	};
