@@ -14,7 +14,7 @@ namespace util
 			virtual ~BoostFileSystem();
 		public:
 			virtual bool fileExists(const std::string& sPath);
-			virtual std::string fileStem(const std::string& sPath) = 0;
+			virtual std::string fileStem(const std::string& sPath);
 			virtual std::string fileName(const std::string& sPath);
 			virtual std::string fileExtension(const std::string& sPath);
 			virtual std::string parentPath(const std::string& sPath);

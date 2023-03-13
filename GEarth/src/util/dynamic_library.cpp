@@ -186,7 +186,7 @@ namespace util
 			return false;
 		}
 		dynamicLibraryInfo.insert({ sName,sPath });
-		return false;
+		return true;
 	}
 
 	bool DynamicLibraryManager::activeDynamicLibrary(const std::string& sName)

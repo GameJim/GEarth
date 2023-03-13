@@ -20,7 +20,7 @@ namespace ui
 	{
 		
 		this->resize(400, 400);
-		this->setAutoFillBackground(false);
+		//this->setAutoFillBackground(false);
 		
 
 		QWidget* pWidget = new CCanva(this);
@@ -57,43 +57,43 @@ namespace ui
 		osg::ref_ptr<osg::Camera> camera = new osg::Camera();
 		camera->setGraphicsContext(gc);
 		camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
-
+		
 #endif
 		//设置相机
 		m_pView->setCamera(camera);
 
 
 		{
-			osgEarth::DateTime dateTime(2022, 7, 17, 20);		//格林尼治时间
+			//osgEarth::DateTime dateTime(2022, 7, 17, 20);		//格林尼治时间
 
-			osgEarth::Util::Ephemeris* ephemeris = new osgEarth::Util::Ephemeris;
+			//osgEarth::Util::Ephemeris* ephemeris = new osgEarth::Util::Ephemeris;
 
-			osgEarth::Util::SkyOptions skyOptions;
+			//osgEarth::Util::SkyOptions skyOptions;
 
-			osgEarth::Config conf = skyOptions.getConfig();
-			osgEarth::optional<osgEarth::URI> path;
-			path = g_sModulePath + "/../data/moon_1024x512.jpg";
-			conf.set("moon_image", path);
-			skyOptions.merge(conf);
-			//skyOptions.ambient() = 0.4;//控制黑夜部分明暗程度，数值越小，越黑暗
-			//skyOptions.quality() = osgEarth::Util::SkyOptions::Quality::QUALITY_HIGH;//控制黑夜部分明暗程度，数值越小，越黑暗
+			//osgEarth::Config conf = skyOptions.getConfig();
+			//osgEarth::optional<osgEarth::URI> path;
+			//path = g_sModulePath + "/../data/moon_1024x512.jpg";
+			//conf.set("moon_image", path);
+			//skyOptions.merge(conf);
+			////skyOptions.ambient() = 0.4;//控制黑夜部分明暗程度，数值越小，越黑暗
+			////skyOptions.quality() = osgEarth::Util::SkyOptions::Quality::QUALITY_HIGH;//控制黑夜部分明暗程度，数值越小，越黑暗
 
-			osgEarth::Util::SkyNode* m_pSkyNode = osgEarth::Util::SkyNode::create(skyOptions);
+			//osgEarth::Util::SkyNode* m_pSkyNode = osgEarth::Util::SkyNode::create(skyOptions);
 		
-			/*m_pSkyNode->setStarsVisible(true);
-			m_pSkyNode->setAtmosphereVisible(true);
-			m_pSkyNode->setSunVisible(true);
-			m_pSkyNode->setMoonVisible(true);*/
+			///*m_pSkyNode->setStarsVisible(true);
+			//m_pSkyNode->setAtmosphereVisible(true);
+			//m_pSkyNode->setSunVisible(true);
+			//m_pSkyNode->setMoonVisible(true);*/
 
 
-			m_pSkyNode->setName("SkyNode");
-			m_pSkyNode->setEphemeris(ephemeris);
-			m_pSkyNode->setDateTime(dateTime);
-			m_pSkyNode->attach(m_pView,0);
-			m_pSkyNode->setLighting(false);
-			m_pSkyNode->addChild(pMapNode);
+			//m_pSkyNode->setName("SkyNode");
+			//m_pSkyNode->setEphemeris(ephemeris);
+			//m_pSkyNode->setDateTime(dateTime);
+			//m_pSkyNode->attach(m_pView,0);
+			//m_pSkyNode->setLighting(false);
+			//m_pSkyNode->addChild(pMapNode);
 
-			m_pView->setSceneData(m_pSkyNode);
+			m_pView->setSceneData(pMapNode);
 		}
 		
 

@@ -1,5 +1,6 @@
 #include "log_system.h"
 #include "util/register_helper.h"
+#include "util/str_uitl.h"
 
 #include <boost/log/trivial.hpp>
 #include <boost/log/core.hpp>
@@ -80,8 +81,17 @@ namespace util
 				int ret = std::stringbuf::sync();
 
 				std::string s = str();
+				
 				str("");
-
+				if (s.empty())
+				{
+					return ret;
+				}
+				
+				//解决乱码问题 nice
+				auto ss = StrUtil::UTF8ToUnicode(s);
+				s = StrUtil::Unicode2UTF8(ss);
+				
 				switch (_level.get())
 				{
 				case boost::log::v2s_mt_nt6::trivial::trace:

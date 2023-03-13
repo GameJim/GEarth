@@ -22,11 +22,21 @@ namespace util
 	LogSystem::LogSystem()
 	{
 		name() = "LogSystem";
-#if defined(DEBUG)
-		logLevel() = EnLogLevel::LOG_LEVEL_DEBUG;
-#else define()
-		logLevel() = EnLogLevel::LOG_LEVEL_WARNING;
-#endif
+
+
+		if (CMAKE_INTDIR == "RelWithDebInfo")
+		{
+			logLevel() = EnLogLevel::LOG_LEVEL_INFO;
+		}
+		else if (CMAKE_INTDIR == "Release")
+		{
+			logLevel() = EnLogLevel::LOG_LEVEL_WARNING;
+		}
+		else
+		{
+			logLevel() = EnLogLevel::LOG_LEVEL_DEBUG;
+		}
+
 		async() = true;
 		enable() = true;
 		logFile() = "log.log";

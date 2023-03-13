@@ -20,7 +20,6 @@ namespace ui
 
 		//启动第一次渲染
 		this->pushMessage(util::actor::makeMessage(*this, &CMdiArea::NotyFrame));
-	
 	}
 
 	CMdiArea::~CMdiArea() {
@@ -43,6 +42,7 @@ namespace ui
 				std::unique_lock<std::mutex> mutex(m_mutex);
 				m_pCompositeViewer->addView(pNewWindow->getView());
 				this->addSubWindow(pNewWindow);
+				pNewWindow->show();
 				return;
 			}
 		}
@@ -52,12 +52,26 @@ namespace ui
 		std::unique_lock<std::mutex> mutex(m_mutex);
 		m_pCompositeViewer->addView(pNewWindow->getView());
 		this->addSubWindow(pNewWindow);
-
+		pNewWindow->show();
 		m_pCompositeViewer->realize();
 	}
 
 
 	
+	void CMdiArea::createMdiSubWindow(osg::ref_ptr<osgEarth::MapNode> pMapNode)
+	{
+		auto pNewWindow = new CMdiSubWindow(pMapNode);
+		std::unique_lock<std::mutex> mutex(m_mutex);
+		m_pCompositeViewer->addView(pNewWindow->getView());
+
+		Qt::WindowFlags flags;
+		flags = flags | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint;
+		this->addSubWindow(pNewWindow, flags);
+		pNewWindow->show();
+
+		m_pCompositeViewer->realize();
+	}
+
 	void CMdiArea::destoryMdiSubWindow(CMdiSubWindow* pMdiSubWindow)
 	{
 		std::unique_lock<std::mutex> mutex(m_mutex);
