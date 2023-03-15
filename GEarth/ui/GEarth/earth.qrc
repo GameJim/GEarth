@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>res/file-eye.png</file>
+    </qresource>
+    <qresource prefix="/title">
+        <file>res/close.png</file>
+        <file>res/max.png</file>
+        <file>res/min.png</file>
+        <file>res/restore.png</file>
+    </qresource>
+</RCC>

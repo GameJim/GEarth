@@ -27,6 +27,7 @@
 #include "util/file_system.h"
 #include "util/log_system.h"
 #include "util/dynamic_library.h"
+#include "GEarth/style_sheets_cfg.h"
 using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Util;
@@ -74,8 +75,12 @@ namespace ui
 	CMainWindow::CMainWindow(QWidget * parent) : RibbonMainWindow(parent) {
 		
 		this->InitEarth();
-		
+
+		this->setObjectName("CMainWindow");
+		this->setStyleSheet(CStyleSheetsCfg::instance().getUIStyle("CMainWindow"));
+
 		//设置相关布局
+		//this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint| Qt::WindowCloseButtonHint);
 		RibbonToolTip::setWrapMode(RibbonToolTip::NativeWrap);
 		ribbonBar()->setTitleBarVisible(false);
 		//大小
@@ -96,6 +101,8 @@ namespace ui
 		//m_pMidArea->createMdiSubWindow(createDefaultMap());
 
 		//创建树控件、绑定callbck
+
+
 	}
 
 	CMainWindow::~CMainWindow() {
@@ -134,6 +141,9 @@ namespace ui
 		//初始化工程
 		m_pEarthViewerProject = std::make_unique<EarthViewerProject>();
 		LOG_INFO << "环境初始化完成" << std::endl;
+		
+
+
 		
 	}
 

@@ -83,7 +83,7 @@ namespace ui
 	EarthCfg::EarthCfg()
 	{
 		m_pConfig = new libconfig::Config();
-		_path = util::FileSystem::GetModulePath() + "/../cfg/earth.cfg";
+		_path = util::FileSystem::GetModulePath() + "/../data/cfg/earth.cfg";
 		m_pConfig->readString(default_cfg);
 	}
 

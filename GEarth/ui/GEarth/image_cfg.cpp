@@ -31,27 +31,14 @@ namespace ui
 		}
 	)ImageConfig";
 
-	bool hasValue(const Setting &setting,const std::string& sValue)
-	{
-		if (setting.isArray() || setting.isList())
-		{
-			for (int i = 0;i < setting.getLength();i++)
-			{
-				std::string value = setting[i].c_str();
-				if (value == sValue)
-					return true;
-			}
-		}
-
-		return false;
-	}
+	
 
 	ImageCfg::ImageCfg()
 	{
 		_default = util::FileSystem::GetModulePath() + "/../res/ui/GEarth/Share.png";
 
-		_cfgPath = util::FileSystem::GetModulePath() + "/../res/ui/GEarth/img.cfg";
-		_defult_res = util::FileSystem::GetModulePath() + "/../res/ui/GEarth";
+		_cfgPath = util::FileSystem::GetModulePath() + "/../data/cfg/earth_img.cfg";
+		_defult_res = util::FileSystem::GetModulePath() + "/../res/ui/GEarth/images";
 		_pConfig = new libconfig::Config();
 		
 	}
@@ -121,6 +108,22 @@ namespace ui
 
 	void ImageCfg::praseCfg(const std::string& path)
 	{
+
+		auto hasValue=[](const Setting &setting, const std::string& sValue)
+		{
+			if (setting.isArray() || setting.isList())
+			{
+				for (int i = 0; i < setting.getLength(); i++)
+				{
+					std::string value = setting[i].c_str();
+					if (value == sValue)
+						return true;
+				}
+			}
+
+			return false;
+		};
+
 		try
 		{
 			if (!path.empty())

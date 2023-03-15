@@ -14,9 +14,25 @@ using namespace libconfig;
 
 namespace ui
 {
+	
 
 	void CStyleSheetsCfg::praseCfg(const std::string& path /*= ""*/)
 	{
+		auto hasValue = [](const Setting &setting, const std::string& sValue)
+		{
+			if (setting.isArray() || setting.isList())
+			{
+				for (int i = 0; i < setting.getLength(); i++)
+				{
+					std::string value = setting[i].c_str();
+					if (value == sValue)
+						return true;
+				}
+			}
+
+			return false;
+		};
+
 		try
 		{
 			if (!path.empty())
@@ -50,6 +66,22 @@ namespace ui
 
 		Setting &demo = qss["demo"];
 
+		
+		if (!demo.exists("paths"))
+		{
+			demo.add("paths", Setting::TypeArray);
+			Setting &paths = demo["paths"];
+			paths.add(Setting::TypeString) = _defult_css_path;
+		}
+		else
+		{
+			Setting &paths = demo["paths"];
+			if (!hasValue(paths, _defult_css_path))
+			{
+				paths.add(Setting::TypeString) = _defult_css_path;
+			}
+		}
+
 
 		if (!demo.exists("typeGroup"))
 		{
@@ -61,84 +93,127 @@ namespace ui
 		}
 	}
 
-	std::string CStyleSheetsCfg::getStyle(const std::string& sType, const std::string& skey/*="default"*/)
+	QString CStyleSheetsCfg::getStyle(const std::string& sType, const std::string& skey/*="default"*/)
 	{
-		std::string sStyle;
+		std::string sfitPath;
 		Setting &root = _pConfig->getRoot();
+
+		//相对路径list
+		Setting &paths = root["qss"]["demo"]["paths"];
+		std::vector<std::string> root_paths;
+		for (int i = 0; i < paths.getLength(); i++)
+		{
+			root_paths.push_back(paths[i].c_str());
+		}
 
 		Setting &type = root["qss"]["demo"]["typeGroup"];
 		if (!type.exists(sType))
 		{
 			Setting & sTypeGroup = type.add(sType, Setting::TypeGroup);
-			sTypeGroup.add(skey, Setting::TypeString) = "";
+			sTypeGroup.add(skey, Setting::TypeString) = sType + "/" + skey + ".css";
 		}
 		else
 		{
 			Setting & sTypeGroup = type[sType];
 			if (!sTypeGroup.exists(skey))
 			{
-				sTypeGroup.add(skey, Setting::TypeString) = "";
+				sTypeGroup.add(skey, Setting::TypeString) = sType+"/" + skey + ".css";
 			}
 			else
 			{
-				sTypeGroup.lookupValue(sType, sStyle);
-				return sStyle;
+				sTypeGroup.lookupValue(skey, sfitPath);
+
+				if (!sfitPath.empty())
+				{
+					if (util::FileSystem::instance()->isAbsPath(sfitPath))
+					{
+						sfitPath = sfitPath;
+					}
+					else
+					{
+						//寻找相对路径
+						sfitPath = util::FileSystem::instance()->searchFile(root_paths, sfitPath);
+					}
+				}
 			}
 		}
 
-		/*if (skey == "default")
+		
+		//如果存在该文件加载文件
+		if (!sfitPath.empty() && util::FileSystem::instance()->fileExists(sfitPath))
 		{
-			Setting &default = root["qss"]["demo"]["default"];
-			if (!default.exists(sType))
+			QFile file(sfitPath.c_str());
+			file.open(QFile::ReadOnly);
+			if (file.isOpen())
 			{
-				default.add(sType, Setting::TypeString)="";
-			}
-			else
-			{
-				default.lookupValue(sType, sStyle);
-				return sStyle;
+				return  QLatin1String(file.readAll());
 			}
 		}
-		else
-		{
-			
-		}*/
-
-		return sStyle;
+		return "";
 	}
 
-	std::string CStyleSheetsCfg::getUIStyle(const std::string& sType)
+	QString CStyleSheetsCfg::getUIStyle(const std::string& sType)
 	{
-		std::string sStyle="";
+		std::string sfitPath ="";
 		Setting &root = _pConfig->getRoot();
 
 		Setting &custom = root["qss"]["demo"]["custom"];
 
+		Setting &paths = root["qss"]["demo"]["paths"];
+
+		//相对路径list
+		std::vector<std::string> root_paths;
+		for (int i = 0; i < paths.getLength(); i++)
+		{
+			root_paths.push_back(paths[i].c_str());
+		}
 
 		if (!custom.exists(sType))
 		{
-			custom.add(sType, Setting::TypeString) = "";
+			custom.add(sType, Setting::TypeString) = sType + ".css";
 		}
 		else
 		{
-			custom.lookupValue(sType, sStyle);
-			return sStyle;
+			custom.lookupValue(sType, sfitPath);
+			if (!sfitPath.empty())
+			{
+				if (util::FileSystem::instance()->isAbsPath(sfitPath))
+				{
+					sfitPath = sfitPath;
+				}
+				else
+				{
+					//寻找相对路径
+					sfitPath = util::FileSystem::instance()->searchFile(root_paths, sfitPath);
+				}
+			}
 		}
 
-		return sStyle;
+		//如果存在该文件加载文件
+		if (!sfitPath.empty() && util::FileSystem::instance()->fileExists(sfitPath))
+		{
+			QFile file(sfitPath.c_str());
+			file.open(QFile::ReadOnly);
+			if (file.isOpen())
+			{
+				return QLatin1String(file.readAll());
+			}
+		}
+		return "";
 	}
 
-	QPushButton* CStyleSheetsCfg::createPushButton(const std::string& skey /*= "default"*/)
+	QPushButton* CStyleSheetsCfg::createPushButton(const QString& skey /*= "default"*/)
 	{
 		QPushButton* pPushButton = new QPushButton();
-		pPushButton->setObjectName(QString::fromLocal8Bit(skey.c_str()));
+		pPushButton->setText(skey);
+		pPushButton->setObjectName(skey);
 
-		pPushButton->setStyleSheet(QString::fromLocal8Bit(instance().getStyle("QPushButton", skey).c_str()));
+		pPushButton->setStyleSheet(instance().getStyle("QPushButton", skey.toStdString()));
 
 		return pPushButton;
 	}
 
-	QHBoxLayout* CStyleSheetsCfg::createHBoxLayout(const std::string& skey /*= "default"*/)
+	QHBoxLayout* CStyleSheetsCfg::createHBoxLayout(const QString& skey /*= "default"*/)
 	{
 		QHBoxLayout* pLayout = new QHBoxLayout();
 		/*pPushButton->setObjectName(QString::fromLocal8Bit(skey.c_str()));
@@ -148,7 +223,7 @@ namespace ui
 		return pLayout;
 	}
 
-	QVBoxLayout* CStyleSheetsCfg::createVBoxLayout( const std::string& skey /*= "default"*/)
+	QVBoxLayout* CStyleSheetsCfg::createVBoxLayout( const QString& skey /*= "default"*/)
 	{
 		QVBoxLayout* pLayout = new QVBoxLayout();
 		/*pPushButton->setObjectName(QString::fromLocal8Bit(skey.c_str()));
@@ -158,39 +233,38 @@ namespace ui
 		return pLayout;
 	}
 
-	QLineEdit* CStyleSheetsCfg::createLineEdit(const std::string& skey /*= "default"*/)
+	QLineEdit* CStyleSheetsCfg::createLineEdit(const QString& skey /*= "default"*/)
 	{
 		QLineEdit* pQWidget = new QLineEdit();
-		pQWidget->setObjectName(QString::fromLocal8Bit(skey.c_str()));
+		pQWidget->setObjectName(skey);
 
-		pQWidget->setStyleSheet(QString::fromLocal8Bit(instance().getStyle("QLineEdit", skey).c_str()));
+		pQWidget->setStyleSheet(instance().getStyle("QLineEdit", skey.toStdString()));
 
 		return pQWidget;
 	}
 
-	QComboBox* CStyleSheetsCfg::createComboBox(const std::string& skey /*= "default"*/)
+	QComboBox* CStyleSheetsCfg::createComboBox(const QString& skey /*= "default"*/)
 	{
 		QComboBox* pQWidget = new QComboBox();
-		pQWidget->setObjectName(QString::fromLocal8Bit(skey.c_str()));
-
-		pQWidget->setStyleSheet(QString::fromLocal8Bit(instance().getStyle("QComboBox", skey).c_str()));
+		pQWidget->setObjectName(skey);
+		pQWidget->setStyleSheet(instance().getStyle("QComboBox", skey.toStdString()));
+		
 
 		return pQWidget;
 	}
 
-	QFileDialog * CStyleSheetsCfg::createFileDialog(const std::string& skey /*= "default"*/)
+	QFileDialog * CStyleSheetsCfg::createFileDialog(const QString& skey /*= "default"*/)
 	{
 		QFileDialog* pQWidget = new QFileDialog();
-		pQWidget->setObjectName(QString::fromLocal8Bit(skey.c_str()));
-
-		pQWidget->setStyleSheet(QString::fromLocal8Bit(instance().getStyle("QComboBox", skey).c_str()));
+		pQWidget->setObjectName(skey);
+		pQWidget->setStyleSheet(instance().getStyle("QFileDialog", skey.toStdString()));
 		return pQWidget;
 	}
 
 	CStyleSheetsCfg::CStyleSheetsCfg()
 	{
-		_default = util::FileSystem::GetModulePath() + "/../res/ui/GEarth/qss.cfg";
-
+		_default = util::FileSystem::GetModulePath() + "/../data/cfg/earth_qss.cfg";
+		_defult_css_path =  util::FileSystem::GetModulePath() + "/../res/ui/GEarth/qss";
 		_pConfig = new libconfig::Config();
 		this->praseCfg(_default);
 	}
